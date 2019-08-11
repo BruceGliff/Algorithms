@@ -1,0 +1,1 @@
+find longest substring with different "K" characters (middle);

@@ -36,5 +36,7 @@ int main()
 
     std::cout << '\n' << maxSum;
 
+    delete array;
+
     return 0;
 }
