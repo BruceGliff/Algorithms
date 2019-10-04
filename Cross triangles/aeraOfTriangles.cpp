@@ -275,21 +275,20 @@ int main()
 
     for (int i = 0; i < 3; i++)    
     {
-        std::cout << "Enter " << i + 1 << " vertex of 1st triangle:\n";
         std::cin >> t1[i].x >> t1[i].y;
+        //scanf("%f %f", &t1[i].x, &t1[i].y);
     }
     for (int i = 0; i < 3; i++)
     {
-        std::cout << "Enter " << i + 1 << " vertex of 2st triangle:\n";
         std::cin >> t2[i].x >> t2[i].y;
+        //scanf("%f %f", &t2[i].x, &t2[i].y);
     }
+
+    // scanf("%f %f %f %f %f %f %f %f %f %f %f %f\n", 
+    //    &t1[0].x, &t1[0].y, &t1[1].x, &t1[1].y, &t1[2].x, &t1[2].y,
+    //    &t2[0].x, &t2[0].y, &t2[1].x, &t2[1].y, &t2[2].x, &t2[2].y);
 
     std::cout << "Vertex:\n";
-    for (int i = 0; i < 3; i++)
-    {
-        std::cout << t1[i].x << ' ' << t1[i].y << ' ';
-        std::cout << t2[i].x << ' ' << t2[i].y << '\n';
-    }
 
-    std::cout <<"Square: " << square(t1, t2) << '\n';
+    std::cout << square(t1, t2) << '\n';
 }
