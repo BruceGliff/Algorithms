@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include <array>
 #include <algorithm>
 
 #define OUT
@@ -10,7 +11,7 @@ struct vertex
 {
     float x;
     float y;
-    vertex() : x(99), y(99) {}
+    vertex() : x(0), y(0) {}
     vertex(float X, float Y) : x(X), y(Y) {}
 };
 
@@ -18,6 +19,7 @@ struct vector
 {
     float x;
     float y;
+    vector() : x(0), y(0) {}
     vector(float X, float Y) : x(X), y(Y) {}
 };
 
@@ -25,6 +27,7 @@ struct line
 {
     vertex a;
     vertex b;
+    line() {}
     line(vertex A, vertex B) : a(A), b(B) {}
 };
 
@@ -44,37 +47,41 @@ struct PointParams
 
 bool isAcross(line l1, line l2, OUT vertex & out);
 float crossProduct(vector a1, vector a2);
-void Internal(vertex * t1, vertex * t2, std::vector<vertex> & OUT poligon);
+void Internal(const std::vector<vertex> & t1, const std::vector<vertex> & t2, std::vector<vertex> & OUT poligon);
 float solveSquare(std::vector<vertex> & poligon);
 
 vertex center(0, 0);
 
 float getAngle(const vertex & a)
 {
-    float dx_a = a.x - center.x;
-    float dy_a = a.y - center.y;
-    float r_a = sqrtf(dx_a * dx_a + dy_a * dy_a);
+    float dx_a = 0, dy_a = 0, r_a = 0, cosA = 0, sinA = 0;
+    dx_a = a.x - center.x;
+    dy_a = a.y - center.y;
 
-    float cosA = dx_a / r_a;
-    float sinA = dy_a / r_a;
+    float b = dx_a * dx_a + dy_a * dy_a;
+
+    r_a = sqrtf(b);
+
+    cosA = dx_a / r_a;
+    sinA = dy_a / r_a;
 
     if (sinA > 0)
         return acosf(cosA);
     else
-        return 2 * PI - acosf(cosA);
+        return (2 * PI - acosf(cosA));
 }
 
 // переход в полярную систему координат\
 и сравнение углов у разных точек для их сортировки
-int compare(const vertex & a, const vertex & b)
+bool compare(const vertex & a, const vertex & b)
 {
     if (getAngle(a) > getAngle(b))
         return 1;
-    
+            
     return 0;
 }   
 
-float square(vertex * t1, vertex * t2) // arrays of vectors
+float square(const std::vector<vertex> & t1, const std::vector<vertex> & t2) // arrays of vectors
 {
     std::vector <vertex> poligon;
     int out_count = 0;
@@ -102,16 +109,16 @@ float square(vertex * t1, vertex * t2) // arrays of vectors
     // Добавление всех точек, которые лежат в другом треугольнике
     Internal(t1, t2, poligon);
 
-    float x;
-    float y;
-    int kx = 0, ky = 0;
+    float x = 0;
+    float y = 0;
+    float kx = 0, ky = 0;
 
     for (auto vert : poligon)
     {
         x += vert.x;
         y += vert.y;
 
-        kx++; ky++;        
+        kx += 1; ky += 1;        
     }
 
     if (kx == 0)
@@ -221,7 +228,7 @@ bool isAcross(line l1, line l2, OUT vertex & out)
     return true;
 }
 
-void allInternalVertex(vertex * in, vertex * what, std::vector<vertex> & OUT poligon)
+void allInternalVertex(const std::vector<vertex> & in, const std::vector<vertex> & what, std::vector<vertex> & OUT poligon)
 {
     vertex A = in[0];
     vertex B = in[1];
@@ -255,7 +262,7 @@ void allInternalVertex(vertex * in, vertex * what, std::vector<vertex> & OUT pol
 
 }
 
-void Internal(vertex * t1, vertex * t2, std::vector<vertex> & OUT poligon)
+void Internal(const std::vector<vertex> & t1, const std::vector<vertex> & t2, std::vector<vertex> & OUT poligon)
 {
     allInternalVertex(t1, t2, poligon);
     allInternalVertex(t2, t1, poligon);
@@ -270,25 +277,33 @@ float crossProduct(vector a1, vector a2)
 
 int main()
 {
-    vertex t1[3];
-    vertex t2[3];
+    // vertex t1[3] = {{0, 0}, {0, 0}, {0, 0}};
+    // vertex t2[3]  = {{0, 0}, {0, 0}, {0, 0}};
+
+    std::vector<vertex> t1;
+    std::vector<vertex> t2;
 
     for (int i = 0; i < 3; i++)    
     {
-        std::cin >> t1[i].x >> t1[i].y;
+        float x = 0;
+        float y = 0;
+        std::cin >> x >> y;
+        t1.push_back(vertex(x, y));
         //scanf("%f %f", &t1[i].x, &t1[i].y);
     }
     for (int i = 0; i < 3; i++)
     {
-        std::cin >> t2[i].x >> t2[i].y;
-        //scanf("%f %f", &t2[i].x, &t2[i].y);
+        float x = 0;
+        float y = 0;
+        std::cin >> x >> y;
+        t2.push_back(vertex(x, y));
     }
 
     // scanf("%f %f %f %f %f %f %f %f %f %f %f %f\n", 
     //    &t1[0].x, &t1[0].y, &t1[1].x, &t1[1].y, &t1[2].x, &t1[2].y,
     //    &t2[0].x, &t2[0].y, &t2[1].x, &t2[1].y, &t2[2].x, &t2[2].y);
 
-    std::cout << "Vertex:\n";
+    // std::cout << "Vertex:\n";
 
     std::cout << square(t1, t2) << '\n';
 }
