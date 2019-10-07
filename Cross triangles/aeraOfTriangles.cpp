@@ -277,9 +277,6 @@ float crossProduct(vector a1, vector a2)
 
 int main()
 {
-    // vertex t1[3] = {{0, 0}, {0, 0}, {0, 0}};
-    // vertex t2[3]  = {{0, 0}, {0, 0}, {0, 0}};
-
     std::vector<vertex> t1;
     std::vector<vertex> t2;
 
@@ -289,8 +286,8 @@ int main()
         float y = 0;
         std::cin >> x >> y;
         t1.push_back(vertex(x, y));
-        //scanf("%f %f", &t1[i].x, &t1[i].y);
     }
+    
     for (int i = 0; i < 3; i++)
     {
         float x = 0;
@@ -298,12 +295,6 @@ int main()
         std::cin >> x >> y;
         t2.push_back(vertex(x, y));
     }
-
-    // scanf("%f %f %f %f %f %f %f %f %f %f %f %f\n", 
-    //    &t1[0].x, &t1[0].y, &t1[1].x, &t1[1].y, &t1[2].x, &t1[2].y,
-    //    &t2[0].x, &t2[0].y, &t2[1].x, &t2[1].y, &t2[2].x, &t2[2].y);
-
-    // std::cout << "Vertex:\n";
 
     std::cout << square(t1, t2) << '\n';
 }
