@@ -175,3 +175,54 @@ std::istream& operator>> (std::istream &in, Triangle2D &triangle)
 
     return in;
 }
+
+Poligon Triangle2D::commonPoligon(Triangle2D & triangle)
+{
+    Poligon poligon;
+    int out_count = 0;
+
+    // поиск всех точек пересечения 
+    for (int i = 0; i < 3; i++)
+        for (int j = 0; j < 3; j++)
+        {
+            Vertex cross(0, 0); // outer vertex
+            if (Line(vertex[i], vertex[(i + 1) % 3]).isAcross(Line(triangle[j], triangle[(j + 1) % 3]), cross))
+            {
+                out_count++;
+                poligon.push_back(cross);
+            }
+        }
+    // Добавление всех точек, которые лежат в другом треугольнике
+    Internal(triangle, poligon);
+ 
+    return poligon;
+}
+
+void Triangle2D::Internal(Triangle2D & triangle, Poligon & poligon)
+{
+    allInternalVertex(triangle, poligon);
+    triangle.allInternalVertex(*this, poligon);
+}
+
+void Triangle2D::allInternalVertex(Triangle2D & trianle, Poligon & poligon)
+{
+    Vertex A = vertex[0];
+    Vertex B = vertex[1];
+    Vertex C = vertex[2];
+
+    float det = Vector(A, B) * Vector(A, C);
+
+    for (int j = 0; j < 3; j++)
+    {
+        float det2 =  Vector(A, trianle[j]) * Vector(A, C);
+        float det1 = Vector(A, B) * Vector(A, trianle[j]);
+
+        float det3 = det - det1 - det2;
+        
+        if (!((det2 >= 0 && det1 >= 0 && det3 >= 0) || (det2 < 0 && det1 < 0 && det3 < 0)))
+            continue;
+
+
+        poligon.push_back(trianle[j]);
+    }
+}

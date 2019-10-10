@@ -86,6 +86,13 @@ struct  Triangle2D
         std::swap(vertex, triangle_ins.vertex);
     }
 
+    Vertex& operator[](int index) { return vertex[index]; }
+	const Vertex& operator[](int index) const { return vertex[index]; }
+
     friend std::istream& operator>> (std::istream &in, Triangle2D &triangle);
+
+    Poligon commonPoligon(Triangle2D & triangle);
+    void Internal(Triangle2D & triangle, Poligon & poligon);
+    void allInternalVertex(Triangle2D & trianle, Poligon & poligon);
 
 };
