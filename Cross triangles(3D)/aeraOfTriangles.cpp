@@ -4,12 +4,25 @@
 
 int main()
 {
-    Triangle2D t1;
-    Triangle2D t2;
+    std::vector<Triangle3D> triangles;
 
-    std::cin >> t1 >> t2;
+    int n = 0;
+    std::cin >> n;
 
-    Poligon common = t1.commonPoligon(t2);
+    for(int i = 0; i < n; i++)
+    {
+        Triangle3D t;
+        std::cin >> t;
 
-    std::cout << common.solveSquare() << '\n';
+        triangles.push_back(t);
+    }
+
+    for (int i = 0; i < n - 1; i++)
+    {
+        for (int j = i + 1; j < n; j++)
+        {
+            if (triangles[i].isAcross(triangles[j]))
+                std::cout << i << ' ' << j << '\n';
+        }
+    }
 }

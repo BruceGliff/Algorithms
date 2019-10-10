@@ -22,6 +22,7 @@ float square(const std::vector<Vertex> & t1, const std::vector<Vertex> & t2) // 
             }
         }
     // Добавление всех точек, которые лежат в другом треугольнике
+
     Internal(t1, t2, poligon);
  
     return poligon.solveSquare();
@@ -42,7 +43,7 @@ void allInternalVertex(const std::vector<Vertex> & in, const std::vector<Vertex>
 
         float det3 = det - det1 - det2;
         
-        if (!((det2 >= 0 && det1 >= 0 && det3 >= 0) || (det2 < 0 && det1 < 0 && det3 < 0)))
+        if (!((det2 > 0 && det1 > 0 && det3 > 0) || (det2 < 0 && det1 < 0 && det3 < 0)))
             continue;
 
 

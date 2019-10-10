@@ -21,16 +21,33 @@ struct PointParams
     } status;
 };
 
+enum class Flat
+{
+    XY,
+    XZ,
+    YZ
+};
 
-struct Vertex
+struct Vertex2D
 {
     float x = 0.f;
     float y = 0.f;
 
-    Vertex() {}
-    Vertex(float X, float Y) : x(X), y(Y) {}
+    Vertex2D() {}
+    Vertex2D(float X, float Y) : x(X), y(Y) {}
 
-    bool operator==(const Vertex & A) { return ((x == A.x) && (y == A.y)); }
+    bool operator==(const Vertex2D & A) { return ((x == A.x) && (y == A.y)); }
+};
+
+struct Vertex3D
+{
+    float x = 0.f;
+    float y = 0.f;
+    float z = 0.f;
+
+    Vertex3D() {}
+    Vertex3D(float X, float Y, float Z) : x(X), y(Y), z(Z) {}
+
 };
 
 struct Vector
@@ -40,42 +57,43 @@ struct Vector
 
     Vector() {}
     Vector(float X, float Y) : x(X), y(Y) {}
-    Vector(const Vertex & A, const Vertex & B) : x(B.x - A.x), y(B.y - A.y) {}
+    Vector(const Vertex2D & A, const Vertex2D & B) : x(B.x - A.x), y(B.y - A.y) {}
 
     float operator*(const Vector & A) { return x * A.y - y * A.x; }
 };
 
 struct Line
 {
-    Vertex a;
-    Vertex b;
+    Vertex2D a;
+    Vertex2D b;
 
     Line() {}
-    Line(Vertex A, Vertex B) : a(A), b(B) {}
+    Line(Vertex2D A, Vertex2D B) : a(A), b(B) {}
 
     float lengh() { return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y); }
-    bool isAcross(Line line, OUT Vertex & out);
+    bool isAcross(Line line, OUT Vertex2D & out);
     PointParams isSegmentsAcross(const Line & line);
-    bool lineInLine(Line what, OUT Vertex & out);
+    bool lineInLine(Line what, OUT Vertex2D & out);
 };
 
 struct Poligon
 {
-    std::vector<Vertex> vert_array;
+    std::vector<Vertex2D> vert_array;
 
     Poligon() {}
-    Poligon(const std::vector<Vertex> & vertex_ins);
+    Poligon(const std::vector<Vertex2D> & vertex_ins);
 
-    void push_back(const Vertex & vert_ins);
+    void push_back(const Vertex2D & vert_ins);
     float solveSquare();
-    static bool compare(const Vertex & a, const Vertex & b);
-    static float getAngle(const Vertex & a);
-    Vertex calcCenter();
+    static bool compare(const Vertex2D & a, const Vertex2D & b);
+    static float getAngle(const Vertex2D & a);
+    Vertex2D calcCenter();
+    int Size() { return vert_array.size(); }
 };
 
 struct  Triangle2D
 {
-    std::array<Vertex, 3> vertex;
+    std::array<Vertex2D, 3> vertex;
     Triangle2D() {};
     Triangle2D(const Triangle2D & triangle_ins)
     {
@@ -86,13 +104,40 @@ struct  Triangle2D
         std::swap(vertex, triangle_ins.vertex);
     }
 
-    Vertex& operator[](int index) { return vertex[index]; }
-	const Vertex& operator[](int index) const { return vertex[index]; }
+    Vertex2D& operator[](int index) { return vertex[index]; }
+	const Vertex2D& operator[](int index) const { return vertex[index]; }
+    void operator=(const Triangle2D & triangle_ins)
+    {
+        std::copy(triangle_ins.vertex.begin(), triangle_ins.vertex.end(), vertex.begin());
+    }
 
     friend std::istream& operator>> (std::istream &in, Triangle2D &triangle);
 
     Poligon commonPoligon(Triangle2D & triangle);
     void Internal(Triangle2D & triangle, Poligon & poligon);
-    void allInternalVertex(Triangle2D & trianle, Poligon & poligon);
+    void allInternalVertex2D(Triangle2D & trianle, Poligon & poligon);
 
+};
+
+struct Triangle3D
+{
+    std::array<Vertex3D, 3> vertex;
+    Triangle3D() {}
+    Triangle3D(const Triangle3D & triangle_ins)
+    {
+        std::copy(triangle_ins.vertex.begin(), triangle_ins.vertex.end(), vertex.begin());
+    }
+    Triangle3D(Triangle3D && triangle_ins)
+    {
+        std::swap(vertex, triangle_ins.vertex);
+    }
+
+    Vertex3D& operator[](int index) { return vertex[index]; }
+	const Vertex3D& operator[](int index) const { return vertex[index]; }
+
+    friend std::istream& operator>> (std::istream &in, Triangle3D &triangle);
+
+    Triangle2D getProection(Flat inFlat) const;
+
+    bool isAcross(const Triangle3D & triangle);
 };

@@ -2,10 +2,10 @@
 
 namespace Global
 {
-    Vertex center;
+    Vertex2D center;
 }
 
-bool Line::isAcross(Line line, OUT Vertex & out)
+bool Line::isAcross(Line line, OUT Vertex2D & out)
 {
     PointParams params = line.isSegmentsAcross(*this);
 
@@ -61,7 +61,7 @@ PointParams Line::isSegmentsAcross(const Line & line)
     return params;
 }
 
-bool Line::lineInLine(Line what, OUT Vertex & out)
+bool Line::lineInLine(Line what, OUT Vertex2D & out)
 {
     float x1 = std::max(a.x, b.x);
     float x2 = std::min(a.x, b.x);
@@ -80,13 +80,13 @@ bool Line::lineInLine(Line what, OUT Vertex & out)
     return false;
 }
 
-Poligon::Poligon(const std::vector<Vertex> & vertex_ins)
+Poligon::Poligon(const std::vector<Vertex2D> & vertex_ins)
 {
     for (auto x : vertex_ins)
         vert_array.push_back(x);
 }
 
-void Poligon::push_back(const Vertex & vert_ins)
+void Poligon::push_back(const Vertex2D & vert_ins)
 {
     bool is = false;
     for (auto vert : vert_array)
@@ -119,7 +119,7 @@ float Poligon::solveSquare()
     return fabs(square) / 2;
 }
 
-bool Poligon::compare(const Vertex & a, const Vertex & b)
+bool Poligon::compare(const Vertex2D & a, const Vertex2D & b)
 {
     if (getAngle(a) > getAngle(b))
         return 1;
@@ -127,7 +127,7 @@ bool Poligon::compare(const Vertex & a, const Vertex & b)
     return 0;
 }   
 
-float Poligon::getAngle(const Vertex & a)
+float Poligon::getAngle(const Vertex2D & a)
 {
     float dx_a = 0, dy_a = 0, r_a = 0, cosA = 0, sinA = 0;
     dx_a = a.x - Global::center.x;
@@ -146,7 +146,7 @@ float Poligon::getAngle(const Vertex & a)
         return (2 * PI - acosf(cosA));
 }
 
-Vertex Poligon::calcCenter()
+Vertex2D Poligon::calcCenter()
 {
     float x = 0;
     float y = 0;
@@ -160,16 +160,27 @@ Vertex Poligon::calcCenter()
         kx += 1; ky += 1;        
     }
     
-    return Vertex(x / kx, y / ky);
+    return Vertex2D(x / kx, y / ky);
 }
 
 
 
 std::istream& operator>> (std::istream &in, Triangle2D &triangle)
 {
-    std::for_each(triangle.vertex.begin(), triangle.vertex.end(),   [&in](Vertex & v)
+    std::for_each(triangle.vertex.begin(), triangle.vertex.end(),   [&in](Vertex2D & v)
                                                                     { 
                                                                         in >> v.x >> v.y;
+                                                                    }
+                 );
+
+    return in;
+}
+
+std::istream& operator>> (std::istream &in, Triangle3D &triangle)
+{
+    std::for_each(triangle.vertex.begin(), triangle.vertex.end(),   [&in](Vertex3D & v)
+                                                                    { 
+                                                                        in >> v.x >> v.y >> v.z;
                                                                     }
                  );
 
@@ -185,7 +196,7 @@ Poligon Triangle2D::commonPoligon(Triangle2D & triangle)
     for (int i = 0; i < 3; i++)
         for (int j = 0; j < 3; j++)
         {
-            Vertex cross(0, 0); // outer vertex
+            Vertex2D cross(0, 0); // outer vertex
             if (Line(vertex[i], vertex[(i + 1) % 3]).isAcross(Line(triangle[j], triangle[(j + 1) % 3]), cross))
             {
                 out_count++;
@@ -200,15 +211,15 @@ Poligon Triangle2D::commonPoligon(Triangle2D & triangle)
 
 void Triangle2D::Internal(Triangle2D & triangle, Poligon & poligon)
 {
-    allInternalVertex(triangle, poligon);
-    triangle.allInternalVertex(*this, poligon);
+    allInternalVertex2D(triangle, poligon);
+    triangle.allInternalVertex2D(*this, poligon);
 }
 
-void Triangle2D::allInternalVertex(Triangle2D & trianle, Poligon & poligon)
+void Triangle2D::allInternalVertex2D(Triangle2D & trianle, Poligon & poligon)
 {
-    Vertex A = vertex[0];
-    Vertex B = vertex[1];
-    Vertex C = vertex[2];
+    Vertex2D A = vertex[0];
+    Vertex2D B = vertex[1];
+    Vertex2D C = vertex[2];
 
     float det = Vector(A, B) * Vector(A, C);
 
@@ -219,10 +230,53 @@ void Triangle2D::allInternalVertex(Triangle2D & trianle, Poligon & poligon)
 
         float det3 = det - det1 - det2;
         
-        if (!((det2 >= 0 && det1 >= 0 && det3 >= 0) || (det2 < 0 && det1 < 0 && det3 < 0)))
+        if (!((det2 > 0 && det1 > 0 && det3 > 0) || (det2 < 0 && det1 < 0 && det3 < 0)))
             continue;
 
 
         poligon.push_back(trianle[j]);
     }
+}
+
+Triangle2D Triangle3D::getProection(Flat inFlat) const
+{
+    Triangle2D triangle;
+    switch (inFlat)
+    {
+    case Flat::XY:
+        for (int i = 0; i < 3; i++)
+            triangle[i] = Vertex2D(vertex[i].x, vertex[i].y);
+        break;
+    case Flat::YZ:
+        for (int i = 0; i < 3; i++)
+            triangle[i] = Vertex2D(vertex[i].y, vertex[i].z);
+        break;
+    case Flat::XZ:
+        for (int i = 0; i < 3; i++)
+            triangle[i] = Vertex2D(vertex[i].x, vertex[i].z);
+        break;
+    default:
+        break;
+    }
+
+    return triangle;
+}
+
+bool Triangle3D::isAcross(const Triangle3D & triangle)
+{
+    Triangle2D proection;
+
+    proection = triangle.getProection(Flat::XY);
+    if (getProection(Flat::XY).commonPoligon(proection).Size() == 0)
+        return false;
+
+    proection = triangle.getProection(Flat::XZ);
+    if (getProection(Flat::XZ).commonPoligon(proection).Size() == 0)
+        return false;
+
+    proection = triangle.getProection(Flat::YZ);
+    if (getProection(Flat::YZ).commonPoligon(proection).Size() == 0)
+        return false;
+
+    return true;
 }
