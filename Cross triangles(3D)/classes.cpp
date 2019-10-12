@@ -38,8 +38,8 @@ PointParams Line::isSegmentsAcross(const Line & line)
 {
     PointParams params;
 
-    float angle1 = Vector(line.a, a) * Vector(line.a, line.b);
-    float angle2 = Vector(line.a, b) * Vector(line.a, line.b); 
+    float angle1 = Vector2D(line.a, a) * Vector2D(line.a, line.b);
+    float angle2 = Vector2D(line.a, b) * Vector2D(line.a, line.b); 
 
     // Если точки одного отрезка лежат по одну сторону от другого отрезка\
     то они не пересекаюся
@@ -221,12 +221,12 @@ void Triangle2D::allInternalVertex2D(Triangle2D & trianle, Poligon & poligon)
     Vertex2D B = vertex[1];
     Vertex2D C = vertex[2];
 
-    float det = Vector(A, B) * Vector(A, C);
+    float det = Vector2D(A, B) * Vector2D(A, C);
 
     for (int j = 0; j < 3; j++)
     {
-        float det2 =  Vector(A, trianle[j]) * Vector(A, C);
-        float det1 = Vector(A, B) * Vector(A, trianle[j]);
+        float det2 =  Vector2D(A, trianle[j]) * Vector2D(A, C);
+        float det1 = Vector2D(A, B) * Vector2D(A, trianle[j]);
 
         float det3 = det - det1 - det2;
         
@@ -264,19 +264,41 @@ Triangle2D Triangle3D::getProection(Flat inFlat) const
 
 bool Triangle3D::isAcross(const Triangle3D & triangle)
 {
-    Triangle2D proection;
+    if (hasInternal(triangle) || triangle.hasInternal(*this))
+        return true;
 
-    proection = triangle.getProection(Flat::XY);
-    if (getProection(Flat::XY).commonPoligon(proection).Size() == 0)
-        return false;
+    // Algorithm Mollers
 
-    proection = triangle.getProection(Flat::XZ);
-    if (getProection(Flat::XZ).commonPoligon(proection).Size() == 0)
-        return false;
-
-    proection = triangle.getProection(Flat::YZ);
-    if (getProection(Flat::YZ).commonPoligon(proection).Size() == 0)
-        return false;
 
     return true;
+}
+
+bool Triangle3D::hasInternal(const Triangle3D & trianle) const
+{
+    Vertex3D A = vertex[0];
+    Vertex3D B = vertex[1];
+    Vertex3D C = vertex[2];
+
+    Vector3D crossProd = Vector3D(A, B).cross(Vector3D(A, C));
+    float det = sqrtf(crossProd.dot(crossProd));
+
+    for (int j = 0; j < 3; j++)
+    {
+
+        crossProd =  Vector3D(A, trianle[j]).cross(Vector3D(A, C));
+        float det2 = sqrtf(crossProd.dot(crossProd));
+
+        crossProd = Vector3D(A, B).cross(Vector3D(A, trianle[j]));
+        float det1 = sqrtf(crossProd.dot(crossProd));
+
+        crossProd = Vector3D(trianle[j], B).cross(Vector3D(trianle[j], C));
+        float det3 = sqrtf(crossProd.dot(crossProd));
+        
+        if ((det1 + det2 + det3) != det)
+            continue;
+
+        return true;
+    }
+
+    return false;
 }

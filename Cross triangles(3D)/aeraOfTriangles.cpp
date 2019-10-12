@@ -17,12 +17,14 @@ int main()
         triangles.push_back(t);
     }
 
+    //std::cout << triangles[0].hasInternal(triangles[1]);
+
     for (int i = 0; i < n - 1; i++)
-    {
         for (int j = i + 1; j < n; j++)
         {
-            if (triangles[i].isAcross(triangles[j]))
+            if(triangles[i].isAcross(triangles[j]))
                 std::cout << i << ' ' << j << '\n';
         }
-    }
+
+    return 0;
 }
