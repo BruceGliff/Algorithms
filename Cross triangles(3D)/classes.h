@@ -72,11 +72,17 @@ struct Vector3D
     Vector3D(float X, float Y, float Z) : x(X), y(Y), z(Z) {}
     Vector3D(const Vertex3D & A, const Vertex3D & B) : x(B.x - A.x), y(B.y - A.y), z(B.z - A.z) {}
 
-    Vector3D cross(const Vector3D & A) 
+    float length() { return sqrtf(dot(*this)); }
+    void setNorm() { float len = length(); if (len == 0) return; x /= len; y /= len; z /= len; }
+    Vector3D norm() { float len = length(); if (len == 0) return Vector3D();  
+        return Vector3D(x / len, y/len, z/len);
+    }
+
+    Vector3D cross(const Vector3D & A) const
     {
         return Vector3D(y * A.z - z * A.y, - (x * A.z - z * A.x), x * A.y - y * A.x);
     }
-    float dot(const Vector3D & A)
+    float dot(const Vector3D & A) const
     {
         return x * A.x + y * A.y + z * A.z;
     }
@@ -111,7 +117,7 @@ struct Poligon
     int Size() { return vert_array.size(); }
 };
 
-struct  Triangle2D
+struct Triangle2D
 {
     std::array<Vertex2D, 3> vertex;
     Triangle2D() {};
@@ -160,5 +166,9 @@ struct Triangle3D
     Triangle2D getProection(Flat inFlat) const;
     bool isAcross(const Triangle3D & triangle);
 
-    bool hasInternal(const Triangle3D & trianle) const; 
+    bool hasInternal(const Triangle3D & trianle) const;
+
+    bool intersects(const Triangle3D & triangle) const; 
+
+    Triangle2D getProection(Vector3D const & e1, Vector3D const & e2, Vertex3D const & center) const;
 };

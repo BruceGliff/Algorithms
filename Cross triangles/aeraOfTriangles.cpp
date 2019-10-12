@@ -24,6 +24,8 @@ float square(const std::vector<Vertex> & t1, const std::vector<Vertex> & t2) // 
     // Добавление всех точек, которые лежат в другом треугольнике
 
     Internal(t1, t2, poligon);
+
+    std::cout << poligon.vert_array.size() << '\n';
  
     return poligon.solveSquare();
 }
@@ -78,6 +80,5 @@ int main()
         std::cin >> x >> y;
         t2.push_back(Vertex(x, y));
     }
-
     std::cout << square(t1, t2) << '\n';
 }

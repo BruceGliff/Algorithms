@@ -4,6 +4,11 @@ namespace Global
 {
     Vertex2D center;
 }
+Vector3D operator-(const Vertex3D & A, const Vertex3D & B)
+{
+    return Vector3D(B, A);
+}
+
 
 bool Line::isAcross(Line line, OUT Vertex2D & out)
 {
@@ -265,12 +270,11 @@ Triangle2D Triangle3D::getProection(Flat inFlat) const
 bool Triangle3D::isAcross(const Triangle3D & triangle)
 {
     if (hasInternal(triangle) || triangle.hasInternal(*this))
-        return true;
+       return true;
 
-    // Algorithm Mollers
+    // puts("a");
 
-
-    return true;
+    return intersects(triangle);
 }
 
 bool Triangle3D::hasInternal(const Triangle3D & trianle) const
@@ -281,6 +285,7 @@ bool Triangle3D::hasInternal(const Triangle3D & trianle) const
 
     Vector3D crossProd = Vector3D(A, B).cross(Vector3D(A, C));
     float det = sqrtf(crossProd.dot(crossProd));
+    if (det == 0) return false;
 
     for (int j = 0; j < 3; j++)
     {
@@ -301,4 +306,61 @@ bool Triangle3D::hasInternal(const Triangle3D & trianle) const
     }
 
     return false;
+}
+
+bool Triangle3D::intersects(const Triangle3D & triangle) const
+{
+    Vector3D e1 = vertex[1] - vertex[0];
+    Vector3D e2 = vertex[2] - vertex[0];
+
+    Vector3D n1 = e1.cross(e2).norm();
+
+    if (n1.length() == 0)
+    {
+        return false;
+
+        // TODO check if 2 lines intersect!
+    }
+
+    Vector3D n2 = e1.cross(n1).norm();
+
+    Triangle2D first = getProection(e1, n2, vertex[0]);
+    Triangle2D second = triangle.getProection(e1, n2, vertex[0]);
+    if (first.commonPoligon(second).Size() == 0)
+        return false;
+    
+    first = getProection(e1, n1, vertex[0]);
+    second = triangle.getProection(e1, n1, vertex[0]);
+    if (first.commonPoligon(second).Size() == 0)
+        return false;
+
+    first = getProection(n1, n2, vertex[0]);
+    second = triangle.getProection(n1, n2, vertex[0]);
+    if (first.commonPoligon(second).Size() == 0)
+        return false;
+
+
+    // new point
+    e1 = vertex[0] - vertex[1];
+    e2 = vertex[2] - vertex[1];
+
+    n1 = e2.cross(e1);
+    n2 = n1.cross(e2);
+
+    first = getProection(n1, n2, vertex[1]);
+    second = triangle.getProection(n1, n2, vertex[1]);
+    if (first.commonPoligon(second).Size() == 0)
+        return false;
+
+    return true;
+}
+
+Triangle2D Triangle3D::getProection(Vector3D const & e1, Vector3D const & e2, Vertex3D const & center) const
+{
+    Triangle2D triangle;
+    for (int i = 0; i < 3; i++)
+        triangle[i] = Vertex2D((vertex[i] - center).dot(e1), (vertex[i] - center).dot(e2));
+
+    return triangle;
+
 }
