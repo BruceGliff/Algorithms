@@ -61,19 +61,17 @@ public:
         return false;
     }
 
-    void CheckTriangles(Sphere * sphere)
+    bool CheckTriangles(Sphere * sphere, bool* triangles)
     {
-        // for (auto it = checkedWith.begin(); it != checkedWith.end(); it++)
-        // {
-        //     if(*it == &sphere)
-        //         return;
-        // }
-        
-        
-        // checkedWith.push_back(&sphere); 
-
         if (triangle.isAcross(sphere->triangle))
-            std::cout << index << ' ' << sphere->index << '\n';
+        {
+            triangles[index] = 1;
+            triangles[sphere->index] = 1;
+            return true;
+        }
+            //std::cout << index << ' ' << sphere->index << '\n';
+
+        return false;
     }
 
     bool insideBox(const Box & box)
@@ -88,5 +86,5 @@ public:
 
 };
 
-void CreateBox(const Box & box, std::vector<Sphere*> & array, int last_size = 0, int delta_depth = 0);
+void CreateBox(const Box & box, std::vector<Sphere*> & array, int last_size, int delta_depth, bool* triangles);
 }

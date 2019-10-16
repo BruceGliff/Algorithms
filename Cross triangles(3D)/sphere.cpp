@@ -37,17 +37,13 @@ void Sphere::SetSphere()
 }
 
 
-void CreateBox(const Box & box, std::vector<Sphere*> & array, int last_size, int delta_depth)
+void CreateBox(const Box & box, std::vector<Sphere*> & array, int last_size, int delta_depth, bool* triangles)
 {
-    // std::cout << "a\n";
-    // std::cout << (*array.begin())->index << '\n';
-
-
     if (array.size() < 2)
         return;
     if (array.size() == 2)
     {
-       array[0]->CheckTriangles(array[1]);
+       array[0]->CheckTriangles(array[1], triangles);
        return;
     }
     if (last_size == array.size())
@@ -55,15 +51,13 @@ void CreateBox(const Box & box, std::vector<Sphere*> & array, int last_size, int
     else 
         delta_depth = 0;
 
-    /////////////CHECK
-    // if (delta_depth == 3)
-    // {
-    //     for(int i = 0; i < array.size() - 1; i++)
-    //         for (int j = i + 1; j < array.size(); j++)
-    //             array[i]->CheckTriangles(array[j]);
-    //     return;
-    // }       
-    /////////////
+    if (delta_depth == 8)
+    {
+        for(int i = 0; i < array.size() - 1; i++)
+            for (int j = i + 1; j < array.size(); j++)
+                array[i]->CheckTriangles(array[j], triangles);
+        return;
+    }       
 
     std::array<std::vector<Sphere*>, 8> mas;
     for (auto i = array.begin(); i < array.end(); i++)
@@ -78,10 +72,11 @@ void CreateBox(const Box & box, std::vector<Sphere*> & array, int last_size, int
 
             if ((*i)->SphereIntersectBox(New))
             {
+                int del2 = 0;
                 for (auto j = i; j < array.end(); j++)
                 {
                     if (i == j) continue;
-                    (*i)->CheckTriangles((*j));
+                    (*i)->CheckTriangles((*j), triangles);
                 }
 
                 delete (*i);
@@ -94,7 +89,7 @@ void CreateBox(const Box & box, std::vector<Sphere*> & array, int last_size, int
         }
     }
     for (int i = 0; i < 8; i++)
-        Optimization::CreateBox(Box(box, i), mas[i], array.size(), delta_depth);
+        Optimization::CreateBox(Box(box, i), mas[i], array.size(), delta_depth, triangles);
 }
 
 }
