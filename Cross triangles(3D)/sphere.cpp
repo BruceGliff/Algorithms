@@ -19,9 +19,9 @@ Box::Box(const Box & box, int iter)
 
 void OSphere::SetSphere()
 {
-    Vertex3D A = (*triangle)[0];
-    Vertex3D B = (*triangle)[1];
-    Vertex3D C = (*triangle)[2];
+    Vertex3D A = triangle[0];
+    Vertex3D B = triangle[1];
+    Vertex3D C = triangle[2];
 
     center.x = (A.x + B.x + C.x) / 3;
     center.y = (A.y + B.y + C.y) / 3;
@@ -30,51 +30,65 @@ void OSphere::SetSphere()
     radius = 0;
     for(int i = 0; i < 3; i++)
     {
-        float f = Vector3D(((*triangle)[i]), center).length();
+        float f = Vector3D((triangle[i]), center).length();
         if (f > radius)
             radius = f;
     }
 }
 
 
-bool OSphere::SphereIntersectBox(Box box) const
-{ 
-    
-    return (Vector3D(center, box.center()).length() - radius) <= (box.d * sqrtf(3) / 2);
-}
-
-
-
 void CreateBox(const Box & box, std::vector<OSphere*> & array, int last_size, int delta_depth)
 {
+    // std::cout << "a\n";
+    // std::cout << (*array.begin())->index << '\n';
+
+
+    if (array.size() < 2)
+        return;
+    if (array.size() == 2)
+    {
+       array[0]->CheckTriangles(array[1]);
+       return;
+    }
     if (last_size == array.size())
         delta_depth++;
     else 
         delta_depth = 0;
 
-    if (array.size() < 2)
-        return;
-    
-    if (array.size() == 2)
-    {
-       array[0]->CheckTriangles(*array[1]);
-       return;
-    }
-
-    if (delta_depth == 3)
-    {
-        for(int i = 0; i < array.size() - 1; i++)
-            for (int j = i + 1; j < array.size(); j++)
-                array[i]->CheckTriangles(*array[j]);
-        return;
-    }       
+    /////////////CHECK
+    // if (delta_depth == 3)
+    // {
+    //     for(int i = 0; i < array.size() - 1; i++)
+    //         for (int j = i + 1; j < array.size(); j++)
+    //             array[i]->CheckTriangles(array[j]);
+    //     return;
+    // }       
+    /////////////
 
     std::array<std::vector<OSphere*>, 8> mas;
-    for (int i = 0; i < array.size(); i++)
+    for (auto i = array.begin(); i < array.end(); i++)
     {
         for (int iter = 0; iter < 8; iter++)
-            if (array[i]->SphereIntersectBox(Box(box, iter)))
-                mas[iter].push_back(array[i]);
+        {   
+            Box New = Box(box, iter);
+
+            if (!((*i)->insideBox(New)))
+                continue;
+
+            if ((*i)->SphereIntersectBox(New))
+            {
+                for (auto j = i; j < array.end(); j++)
+                {
+                    if (i == j) continue;
+                    (*i)->CheckTriangles((*j));
+                }
+
+                array.erase(i);
+                break;
+            }    
+                
+            mas[iter].push_back(*i);
+        }
     }
     for (int i = 0; i < 8; i++)
         Optimization::CreateBox(Box(box, i), mas[i], array.size(), delta_depth);

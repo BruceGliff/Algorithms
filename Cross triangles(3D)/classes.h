@@ -160,6 +160,16 @@ struct Triangle3D
 
     Vertex3D& operator[](int index) { return vertex[index]; }
 	const Vertex3D& operator[](int index) const { return vertex[index]; }
+    Triangle3D operator=(Triangle3D && tr)
+    {
+        std::swap(vertex, tr.vertex);
+        return *this;
+    }
+    Triangle3D operator=(const Triangle3D & tr)
+    {
+        std::copy(tr.vertex.begin(), tr.vertex.end(), vertex.begin());
+        return *this;
+    }
 
     friend std::istream& operator>> (std::istream &in, Triangle3D &triangle);
 
