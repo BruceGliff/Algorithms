@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "classes.h"
+#include "sphere.h"
 
 int main()
 {
@@ -17,14 +18,17 @@ int main()
         triangles.push_back(t);
     }
 
-    //std::cout << triangles[0].hasInternal(triangles[1]);
+    int ind = 0;
+    std::vector<Optimization::OSphere> spheres;
+    std::vector<Optimization::OSphere*> spheres_array;
 
-    for (int i = 0; i < n - 1; i++)
-        for (int j = i + 1; j < n; j++)
-        {   
-            if(triangles[i].isAcross(triangles[j]))
-                std::cout << i << ' ' << j << '\n';
-        }
+    for (std::vector<Triangle3D>::iterator tr = triangles.begin(); tr < triangles.end(); tr++, ind++)
+        spheres.push_back(Optimization::OSphere(tr, ind));
+
+    for (int i = 0; i < spheres.size(); i++)
+        spheres_array.push_back(&spheres[i]);
+
+    Optimization::CreateBox(Optimization::Box(Vertex3D(0,0,0), 100.f), spheres_array, spheres.size(), 0);
 
     return 0;
 }
