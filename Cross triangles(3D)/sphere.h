@@ -21,28 +21,28 @@ struct Box
     }
 };
 
-class OSphere
+class Sphere
 {
     Triangle3D triangle;
 
     //std::set<int> checkedWith;
-
-public:    int index;
+public:
+    int index;
     Vertex3D center;
     float radius;
     void SetSphere();
     
 public:
-    OSphere() = default;
+    Sphere() = default;
 
-    OSphere(const Triangle3D & triangle_ins, int index_ins) :
+    Sphere(const Triangle3D & triangle_ins, int index_ins) :
     triangle(triangle_ins),
     index(index_ins),
     radius(0.f)
     {
         SetSphere();
     }
-    OSphere(OSphere && sp)
+    Sphere(Sphere && sp)
     {
         triangle = sp.triangle;
         index = sp.index;
@@ -61,7 +61,7 @@ public:
         return false;
     }
 
-    void CheckTriangles(OSphere * sphere)
+    void CheckTriangles(Sphere * sphere)
     {
         // for (auto it = checkedWith.begin(); it != checkedWith.end(); it++)
         // {
@@ -88,5 +88,5 @@ public:
 
 };
 
-void CreateBox(const Box & box, std::vector<OSphere*> & array, int last_size = 0, int delta_depth = 0);
+void CreateBox(const Box & box, std::vector<Sphere*> & array, int last_size = 0, int delta_depth = 0);
 }

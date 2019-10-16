@@ -5,8 +5,7 @@
 
 int main()
 {
-    std::vector<Optimization::OSphere> spheres;
-    std::vector<Optimization::OSphere*> spheres_array;
+    std::vector<Optimization::Sphere*> spheres_array;
 
     int n = 0;
     std::cin >> n;
@@ -16,12 +15,16 @@ int main()
         Triangle3D t;
         std::cin >> t;
 
-        spheres.push_back(Optimization::OSphere(t, i));
-        spheres_array.push_back(&(spheres[i]));
+        spheres_array.push_back(new Optimization::Sphere(t, i));
     }        
 
-    std::cout << spheres_array[0]->index << '\n';
-    Optimization::CreateBox(Optimization::Box(Vertex3D(0,0,0), 100.f), spheres_array, spheres.size(), 0);
+    Optimization::CreateBox(Optimization::Box(Vertex3D(0,0,0), 100.f), spheres_array, spheres_array.size(), 0);
+
+    std::for_each(spheres_array.begin(), spheres_array.end(), 
+    [](Optimization::Sphere * sp)
+    {
+        delete sp;
+    });
 
     return 0;
 }

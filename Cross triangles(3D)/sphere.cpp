@@ -17,7 +17,7 @@ Box::Box(const Box & box, int iter)
 }
 
 
-void OSphere::SetSphere()
+void Sphere::SetSphere()
 {
     Vertex3D A = triangle[0];
     Vertex3D B = triangle[1];
@@ -37,7 +37,7 @@ void OSphere::SetSphere()
 }
 
 
-void CreateBox(const Box & box, std::vector<OSphere*> & array, int last_size, int delta_depth)
+void CreateBox(const Box & box, std::vector<Sphere*> & array, int last_size, int delta_depth)
 {
     // std::cout << "a\n";
     // std::cout << (*array.begin())->index << '\n';
@@ -65,9 +65,10 @@ void CreateBox(const Box & box, std::vector<OSphere*> & array, int last_size, in
     // }       
     /////////////
 
-    std::array<std::vector<OSphere*>, 8> mas;
+    std::array<std::vector<Sphere*>, 8> mas;
     for (auto i = array.begin(); i < array.end(); i++)
     {
+        //std::cout << (*i)->index << ' ' << box.d <<'\n';
         for (int iter = 0; iter < 8; iter++)
         {   
             Box New = Box(box, iter);
@@ -83,7 +84,9 @@ void CreateBox(const Box & box, std::vector<OSphere*> & array, int last_size, in
                     (*i)->CheckTriangles((*j));
                 }
 
+                delete (*i);
                 array.erase(i);
+                i--;
                 break;
             }    
                 
