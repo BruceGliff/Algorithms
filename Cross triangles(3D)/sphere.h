@@ -10,6 +10,8 @@
 // Classes provide interfaces for working with optimization \
    using Space splitting and Spheres describing a triangle.
 
+// For optimization Octo-tree used
+
 
 namespace Optimization{
 

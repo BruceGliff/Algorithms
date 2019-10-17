@@ -4,6 +4,7 @@
 struct Vector3D;
 
 // Classes provide an interface for processing with points(vertexes) in 3D and 2D spaces
+// Substruction two vertexes gives a Vector
 
 struct Vertex2D
 {

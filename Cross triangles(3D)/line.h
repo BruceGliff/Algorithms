@@ -1,6 +1,6 @@
 #pragma once
 
-// Class provides an interface for processing with lines
+// Class provides an interface for processing with lines(length, interserts, contains)
 
 #include <algorithm>
 

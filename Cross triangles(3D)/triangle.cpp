@@ -23,9 +23,9 @@ std::istream& operator>> (std::istream &in, Triangle3D &triangle)
     return in;
 }
 
-Poligon Triangle2D::commonPoligon(Triangle2D & triangle)
+Polygon Triangle2D::commonPolygon(Triangle2D & triangle)
 {
-    Poligon poligon;
+    Polygon polygon;
     int out_count = 0;
 
     // поиск всех точек пересечения 
@@ -36,22 +36,22 @@ Poligon Triangle2D::commonPoligon(Triangle2D & triangle)
             if (Line(vertex[i], vertex[(i + 1) % 3]).isAcross(Line(triangle[j], triangle[(j + 1) % 3]), cross))
             {
                 out_count++;
-                poligon.push_back(cross);
+                polygon.push_back(cross);
             }
         }
     // Добавление всех точек, которые лежат в другом треугольнике
-    Internal(triangle, poligon);
+    Internal(triangle, polygon);
  
-    return poligon;
+    return polygon;
 }
 
-void Triangle2D::Internal(Triangle2D & triangle, Poligon & poligon)
+void Triangle2D::Internal(Triangle2D & triangle, Polygon & polygon)
 {
-    allInternalVertex2D(triangle, poligon);
-    triangle.allInternalVertex2D(*this, poligon);
+    allInternalVertex2D(triangle, polygon);
+    triangle.allInternalVertex2D(*this, polygon);
 }
 
-void Triangle2D::allInternalVertex2D(Triangle2D & trianle, Poligon & poligon)
+void Triangle2D::allInternalVertex2D(Triangle2D & trianle, Polygon & polygon)
 {
     Vertex2D A = vertex[0];
     Vertex2D B = vertex[1];
@@ -70,7 +70,7 @@ void Triangle2D::allInternalVertex2D(Triangle2D & trianle, Poligon & poligon)
             continue;
 
 
-        poligon.push_back(trianle[j]);
+        polygon.push_back(trianle[j]);
     }
 }
 
@@ -131,17 +131,17 @@ bool Triangle3D::intersects(const Triangle3D & triangle) const
 
     Triangle2D first = getProection(e1, n2, vertex[0]);
     Triangle2D second = triangle.getProection(e1, n2, vertex[0]);
-    if (first.commonPoligon(second).Size() == 0)
+    if (first.commonPolygon(second).Size() == 0)
         return false;
     
     first = getProection(e1, n1, vertex[0]);
     second = triangle.getProection(e1, n1, vertex[0]);
-    if (first.commonPoligon(second).Size() == 0)
+    if (first.commonPolygon(second).Size() == 0)
         return false;
 
     first = getProection(n1, n2, vertex[0]);
     second = triangle.getProection(n1, n2, vertex[0]);
-    if (first.commonPoligon(second).Size() == 0)
+    if (first.commonPolygon(second).Size() == 0)
         return false;
 
 
@@ -154,7 +154,7 @@ bool Triangle3D::intersects(const Triangle3D & triangle) const
 
     first = getProection(n1, n2, vertex[1]);
     second = triangle.getProection(n1, n2, vertex[1]);
-    if (first.commonPoligon(second).Size() == 0)
+    if (first.commonPolygon(second).Size() == 0)
         return false;
 
     return true;

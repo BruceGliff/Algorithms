@@ -5,7 +5,7 @@
 
 #include "vector.h"
 #include "vertex.h"
-#include "poligon.h"
+#include "polygon.h"
 
 // Classes provide an interface for processing with triangles in 2D and 3D spaces
 
@@ -31,11 +31,13 @@ struct Triangle2D
 
     friend std::istream& operator>> (std::istream &in, Triangle2D &triangle);
 
-    Poligon commonPoligon(Triangle2D & triangle);
-    void Internal(Triangle2D & triangle, Poligon & poligon);
-    void allInternalVertex2D(Triangle2D & trianle, Poligon & poligon);
+    Polygon commonPolygon(Triangle2D & triangle);
+    void Internal(Triangle2D & triangle, Polygon & polygon);
+    void allInternalVertex2D(Triangle2D & trianle, Polygon & polygon);
 
 };
+
+// Triangle in 3D can has a proection to any basis
 
 struct Triangle3D
 {

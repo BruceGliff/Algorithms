@@ -5,6 +5,8 @@
 
 // Classes provide an interface for processing with vectors in 3D and 2D spaces
 
+// Calculation cross and dot products and normalize vectors
+
 struct Vector2D
 {
     float x = 0.f;

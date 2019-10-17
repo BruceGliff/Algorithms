@@ -1,6 +1,8 @@
 #pragma once
 
-// Class provides an interface for processing with poligons
+// Class provides an interface for processing with polygons
+
+// All point in polygon locate counter-clockwise when called solveSquare()
 
 #include <vector>
 #include <algorithm>
@@ -11,12 +13,12 @@
 #include "vertex.h"
 #include "line.h"
 
-struct Poligon
+struct Polygon
 {
     std::vector<Vertex2D> vert_array;
 
-    Poligon() = default;
-    Poligon(const std::vector<Vertex2D> & vertex_ins);
+    Polygon() = default;
+    Polygon(const std::vector<Vertex2D> & vertex_ins);
 
     void push_back(const Vertex2D & vert_ins);
     float solveSquare();

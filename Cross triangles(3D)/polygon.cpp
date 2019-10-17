@@ -1,4 +1,4 @@
-#include "poligon.h"
+#include "polygon.h"
 
 namespace Global
 {
@@ -6,13 +6,13 @@ namespace Global
 }
 
 
-Poligon::Poligon(const std::vector<Vertex2D> & vertex_ins)
+Polygon::Polygon(const std::vector<Vertex2D> & vertex_ins)
 {
     for (auto x : vertex_ins)
         vert_array.push_back(x);
 }
 
-void Poligon::push_back(const Vertex2D & vert_ins)
+void Polygon::push_back(const Vertex2D & vert_ins)
 {
     bool is = false;
     for (auto vert : vert_array)
@@ -27,7 +27,7 @@ void Poligon::push_back(const Vertex2D & vert_ins)
         vert_array.push_back(vert_ins);
 }
 
-float Poligon::solveSquare()
+float Polygon::solveSquare()
 {
     Global::center = calcCenter();
 
@@ -45,7 +45,7 @@ float Poligon::solveSquare()
     return fabs(square) / 2;
 }
 
-bool Poligon::compare(const Vertex2D & a, const Vertex2D & b)
+bool Polygon::compare(const Vertex2D & a, const Vertex2D & b)
 {
     if (getAngle(a) > getAngle(b))
         return 1;
@@ -53,7 +53,7 @@ bool Poligon::compare(const Vertex2D & a, const Vertex2D & b)
     return 0;
 }   
 
-float Poligon::getAngle(const Vertex2D & a)
+float Polygon::getAngle(const Vertex2D & a)
 {
     float dx_a = 0, dy_a = 0, r_a = 0, cosA = 0, sinA = 0;
     dx_a = a.x - Global::center.x;
@@ -72,7 +72,7 @@ float Poligon::getAngle(const Vertex2D & a)
         return (2 * PI - acosf(cosA));
 }
 
-Vertex2D Poligon::calcCenter()
+Vertex2D Polygon::calcCenter()
 {
     float x = 0;
     float y = 0;
