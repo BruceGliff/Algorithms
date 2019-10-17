@@ -1,8 +1,14 @@
 #pragma once
 
-#include "classes.h"
 #include <unistd.h>
-#include <set>
+#include <vector>
+
+#include "vertex.h"
+#include "vector.h"
+#include "triangle.h"
+
+// Classes provide interfaces for working with optimization \
+   using Space splitting and Spheres describing a triangle.
 
 
 namespace Optimization{
@@ -25,8 +31,6 @@ class Sphere
 {
     Triangle3D triangle;
 
-    //std::set<int> checkedWith;
-public:
     int index;
     Vertex3D center;
     float radius;
@@ -69,7 +73,6 @@ public:
             triangles[sphere->index] = 1;
             return true;
         }
-            //std::cout << index << ' ' << sphere->index << '\n';
 
         return false;
     }

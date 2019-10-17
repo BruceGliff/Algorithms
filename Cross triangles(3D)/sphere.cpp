@@ -1,7 +1,6 @@
 #include "sphere.h"
 
-namespace Optimization
-{
+namespace Optimization{
 
 Box::Box(const Box & box, int iter)
 {
@@ -37,15 +36,16 @@ void Sphere::SetSphere()
 }
 
 
-void CreateBox(const Box & box, std::vector<Sphere*> & array, int last_size, int delta_depth, bool* triangles)
+void CreateBox(const Box & box, std::vector<Sphere*> & array, int last_size, int delta_depth, bool* status)
 {
     if (array.size() < 2)
         return;
     if (array.size() == 2)
     {
-       array[0]->CheckTriangles(array[1], triangles);
+       array[0]->CheckTriangles(array[1], status);
        return;
     }
+
     if (last_size == array.size())
         delta_depth++;
     else 
@@ -55,14 +55,13 @@ void CreateBox(const Box & box, std::vector<Sphere*> & array, int last_size, int
     {
         for(int i = 0; i < array.size() - 1; i++)
             for (int j = i + 1; j < array.size(); j++)
-                array[i]->CheckTriangles(array[j], triangles);
+                array[i]->CheckTriangles(array[j], status);
         return;
     }       
 
     std::array<std::vector<Sphere*>, 8> mas;
     for (auto i = array.begin(); i < array.end(); i++)
     {
-        //std::cout << (*i)->index << ' ' << box.d <<'\n';
         for (int iter = 0; iter < 8; iter++)
         {   
             Box New = Box(box, iter);
@@ -76,7 +75,7 @@ void CreateBox(const Box & box, std::vector<Sphere*> & array, int last_size, int
                 for (auto j = i; j < array.end(); j++)
                 {
                     if (i == j) continue;
-                    (*i)->CheckTriangles((*j), triangles);
+                    (*i)->CheckTriangles((*j), status);
                 }
 
                 delete (*i);
@@ -89,7 +88,7 @@ void CreateBox(const Box & box, std::vector<Sphere*> & array, int last_size, int
         }
     }
     for (int i = 0; i < 8; i++)
-        Optimization::CreateBox(Box(box, i), mas[i], array.size(), delta_depth, triangles);
+        Optimization::CreateBox(Box(box, i), mas[i], array.size(), delta_depth, status);
 }
 
 }
