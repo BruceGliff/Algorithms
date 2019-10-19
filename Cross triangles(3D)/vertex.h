@@ -14,7 +14,7 @@ struct Vertex2D
     Vertex2D() = default;
     Vertex2D(float X, float Y) : x(X), y(Y) {}
 
-    bool operator==(const Vertex2D & A) { return ((x == A.x) && (y == A.y)); }
+    bool operator==(const Vertex2D & A) const { return ((x == A.x) && (y == A.y)); }
 };
 
 struct Vertex3D

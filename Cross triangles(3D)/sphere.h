@@ -2,6 +2,7 @@
 
 #include <unistd.h>
 #include <vector>
+#include <set>
 
 #include "vertex.h"
 #include "vector.h"
@@ -42,21 +43,14 @@ public:
     Sphere() = default;
 
     Sphere(const Triangle3D & triangle_ins, int index_ins) :
-    triangle(triangle_ins),
-    index(index_ins),
-    radius(0.f)
+        triangle(triangle_ins),
+        index(index_ins),
+        radius(0.f)
     {
         SetSphere();
     }
-    Sphere(Sphere && sp)
-    {
-        triangle = sp.triangle;
-        index = sp.index;
-        center = sp.center;
-        radius = sp.radius;
-    }
 
-    bool SphereIntersectBox(Box box) const
+    bool SphereIntersectBox(const Box & box) const
     {
         Vertex3D boxCenter = box.center();
         if (center.x - radius <= boxCenter.x || center.x + radius >= boxCenter.x
@@ -67,12 +61,13 @@ public:
         return false;
     }
 
-    bool CheckTriangles(Sphere * sphere, bool* triangles)
+    bool CheckTriangles(const Sphere * sphere, std::set<int> & out_result) const
     {
         if (triangle.isAcross(sphere->triangle))
         {
-            triangles[index] = 1;
-            triangles[sphere->index] = 1;
+            out_result.insert(index);
+            out_result.insert(sphere->index);
+
             return true;
         }
 
@@ -91,5 +86,5 @@ public:
 
 };
 
-void CreateBox(const Box & box, std::vector<Sphere*> & array, int last_size, int delta_depth, bool* triangles);
+void CreateBox(const Box & box, std::vector<Sphere*> & array, int last_size, int delta_depth, std::set<int> & out_result);
 }

@@ -36,13 +36,13 @@ void Sphere::SetSphere()
 }
 
 
-void CreateBox(const Box & box, std::vector<Sphere*> & array, int last_size, int delta_depth, bool* status)
+void CreateBox(const Box & box, std::vector<Sphere*> & array, int last_size, int delta_depth, std::set<int> & out_result)
 {
     if (array.size() < 2)
         return;
     if (array.size() == 2)
     {
-       array[0]->CheckTriangles(array[1], status);
+       array[0]->CheckTriangles(array[1], out_result);
        return;
     }
 
@@ -55,7 +55,7 @@ void CreateBox(const Box & box, std::vector<Sphere*> & array, int last_size, int
     {
         for(int i = 0; i < array.size() - 1; i++)
             for (int j = i + 1; j < array.size(); j++)
-                array[i]->CheckTriangles(array[j], status);
+                array[i]->CheckTriangles(array[j], out_result);
         return;
     }       
 
@@ -75,7 +75,7 @@ void CreateBox(const Box & box, std::vector<Sphere*> & array, int last_size, int
                 for (auto j = i; j < array.end(); j++)
                 {
                     if (i == j) continue;
-                    (*i)->CheckTriangles((*j), status);
+                    (*i)->CheckTriangles((*j), out_result);
                 }
 
                 delete (*i);
@@ -88,7 +88,7 @@ void CreateBox(const Box & box, std::vector<Sphere*> & array, int last_size, int
         }
     }
     for (int i = 0; i < 8; i++)
-        Optimization::CreateBox(Box(box, i), mas[i], array.size(), delta_depth, status);
+        Optimization::CreateBox(Box(box, i), mas[i], array.size(), delta_depth, out_result);
 }
 
 }

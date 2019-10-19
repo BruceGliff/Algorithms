@@ -25,11 +25,11 @@ struct Line
     Vertex2D a;
     Vertex2D b;
 
-    Line() {}
+    Line() = default;
     Line(Vertex2D A, Vertex2D B) : a(A), b(B) {}
 
-    float lengh() { return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y); }
-    bool isAcross(Line line, Vertex2D & out);
-    PointParams isSegmentsAcross(const Line & line);
-    bool lineInLine(Line what, Vertex2D & out);
+    float lengh() const { return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y); }
+    bool isAcross(Line line, Vertex2D & out) const;
+    PointParams isSegmentsAcross(const Line & line) const;
+    bool lineInLine(Line what, Vertex2D & out) const;
 };

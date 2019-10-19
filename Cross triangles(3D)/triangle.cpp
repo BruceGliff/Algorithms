@@ -3,22 +3,16 @@
 
 std::istream& operator>> (std::istream &in, Triangle2D &triangle)
 {
-    std::for_each(triangle.vertex.begin(), triangle.vertex.end(),   [&in](Vertex2D & v)
-                                                                    { 
-                                                                        in >> v.x >> v.y;
-                                                                    }
-                 );
+    for (auto &v : triangle.vertex)
+        in >> v.x >> v.y;
 
     return in;
 }
 
 std::istream& operator>> (std::istream &in, Triangle3D &triangle)
 {
-    std::for_each(triangle.vertex.begin(), triangle.vertex.end(),   [&in](Vertex3D & v)
-                                                                    { 
-                                                                        in >> v.x >> v.y >> v.z;
-                                                                    }
-                 );
+    for (auto &v : triangle.vertex)
+        in >> v.x >> v.y >> v.z;
 
     return in;
 }
@@ -74,7 +68,7 @@ void Triangle2D::allInternalVertex2D(Triangle2D & trianle, Polygon & polygon)
     }
 }
 
-bool Triangle3D::isAcross(const Triangle3D & triangle)
+bool Triangle3D::isAcross(const Triangle3D & triangle) const
 {
     if (hasInternal(triangle) || triangle.hasInternal(*this))
        return true;

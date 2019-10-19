@@ -24,6 +24,6 @@ struct Polygon
     float solveSquare();
     static bool compare(const Vertex2D & a, const Vertex2D & b);
     static float getAngle(const Vertex2D & a);
-    Vertex2D calcCenter();
-    int Size() { return vert_array.size(); }
+    Vertex2D calcCenter() const;
+    int Size() const { return vert_array.size(); }
 };

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstring>
 #include <algorithm>
+#include <array>
 
 #include "triangle.h"
 #include "sphere.h"
@@ -12,8 +13,7 @@ int main()
     int n = 0;
     std::cin >> n;
 
-    bool* out_result = new bool[n];
-    memset(out_result, 0, n);
+    std::set<int> out_result;
 
     for(int i = 0; i < n; i++)
     {
@@ -25,17 +25,11 @@ int main()
 
     Optimization::CreateBox(Optimization::Box(Vertex3D(0,0,0), 100.f), spheres_array, spheres_array.size(), 0, out_result);
 
-    for (int i = 0; i < n; i++)
-        if (out_result[i])
-            std::cout << i << '\n';
+    for (auto &i : out_result)
+        std::cout << i << '\n';
 
-    delete[] out_result;
-
-    std::for_each(spheres_array.begin(), spheres_array.end(), 
-    [](Optimization::Sphere * sp)
-    {
+    for (auto sp : spheres_array)
         delete sp;
-    });
 
     return 0;
 }

@@ -72,7 +72,7 @@ float Polygon::getAngle(const Vertex2D & a)
         return (2 * PI - acosf(cosA));
 }
 
-Vertex2D Polygon::calcCenter()
+Vertex2D Polygon::calcCenter() const
 {
     float x = 0;
     float y = 0;

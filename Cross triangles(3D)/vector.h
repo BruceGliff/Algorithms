@@ -16,7 +16,7 @@ struct Vector2D
     Vector2D(float X, float Y) : x(X), y(Y) {}
     Vector2D(const Vertex2D & A, const Vertex2D & B) : x(B.x - A.x), y(B.y - A.y) {}
 
-    float operator*(const Vector2D & A) { return x * A.y - y * A.x; }
+    float operator*(const Vector2D & A) const { return x * A.y - y * A.x; }
 };
 
 struct Vector3D
@@ -29,9 +29,9 @@ struct Vector3D
     Vector3D(float X, float Y, float Z) : x(X), y(Y), z(Z) {}
     Vector3D(const Vertex3D & A, const Vertex3D & B) : x(B.x - A.x), y(B.y - A.y), z(B.z - A.z) {}
 
-    float length() { return sqrtf(dot(*this)); }
+    float length() const { return sqrtf(dot(*this)); }
     void setNorm() { float len = length(); if (len == 0) return; x /= len; y /= len; z /= len; }
-    Vector3D norm() { float len = length(); if (len == 0) return Vector3D();  
+    Vector3D norm() const { float len = length(); if (len == 0) return Vector3D();  
         return Vector3D(x / len, y/len, z/len);
     }
 

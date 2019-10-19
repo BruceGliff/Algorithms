@@ -1,6 +1,6 @@
 #include "line.h"
 
-bool Line::isAcross(Line line, Vertex2D & out)
+bool Line::isAcross(Line line, Vertex2D & out) const
 {
     PointParams params = line.isSegmentsAcross(*this);
 
@@ -29,7 +29,7 @@ bool Line::isAcross(Line line, Vertex2D & out)
     return true;
 }
 
-PointParams Line::isSegmentsAcross(const Line & line)
+PointParams Line::isSegmentsAcross(const Line & line) const
 {
     PointParams params;
 
@@ -56,7 +56,7 @@ PointParams Line::isSegmentsAcross(const Line & line)
     return params;
 }
 
-bool Line::lineInLine(Line what, Vertex2D & out)
+bool Line::lineInLine(Line what, Vertex2D & out) const
 {
     float x1 = std::max(a.x, b.x);
     float x2 = std::min(a.x, b.x);
