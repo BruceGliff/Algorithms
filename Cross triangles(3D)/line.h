@@ -7,10 +7,11 @@
 #include "vertex.h"
 #include "vector.h"
 
+template <typename T>
 struct PointParams
 {
-    float angle1;
-    float angle2;
+    T angle1;
+    T angle2;
 
     enum class PointStatus
     {
@@ -20,16 +21,19 @@ struct PointParams
     } status;
 };
 
+template <typename T>
 struct Line
 {
-    Vertex2D a;
-    Vertex2D b;
+    Vertex2D<T> a;
+    Vertex2D<T> b;
 
     Line() = default;
-    Line(Vertex2D A, Vertex2D B) : a(A), b(B) {}
+    Line(Vertex2D<T> A, Vertex2D<T> B) : a(A), b(B) {}
 
-    float lengh() const { return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y); }
-    bool isAcross(Line line, Vertex2D & out) const;
-    PointParams isSegmentsAcross(const Line & line) const;
-    bool lineInLine(Line what, Vertex2D & out) const;
+    T lengh() const { return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y); }
+    bool isAcross(Line line, Vertex2D<T> & out) const;
+    PointParams<T> isSegmentsAcross(const Line & line) const;
+    bool lineInLine(Line what, Vertex2D<T> & out) const;
 };
+
+#include "line.hpp"

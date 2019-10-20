@@ -13,46 +13,46 @@
 
 // For optimization Octo-tree used
 
-
 namespace Optimization{
 
+template <typename T>
 struct Box
 {
-    Vertex3D zero;
-    float d;
+    Vertex3D<T> zero;
+    T d;
     Box() = default;
-    Box(const Vertex3D & point, float d_ins) : zero(point), d(d_ins) {}
+    Box(const Vertex3D<T> & point, T d_ins) : zero(point), d(d_ins) {}
     Box(const Box & box, int iter);
 
-    Vertex3D center() const
+    Vertex3D<T> center() const
     {  
-        return Vertex3D(zero.x + d/2, zero.y + d/2, zero.z + d/2);
+        return Vertex3D<T>(zero.x + d/2, zero.y + d/2, zero.z + d/2);
     }
 };
 
+template <typename T>
 class Sphere
 {
-    Triangle3D triangle;
+    Triangle3D<T> triangle;
 
     int index;
-    Vertex3D center;
-    float radius;
+    Vertex3D<T> center;
+    T radius;
     void SetSphere();
     
 public:
     Sphere() = default;
 
-    Sphere(const Triangle3D & triangle_ins, int index_ins) :
+    Sphere(const Triangle3D<T> & triangle_ins, int index_ins) :
         triangle(triangle_ins),
-        index(index_ins),
-        radius(0.f)
+        index(index_ins)
     {
         SetSphere();
     }
 
-    bool SphereIntersectBox(const Box & box) const
+    bool SphereIntersectBox(const Box<T> & box) const
     {
-        Vertex3D boxCenter = box.center();
+        Vertex3D<T> boxCenter = box.center();
         if (center.x - radius <= boxCenter.x || center.x + radius >= boxCenter.x
          || center.y - radius <= boxCenter.y || center.x + radius >= boxCenter.y
          || center.z - radius <= boxCenter.z || center.x + radius >= boxCenter.z)
@@ -74,7 +74,7 @@ public:
         return false;
     }
 
-    bool insideBox(const Box & box)
+    bool insideBox(const Box<T> & box)
     {
         if (center.x < box.zero.x || center.x > box.zero.x + box.d
          || center.y < box.zero.y || center.y > box.zero.y + box.d
@@ -86,5 +86,8 @@ public:
 
 };
 
-void CreateBox(const Box & box, std::vector<Sphere*> & array, int last_size, int delta_depth, std::set<int> & out_result);
+template <typename T>
+void CreateBox(const Box<T> & box, std::vector<Sphere<T>*> & array, int last_size, int delta_depth, std::set<int> & out_result);
 }
+
+#include "sphere.hpp"

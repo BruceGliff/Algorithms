@@ -13,17 +13,20 @@
 #include "vertex.h"
 #include "line.h"
 
+template <typename T>
 struct Polygon
 {
-    std::vector<Vertex2D> vert_array;
+    std::vector<Vertex2D<T>> vert_array;
 
     Polygon() = default;
-    Polygon(const std::vector<Vertex2D> & vertex_ins);
+    Polygon(const std::vector<Vertex2D<T>> & vertex_ins);
 
-    void push_back(const Vertex2D & vert_ins);
-    float solveSquare();
-    static bool compare(const Vertex2D & a, const Vertex2D & b);
-    static float getAngle(const Vertex2D & a);
-    Vertex2D calcCenter() const;
+    void push_back(const Vertex2D<T> & vert_ins);
+    T solveSquare();
+    static bool compare(const Vertex2D<T> & a, const Vertex2D<T> & b);
+    static T getAngle(const Vertex2D<T> & a);
+    Vertex2D<T> calcCenter() const;
     int Size() const { return vert_array.size(); }
 };
+
+#include "polygon.hpp"

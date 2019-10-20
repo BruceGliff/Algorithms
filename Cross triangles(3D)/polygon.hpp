@@ -1,21 +1,23 @@
-#include "polygon.h"
+
 
 namespace Global
 {
-    Vertex2D center;
+    template <typename T>
+    Vertex2D<T> center;
 }
 
-
-Polygon::Polygon(const std::vector<Vertex2D> & vertex_ins)
+template <typename T>
+Polygon<T>::Polygon(const std::vector<Vertex2D<T>> & vertex_ins)
 {
-    for (auto x : vertex_ins)
+    for (auto const & x : vertex_ins)
         vert_array.push_back(x);
 }
 
-void Polygon::push_back(const Vertex2D & vert_ins)
+template <typename T>
+void Polygon<T>::push_back(const Vertex2D<T> & vert_ins)
 {
     bool is = false;
-    for (auto vert : vert_array)
+    for (auto const & vert : vert_array)
     {
         if (vert == vert_ins)
         {
@@ -27,14 +29,15 @@ void Polygon::push_back(const Vertex2D & vert_ins)
         vert_array.push_back(vert_ins);
 }
 
-float Polygon::solveSquare()
+template <typename T>
+T Polygon<T>::solveSquare()
 {
-    Global::center = calcCenter();
+    Global::center<T> = calcCenter();
 
     // Сортировка вершин многоугольника, чтобы можно было совершить их обход против часовой стрелки
     sort(vert_array.begin(), vert_array.end(), compare);
 
-    float square = 0;
+    T square = 0;
 
     // расчёт площади выпуклого многоугольника s = sum(Xi * Yi+1 - Xi+1 * Yi)
     for (int i = 0; i < vert_array.size(); i++)
@@ -45,7 +48,8 @@ float Polygon::solveSquare()
     return fabs(square) / 2;
 }
 
-bool Polygon::compare(const Vertex2D & a, const Vertex2D & b)
+template <typename T>
+bool Polygon<T>::compare(const Vertex2D<T> & a, const Vertex2D<T> & b)
 {
     if (getAngle(a) > getAngle(b))
         return 1;
@@ -53,15 +57,16 @@ bool Polygon::compare(const Vertex2D & a, const Vertex2D & b)
     return 0;
 }   
 
-float Polygon::getAngle(const Vertex2D & a)
+template <typename T>
+T Polygon<T>::getAngle(const Vertex2D<T> & a)
 {
-    float dx_a = 0, dy_a = 0, r_a = 0, cosA = 0, sinA = 0;
-    dx_a = a.x - Global::center.x;
-    dy_a = a.y - Global::center.y;
+    T dx_a = 0, dy_a = 0, r_a = 0, cosA = 0, sinA = 0;
+    dx_a = a.x - Global::center<T>.x;
+    dy_a = a.y - Global::center<T>.y;
 
-    float b = dx_a * dx_a + dy_a * dy_a;
+    T b = dx_a * dx_a + dy_a * dy_a;
 
-    r_a = sqrtf(b);
+    r_a = sqrtl(b);
 
     cosA = dx_a / r_a;
     sinA = dy_a / r_a;
@@ -72,13 +77,14 @@ float Polygon::getAngle(const Vertex2D & a)
         return (2 * PI - acosf(cosA));
 }
 
-Vertex2D Polygon::calcCenter() const
+template <typename T>
+Vertex2D<T> Polygon<T>::calcCenter() const
 {
-    float x = 0;
-    float y = 0;
-    float kx = 0, ky = 0;
+    T x = 0;
+    T y = 0;
+    T kx = 0, ky = 0;
 
-    for (auto vert : vert_array)
+    for (auto const & vert : vert_array)
     {
         x += vert.x;
         y += vert.y;
@@ -86,5 +92,5 @@ Vertex2D Polygon::calcCenter() const
         kx += 1; ky += 1;        
     }
     
-    return Vertex2D(x / kx, y / ky);
+    return Vertex2D<T>(x / kx, y / ky);
 }
