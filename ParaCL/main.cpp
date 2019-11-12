@@ -4,25 +4,17 @@
 
 int main()
 {
-    Node * root = new Scope;
+    Node * root = new Scope{nullptr};
 
     {
-        std::map<std::string, Node *> m;
+        Scope * scope = static_cast<Scope *>(root);
+        std::string s = "fst";
+        scope->addBranch(new Op((*scope)[s], nullptr, Ops::StdIn));
 
+        Scope * u = new Scope{scope};
+        scope->addBranch(u);
 
-        std::string variable = "fst";
-        int val = 12;
-        
-        if (m.find(variable) == m.end())
-        {
-            Node * dec = new Decl;
-            m[variable] = dec;
-
-        }        
-
-        static_cast<Scope *>(root)->addBranch(new Op(m[variable], nullptr, Ops::StdIn));
-       // static_cast<Scope *>(root)->addBranch(new Op(m[variable], new Value(val), Ops::Assign));
-        static_cast<Scope *>(root)->addBranch(new Op(nullptr, m[variable], Ops::StdOut));
+        u->addBranch(new Op(nullptr, (*u)[s], Ops::StdOut));
 
         root->calc();
 

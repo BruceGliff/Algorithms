@@ -15,26 +15,6 @@ Node::~Node() {}
 
 using tmp = int;
 
-// SCOPE
-class Scope final : public Node
-{
-    std::vector<Node *> branches;
-    std::map<std::string, Node *> memory;
-
-public:
-    Scope() = default;
-    tmp calc() override
-    {
-        for (auto x : branches)
-            x->calc();
-    }
-
-    void addBranch(Node * branch)
-    {
-        branches.push_back(branch);
-    }
-};
-
 // NUMBER
 class Value final : public Node
 {
@@ -50,7 +30,6 @@ public:
 
 class Decl final : public Node
 {
-    using Map = std::map<std::string, int>;
     int val;
 
 public:
@@ -63,6 +42,50 @@ public:
     void SetValue(int Val)
     {
        val = Val;
+    }
+};
+
+// SCOPE
+class Scope final : public Node
+{
+    std::vector<Node *> branches;
+    std::map<std::string, Node *> memory;
+
+    Scope * prev_scope;
+
+public:
+    Scope(Scope * prev) : prev_scope(prev) {}
+    tmp calc() override
+    {
+        for (auto x : branches)
+            x->calc();
+    }
+
+    void addBranch(Node * branch)
+    {
+        branches.push_back(branch);
+    }
+
+    Node * operator[](std::string const & var_name)
+    {
+        if (memory.find(var_name) == memory.end())
+        {
+            if (!prev_scope)
+            {
+                Decl * dec = new Decl;
+                memory[var_name] = dec;
+                return dec;
+            }
+            if (prev_scope->memory.find(var_name) == prev_scope->memory.end())
+            {
+                Decl * dec = new Decl;
+                memory[var_name] = dec;
+                return dec;
+            }
+            else
+                return prev_scope->memory[var_name];
+        }
+        return memory[var_name];
     }
 };
 
