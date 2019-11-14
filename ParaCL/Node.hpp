@@ -60,7 +60,7 @@ public:
         for (auto x : branches)
             x->calc();
     }
-
+    Scope * resetScope() { return prev_scope; }
     void addBranch(Node * branch)
     {
         branches.push_back(branch);
@@ -110,35 +110,35 @@ protected:
     Ops op;
 
 public:
-    Op(Node * r, Node * l, Ops o) : right(r), left(l), op(o) {}
+    Op(Node * l, Ops o, Node * r) : left(l), right(r), op(o) {}
     tmp calc() override
     {
+        int val = 0;
         switch (op)
         {
         case Ops::Plus:
-            return right->calc() + left->calc();
+            return left->calc() + right->calc();
             break;
         case Ops::Minus:
-            return right->calc() - left->calc();
+            return left->calc() - right->calc();
             break;
         case Ops::Greater:
-            return right->calc() > left->calc();
+            return left->calc() > right->calc();
             break;
         case Ops::Less:
-            return right->calc() < left->calc();
+            return left->calc() < right->calc();
             break;
         case Ops::Assign:
-            static_cast<Decl * >(right)->SetValue(left->calc());
+            val = right->calc();
+            static_cast<Decl * >(left)->SetValue(val);
+            return val; // BE CAREFUL
             break;
         case Ops::StdOut:
-            std::cout << left->calc() << std::endl;
+            std::cout << right->calc() << std::endl;
             break;
         case Ops::StdIn:
-            int val;
             std::cin >> val;
-            static_cast<Decl * >(right)->SetValue(val);
-            break;
-        default:
+            return val;
             break;
         }
     }
