@@ -68,23 +68,36 @@ public:
 
     Node * operator[](std::string const & var_name)
     {
+        // if (memory.find(var_name) == memory.end())
+        // {
+        //     if (!prev_scope)
+        //     {
+        //         Decl * dec = new Decl;
+        //         memory[var_name] = dec;
+        //         return dec;
+        //     }
+        //     if (prev_scope->memory.find(var_name) == prev_scope->memory.end())
+        //     {
+        //         Decl * dec = new Decl;
+        //         memory[var_name] = dec;
+        //         return dec;
+        //     }
+        //     else
+        //         return prev_scope->memory[var_name];
+        // }
+        // return memory[var_name];
+
+
         if (memory.find(var_name) == memory.end())
         {
-            if (!prev_scope)
-            {
-                Decl * dec = new Decl;
-                memory[var_name] = dec;
-                return dec;
-            }
-            if (prev_scope->memory.find(var_name) == prev_scope->memory.end())
-            {
-                Decl * dec = new Decl;
-                memory[var_name] = dec;
-                return dec;
-            }
-            else
-                return prev_scope->memory[var_name];
+            if (prev_scope)
+                return prev_scope->operator[](var_name);
+            
+            Decl * dec = new Decl;
+            memory[var_name] = dec;
+            return dec;
         }
+
         return memory[var_name];
     }
 };
@@ -145,8 +158,6 @@ public:
 };
 
 
-
-
 // WHILE
 class While : public Node
 {
@@ -159,6 +170,24 @@ public:
     {
         while(op->calc())
             scope->calc();
+
+        return 0;
+    }
+};
+
+class If : public Node
+{
+    Node * op;
+    Node * scope;
+
+public:
+    If(Node * o, Node * s) : op(o), scope(s) {}
+    tmp calc() override
+    {
+        if (op->calc())
+            scope->calc();
+
+        return 0;
     }
 };
 

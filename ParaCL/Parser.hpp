@@ -11,6 +11,17 @@
 #define A std::cout<<"A"<<std::endl;
 #define B(a) std::cout<<a<<std::endl;
 
+enum class EScopeCond
+{
+    FUNC,
+    REGULAR
+};
+enum class EFunct
+{
+    IF,
+    WHILE
+};
+
 class PureFile
 {
     char * buffer = nullptr;
@@ -58,12 +69,13 @@ class Parser
 
     bool Find(char const * what, PureFile & where);
 
-    Scope * GetScope(PureFile &f);
-    Node * GetIf(PureFile & f) {};
-    Node * GetWhile(PureFile & f) {};
+    Scope * GetScope(PureFile &f, EScopeCond cond = EScopeCond::REGULAR);
+    Node * GetIf(PureFile & f);
+    Node * GetWhile(PureFile & f);
     Node * GetDecl(PureFile & f);
     Node * GetNum(PureFile & f);
     Node * GetOperation(PureFile & f);
+    Node * GetFunctBody(PureFile & f, EFunct funcType);
     Ops GetOp(PureFile & f);
 
     void skipSpace(PureFile & f)
@@ -165,26 +177,56 @@ bool Parser::Find(char const * what, PureFile & where)
     return true;
 }
 
-Scope * Parser::GetScope(PureFile & f)
+Scope * Parser::GetScope(PureFile & f, EScopeCond cond)
 {
     skipSpace(f);
-    if (*f != '{' && currentScope)
+    if (*f != '{' && currentScope && (cond != EScopeCond::FUNC))
         return nullptr;
     if (*f == '{' && currentScope)
+    {
         ++f; // skip {
+        cond = EScopeCond::REGULAR;
+    }
     currentScope = new Scope{currentScope};
     
     while(*f != '}' && !f.isEnd())
     {
+        Node * tmp = nullptr;
         Scope * newS = GetScope(f);
         if (newS)
         {
             currentScope->addBranch(newS);
+            if (cond == EScopeCond::FUNC)
+                break;
             continue;
         }
-        Node * tmp = GetOperation(f);
+
+        tmp = GetIf(f);
         if (tmp)
+        {
             currentScope->addBranch(tmp);
+            if (cond == EScopeCond::FUNC)
+                break;
+            continue;
+        }
+
+        tmp = GetWhile(f);
+        if (tmp)
+        {
+            currentScope->addBranch(tmp);
+            if (cond == EScopeCond::FUNC)
+                break;
+            continue;
+        }
+
+        tmp = GetOperation(f);
+        if (tmp)
+        {
+            currentScope->addBranch(tmp);
+            if (cond == EScopeCond::FUNC)
+                break;
+            continue;
+        }
     }
     skipSpace(f);    
     if (*f == '}')
@@ -192,4 +234,61 @@ Scope * Parser::GetScope(PureFile & f)
     Scope * tmp = currentScope;
     currentScope = currentScope->resetScope();
     return tmp;
+}
+
+Node * Parser::GetIf(PureFile & f)
+{
+    skipSpace(f);
+    int const It = f.GetIt();
+    if (Find("if", f))
+        return GetFunctBody(f, EFunct::IF);
+
+    f.SetIt(It);
+
+    return nullptr;
+}
+
+Node * Parser::GetWhile(PureFile & f)
+{
+    skipSpace(f);
+    int const It = f.GetIt();
+    if (Find("while", f))
+        return GetFunctBody(f, EFunct::WHILE);
+
+    f.SetIt(It);
+
+    return nullptr;
+}
+
+
+Node * Parser::GetFunctBody(PureFile & f, EFunct funcType)
+{
+    skipSpace(f);
+    if (*f == '(')
+    {
+        ++f;
+        currentScope = new Scope{currentScope};
+        Node * op = GetOperation(f);
+        skipSpace(f);
+        ++f; // skip )
+        skipSpace(f);
+        Node * scope = GetScope(f, EScopeCond::FUNC);
+
+        switch (funcType)
+        {
+        case EFunct::IF:
+            currentScope->addBranch(new If{op, scope});
+            scope = currentScope;
+            currentScope = currentScope->resetScope();
+            return scope;
+        case EFunct::WHILE:
+            currentScope->addBranch(new While{op, scope});
+            scope = currentScope;
+            currentScope = currentScope->resetScope();
+            return scope;
+        } 
+           
+    }
+
+    return nullptr;
 }

@@ -1,4 +1,8 @@
-b=8;
-a = 1 + b + 1 + b;
-a = 1-b-1-b;
-print a;
+while(i < 5)
+{
+    i = i +1;
+    print i;
+    if(i > 4)
+        i = ?;
+}
+
