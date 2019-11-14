@@ -6,14 +6,13 @@
 
 class Node
 {
-    Node * scope;
 public:
     virtual int calc() = 0;
     virtual ~Node() = 0;
 };
 Node::~Node() {}
 
-using tmp = int;
+using RType = int;
 
 // NUMBER
 class Value final : public Node
@@ -22,27 +21,27 @@ class Value final : public Node
 
 public: 
     Value(int v) : val(v) {}
-    tmp calc() override
+    RType calc() override
     {
         return val;
     }
+    ~Value() {}
 };
 
 class Decl final : public Node
 {
     int val;
-
 public:
     Decl() = default;
-    tmp calc() override
+    RType calc() override
     {
         return val;
     }
-
     void SetValue(int Val)
     {
        val = Val;
     }
+    ~Decl() {}
 };
 
 // SCOPE
@@ -55,12 +54,12 @@ class Scope final : public Node
 
 public:
     Scope(Scope * prev) : prev_scope(prev) {}
-    tmp calc() override
+    RType calc() override
     {
         for (auto x : branches)
             x->calc();
     }
-    Scope * resetScope() { return prev_scope; }
+    Scope * resetScope() const { return prev_scope; }
     void addBranch(Node * branch)
     {
         branches.push_back(branch);
@@ -68,37 +67,33 @@ public:
 
     Node * operator[](std::string const & var_name)
     {
-        // if (memory.find(var_name) == memory.end())
-        // {
-        //     if (!prev_scope)
-        //     {
-        //         Decl * dec = new Decl;
-        //         memory[var_name] = dec;
-        //         return dec;
-        //     }
-        //     if (prev_scope->memory.find(var_name) == prev_scope->memory.end())
-        //     {
-        //         Decl * dec = new Decl;
-        //         memory[var_name] = dec;
-        //         return dec;
-        //     }
-        //     else
-        //         return prev_scope->memory[var_name];
-        // }
-        // return memory[var_name];
+        // PROBLEM
+        Node * t = existsLater(var_name);
+        if (t)
+            return t;
 
+        Node * dec = new Decl;
+        memory[var_name] = dec;
+        return dec;
+    }
+    Node * existsLater(std::string const & var_name)
+    {
+        Node * f = nullptr;
+        if (memory.find(var_name) != memory.end())
+            return memory[var_name];
+        if (prev_scope && !f)
+            f = prev_scope->existsLater(var_name);
 
-        if (memory.find(var_name) == memory.end())
-        {
-            if (prev_scope)
-                return prev_scope->operator[](var_name);
-            
-            Decl * dec = new Decl;
-            memory[var_name] = dec;
-            return dec;
-        }
+        return f;
+    }
 
-        return memory[var_name];
+    ~Scope()
+    {
+        for (auto x : branches)
+            delete x;
+
+        for (auto x : memory)
+            delete x.second;
     }
 };
 
@@ -111,28 +106,32 @@ enum class Ops
     Greater,
     Less,
     StdOut,
-    StdIn
+    StdIn,
+    Equal
 };
 
 
-class Op : public Node
+class Op final : public Node
 {
-protected:
     Node * right;
     Node * left;
     Ops op;
 
 public:
     Op(Node * l, Ops o, Node * r) : left(l), right(r), op(o) {}
-    tmp calc() override
+    RType calc() override
     {
         int val = 0;
         switch (op)
         {
         case Ops::Plus:
+            if (left == nullptr)
+                return 0 + right->calc();
             return left->calc() + right->calc();
             break;
         case Ops::Minus:
+            if (left == nullptr)
+                return 0 + right->calc();
             return left->calc() - right->calc();
             break;
         case Ops::Greater:
@@ -144,7 +143,7 @@ public:
         case Ops::Assign:
             val = right->calc();
             static_cast<Decl * >(left)->SetValue(val);
-            return val; // BE CAREFUL
+            return val;
             break;
         case Ops::StdOut:
             std::cout << right->calc() << std::endl;
@@ -153,41 +152,63 @@ public:
             std::cin >> val;
             return val;
             break;
+        case Ops::Equal:
+            return (left->calc() == right->calc());
+            break;
         }
+    }
+    ~Op() 
+    { 
+        if (!dynamic_cast<Decl *>(right))
+            delete right;
+        if (!dynamic_cast<Decl *>(left))
+            delete left; 
     }
 };
 
 
 // WHILE
-class While : public Node
+class While final : public Node
 {
-    Node * op;
-    Node * scope;
+    Node * op = nullptr;
+    Node * scope = nullptr;
 
 public:
     While(Node * o, Node * s) : op(o), scope(s) {}
-    tmp calc() override
+    RType calc() override
     {
         while(op->calc())
             scope->calc();
 
         return 0;
     }
+    ~While()
+    {
+        if (!dynamic_cast<Decl *>(op))
+            delete op;
+        delete scope;
+    }
 };
 
-class If : public Node
+class If final : public Node
 {
     Node * op;
     Node * scope;
 
 public:
     If(Node * o, Node * s) : op(o), scope(s) {}
-    tmp calc() override
+    RType calc() override
     {
         if (op->calc())
             scope->calc();
 
         return 0;
+    }
+    ~If() 
+    { 
+        if (!dynamic_cast<Decl *>(op))
+            delete op;
+        delete scope;
     }
 };
 

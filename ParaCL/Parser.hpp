@@ -6,7 +6,6 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include "Node.hpp"
-#include <set>
 
 #define A std::cout<<"A"<<std::endl;
 #define B(a) std::cout<<a<<std::endl;
@@ -22,7 +21,7 @@ enum class EFunct
     WHILE
 };
 
-class PureFile
+class PureFile final
 {
     char * buffer = nullptr;
     int size = 0;
@@ -47,17 +46,21 @@ public:
     }
     int GetIt() const { return it; }
     int SetIt(int i) { it = i; }
-    bool isEnd() { return it >= size; }
-    bool isBegin() { return !it; }
-    void out() { std::cout << buffer << std::endl; }
+    bool isEnd() const { return it >= size; }
+    bool isBegin() const { return !it; }
+    void out() const { std::cout << buffer << std::endl; }
     ~PureFile() { delete[] buffer; }
 
     PureFile & operator++() { ++it; }
-    char operator*() const { return *(buffer + it); }
+    char operator*() const 
+    { 
+        if (isEnd())
+            return 0;
+        return *(buffer + it); 
+    }
     PureFile & operator+(int i) { it += i; }
     PureFile & operator--() { --it; }
     PureFile & operator-(int i) { it -= i; }
-
 };
 
 
@@ -65,7 +68,6 @@ class Parser
 {
     PureFile f_;
     Scope * currentScope = nullptr;
-    std::set<char> availableOps{'=', '<', '>', '?', '+', '-'};
 
     bool Find(char const * what, PureFile & where);
 
@@ -80,6 +82,8 @@ class Parser
 
     void skipSpace(PureFile & f)
     {
+        if (f.isEnd())
+            return;
         while (*f == ' ' || *f == '\n' || *f == '\t')
             ++f;   
     }
@@ -91,6 +95,7 @@ public:
             currentScope = GetScope(f_);
     }
     void exec() { if (currentScope) currentScope->calc(); }
+    ~Parser() { delete currentScope; }
 
 };
 
@@ -99,11 +104,10 @@ Node * Parser::GetOperation(PureFile & f)
     skipSpace(f);
     Node * lft = GetDecl(f); 
     if (!lft) lft = GetNum(f);
-
     skipSpace(f);
+
     if (*f == ')' || *f == ';' || *f == '}' || f.isEnd())
     { if (*f == ';') ++f; return lft;}
-    
     Ops op = GetOp(f);
     Node * rgh = GetOperation(f);
 
@@ -142,6 +146,8 @@ Ops Parser::GetOp(PureFile & f)
         return Ops::Greater;
     if (Find("<", f))
         return Ops::Less;
+    if (Find("==", f))
+        return Ops::Equal;
     if (Find("=", f))
         return Ops::Assign;
     if (Find("+", f))
@@ -188,8 +194,7 @@ Scope * Parser::GetScope(PureFile & f, EScopeCond cond)
         cond = EScopeCond::REGULAR;
     }
     currentScope = new Scope{currentScope};
-    
-    while(*f != '}' && !f.isEnd())
+    while(!f.isEnd() && *f != '}')
     {
         Node * tmp = nullptr;
         Scope * newS = GetScope(f);
@@ -218,7 +223,6 @@ Scope * Parser::GetScope(PureFile & f, EScopeCond cond)
                 break;
             continue;
         }
-
         tmp = GetOperation(f);
         if (tmp)
         {
@@ -273,7 +277,6 @@ Node * Parser::GetFunctBody(PureFile & f, EFunct funcType)
         ++f; // skip )
         skipSpace(f);
         Node * scope = GetScope(f, EScopeCond::FUNC);
-
         switch (funcType)
         {
         case EFunct::IF:
