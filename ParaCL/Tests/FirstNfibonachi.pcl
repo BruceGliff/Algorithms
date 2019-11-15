@@ -1,6 +1,6 @@
 n=0;
-
-while(n < 12)
+x = ?;
+while(n < x)
 {
     n=n+1;
     a = 0;
