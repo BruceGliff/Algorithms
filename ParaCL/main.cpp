@@ -1,10 +1,9 @@
 #include <iostream>
-#include "Node.hpp"
 #include "Parser.hpp"
 
 
-int main()
+int main(int argc, char * argv[])
 {
-    Parser p{"main.pcl"};
+    Parser p{argv[1]};
     p.exec();   
 }

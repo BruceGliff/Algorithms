@@ -67,7 +67,6 @@ public:
 
     Node * operator[](std::string const & var_name)
     {
-        // PROBLEM
         Node * t = existsLater(var_name);
         if (t)
             return t;
@@ -75,6 +74,18 @@ public:
         Node * dec = new Decl;
         memory[var_name] = dec;
         return dec;
+
+        // if (memory.find(var_name) == memory.end())
+        // {
+        //     if (prev_scope)
+        //         return prev_scope->operator[](var_name);
+            
+        //     Decl * dec = new Decl;
+        //     memory[var_name] = dec;
+        //     return dec;
+        // }
+
+        // return memory[var_name];
     }
     Node * existsLater(std::string const & var_name)
     {
@@ -107,7 +118,9 @@ enum class Ops
     Less,
     StdOut,
     StdIn,
-    Equal
+    Equal,
+    // Div,
+    // Times
 };
 
 
@@ -131,7 +144,7 @@ public:
             break;
         case Ops::Minus:
             if (left == nullptr)
-                return 0 + right->calc();
+                return 0 - right->calc();
             return left->calc() - right->calc();
             break;
         case Ops::Greater:
@@ -155,6 +168,13 @@ public:
         case Ops::Equal:
             return (left->calc() == right->calc());
             break;
+        // Not available yet
+        // case Ops::Div:
+        //     return left->calc() / right->calc();
+        //     break;
+        // case Ops::Times:
+        //     return left->calc() * right->calc();
+        //     break;
         }
     }
     ~Op() 

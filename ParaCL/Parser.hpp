@@ -154,6 +154,10 @@ Ops Parser::GetOp(PureFile & f)
         return Ops::Plus;
     if (Find("-", f))
         return Ops::Minus;
+    // if (Find("*", f))
+    //     return Ops::Times;
+    // if (Find("/", f))
+    //     return Ops::Div;
 }
 
 Node * Parser::GetNum(PureFile & f)
