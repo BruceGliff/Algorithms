@@ -40,27 +40,27 @@ int   [0-9]+
 ";"		{	return SM;	}
 "="		{ 	return ASG;	}
 "=="	{	
-			yylval.value = RELOP_EQ;
+			yylval.op = Ops::Equal;
 			return RELOP;
 		}
 "!="	{
-			yylval.value = RELOP_NE;
+			yylval.op = Ops::NotEqual;
 			return RELOP;
 		}
 "<"		{
-			yylval.value = RELOP_LT;
+			yylval.op = Ops::Less;
 			return RELOP;
 		}
 ">"		{
-			yylval.value = RELOP_GT;
+			yylval.op = Ops::Greater;
 			return RELOP;
 		}
 "<="	{
-			yylval.value = RELOP_LE;
+			yylval.op = Ops::LessEq;
 			return RELOP;
 		}
 ">="	{
-			yylval.value = RELOP_GE;
+			yylval.op = Ops::GreaterEq;
 			return RELOP;
 		}
 "||"	{	return OR;	}

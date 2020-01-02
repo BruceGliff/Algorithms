@@ -891,7 +891,7 @@ case 18:
 YY_RULE_SETUP
 #line 42 "scanner.l"
 {	
-			yylval.value = RELOP_EQ;
+			yylval.op = Ops::Equal;
 			return RELOP;
 		}
 	YY_BREAK
@@ -899,7 +899,7 @@ case 19:
 YY_RULE_SETUP
 #line 46 "scanner.l"
 {
-			yylval.value = RELOP_NE;
+			yylval.op = Ops::NotEqual;
 			return RELOP;
 		}
 	YY_BREAK
@@ -907,7 +907,7 @@ case 20:
 YY_RULE_SETUP
 #line 50 "scanner.l"
 {
-			yylval.value = RELOP_LT;
+			yylval.op = Ops::Less;
 			return RELOP;
 		}
 	YY_BREAK
@@ -915,7 +915,7 @@ case 21:
 YY_RULE_SETUP
 #line 54 "scanner.l"
 {
-			yylval.value = RELOP_GT;
+			yylval.op = Ops::Greater;
 			return RELOP;
 		}
 	YY_BREAK
@@ -923,7 +923,7 @@ case 22:
 YY_RULE_SETUP
 #line 58 "scanner.l"
 {
-			yylval.value = RELOP_LE;
+			yylval.op = Ops::LessEq;
 			return RELOP;
 		}
 	YY_BREAK
@@ -931,7 +931,7 @@ case 23:
 YY_RULE_SETUP
 #line 62 "scanner.l"
 {
-			yylval.value = RELOP_GE;
+			yylval.op = Ops::GreaterEq;
 			return RELOP;
 		}
 	YY_BREAK

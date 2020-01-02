@@ -3,22 +3,12 @@
 #include <string>
 #include "Node.hpp"
 
-enum relop
-{
-	RELOP_EQ,
-	RELOP_NE,
-	RELOP_GT,
-	RELOP_GE,
-	RELOP_LT,
-	RELOP_LE
-};
-
-
 struct yyRet
 {
 	std::string name;
 	int value;
 	Node * treeNode;
+	Ops op;
 };
 
 #define YYSTYPE yyRet

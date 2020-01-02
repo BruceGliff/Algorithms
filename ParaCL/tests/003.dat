@@ -1,2 +1,4 @@
-while(1) 
-{a=3;}
+a=0;
+while(!a)
+{ a=?; print a;}
+print a;

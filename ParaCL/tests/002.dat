@@ -1,2 +1,4 @@
 a=-3;
 print a;
+b=?;
+print (a+b)/3;

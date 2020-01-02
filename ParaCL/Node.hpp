@@ -62,19 +62,23 @@ public:
 // OPERATIONS
 enum class Ops
 {
-    Plus,
-    Minus,
-    Assign,
-    Greater,
-    Less,
-    GreaterEq,
-    LessEq,
-    StdOut,
-    StdIn,
-    Equal,
-    Div,
-    Mul,
-    Mod
+    Plus, //
+    Minus, //
+    Assign, //
+    Greater, //
+    Less, //
+    GreaterEq, //
+    LessEq, //
+    StdOut, //
+    StdIn, //
+    Equal, //
+    NotEqual, //
+    Div, //
+    Mul, //
+    Mod, //
+    Not,
+    And,
+    Or
 };
 
 

@@ -129,6 +129,18 @@ RType Op::calc()
     case Ops::Equal:
         return (left->calc() == right->calc());
         break;
+    case Ops::NotEqual:
+        return (left->calc() != right->calc());
+        break;
+    case Ops::Not:
+        return !static_cast<bool>(right->calc());
+        break;
+    case Ops::And:
+        return left->calc() && right->calc();
+        break;
+    case Ops::Or:
+        return left->calc() || right->calc();
+        break;
     case Ops::Div:
         return left->calc() / right->calc();
         break;

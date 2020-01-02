@@ -391,16 +391,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  24
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   123
+#define YYLAST   120
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  28
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  15
+#define YYNNTS  17
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  37
+#define YYNRULES  39
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  68
+#define YYNSTATES  70
 
 /* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
    by yylex, with out-of-bounds checking.  */
@@ -449,10 +449,10 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    24,    24,    29,    31,    33,    39,    45,    47,    53,
-      59,    61,    63,    69,    75,    81,    83,    85,    87,    89,
-      91,    96,   102,   108,   110,   112,   114,   116,   118,   120,
-     122,   124,   126,   128,   130,   132,   134,   136
+       0,    24,    24,    29,    34,    39,    45,    47,    53,    59,
+      64,    70,    76,    82,    88,    94,   100,   106,   111,   116,
+     121,   126,   131,   136,   142,   148,   153,   158,   164,   170,
+     177,   182,   187,   192,   197,   202,   207,   213,   219,   225
 };
 #endif
 
@@ -464,9 +464,9 @@ static const char *const yytname[] =
   "$end", "error", "$undefined", "NAME", "VALUE", "WHILE", "IF", "SM",
   "LBR", "RBR", "LPAR", "RPAR", "LCB", "RCB", "ILLEGAL", "OUTPUT", "ASG",
   "RELOP", "INPUT", "OR", "AND", "NOT", "PLUS", "MINUS", "MUL", "DIV",
-  "MOD", "UMINUS", "$accept", "program", "scope", "stms", "stm", "oper",
-  "assign", "lval", "expr", "if", "ifh", "lexpr", "while", "whileh",
-  "output", YY_NULLPTR
+  "MOD", "UMINUS", "$accept", "program", "scope", "openScope",
+  "closeScope", "stms", "stm", "oper", "assign", "lval", "expr", "if",
+  "ifh", "lexpr", "while", "whileh", "output", YY_NULLPTR
 };
 #endif
 
@@ -495,13 +495,13 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-       2,   -11,    -9,    -6,    32,     6,    91,   -11,   -11,   -11,
-       3,   -11,    91,   -11,    91,   -11,    10,    10,   -11,   -11,
-      32,   -11,    32,    37,   -11,     2,   -11,   -11,    32,   -11,
-      91,   -11,   -11,    10,    10,    88,    59,    96,    63,   -11,
-     -11,    32,    32,    32,    32,    32,    87,    42,    58,    98,
-     -11,    32,   -11,    10,    10,   -11,   -11,    27,    27,   -11,
-     -11,   -11,   -11,   -11,   -11,    97,     1,   -11
+      -1,   -11,    -9,     0,    33,    12,    92,   -11,   -11,   -11,
+      -8,   -11,    92,   -11,    92,   -11,     3,     3,   -11,   -11,
+      33,   -11,    33,    38,   -11,   -11,   -11,    -1,   -11,    33,
+     -11,   -11,   -11,   -11,     3,     3,    89,     8,    35,    64,
+     -11,   -11,    33,    33,    33,    33,    33,    88,    43,    59,
+      60,   -11,    33,   -11,     3,     3,   -11,   -11,    48,    48,
+     -11,   -11,   -11,   -11,   -11,   -11,   -11,    94,     2,   -11
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -509,27 +509,27 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       4,    14,     0,     0,     0,     0,     2,     5,     8,     9,
-       0,    10,     4,    11,     0,    12,     0,     0,    21,    22,
-       0,    23,     0,     0,     1,     4,     7,     6,     0,    26,
-      25,    35,    34,     0,     0,    28,     0,     0,     0,    20,
-      37,     0,     0,     0,     0,     0,     0,     0,    28,     0,
-      32,     0,    36,     0,     0,    27,    24,    15,    16,    17,
-      18,    19,     3,    13,    33,    29,    30,    31
+       6,    16,     0,     0,     0,     0,     2,     7,    10,    11,
+       0,    12,     0,    13,     0,    14,     0,     0,    23,    24,
+       0,    25,     0,     0,     1,     4,     9,     6,     8,     0,
+      28,    27,    37,    36,     0,     0,    30,     0,     0,     0,
+      22,    39,     0,     0,     0,     0,     0,     0,     0,    30,
+       0,    34,     0,    38,     0,     0,    29,    26,    17,    18,
+      19,    20,    21,     5,     3,    15,    35,    31,    32,    33
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -11,   -11,    -2,   -10,    -3,   -11,   -11,   -11,    -4,   -11,
-     -11,    -8,   -11,   -11,   -11
+     -11,   -11,    17,   -11,   -11,   -10,    -3,   -11,   -11,   -11,
+      -4,   -11,   -11,    -2,   -11,   -11,   -11
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     5,    26,     6,     7,     8,     9,    10,    35,    11,
-      12,    36,    13,    14,    15
+      -1,     5,    26,    27,    64,     6,     7,     8,     9,    10,
+      36,    11,    12,    37,    13,    14,    15
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -537,67 +537,67 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-      23,    16,    30,    27,    17,     1,    24,     2,     3,    37,
-      29,    32,    31,    18,    19,    46,    38,     4,    39,    28,
-      33,    54,     0,     0,    47,    49,    50,    27,    21,    48,
-       0,    34,     0,    22,     0,    18,    19,    57,    58,    59,
-      60,    61,    20,    27,    40,    66,    67,    65,     0,    63,
-      21,    43,    44,    45,     0,    22,     0,     0,     0,    41,
-      42,    43,    44,    45,    41,    42,    43,    44,    45,    56,
-      52,     0,     0,     0,    56,    51,     0,     0,    53,    54,
-      41,    42,    43,    44,    45,    41,    42,    43,    44,    45,
-       1,     0,     2,     3,     1,     0,     2,     3,     0,    25,
-      62,     0,     4,    25,     0,    51,     4,    55,     0,    64,
-      41,    42,    43,    44,    45,    53,    54,    53,    54,    41,
-      42,    43,    44,    45
+      23,    16,     1,    28,     2,     3,    18,    19,    29,    31,
+      17,    33,    24,    34,     4,    38,    39,    47,    40,    53,
+       0,    21,    55,     0,    35,    48,    22,    54,    55,    30,
+      49,    32,    50,    51,     0,     0,    18,    19,    58,    59,
+      60,    61,    62,    20,    28,    41,    56,     0,    67,     0,
+      65,    21,    68,    69,    54,    55,    22,     0,     0,     0,
+      42,    43,    44,    45,    46,    42,    43,    44,    45,    46,
+      57,    66,    44,    45,    46,    57,    52,     0,     0,    54,
+      55,    42,    43,    44,    45,    46,    42,    43,    44,    45,
+      46,     1,     0,     2,     3,     1,     0,     2,     3,     0,
+      25,    63,     0,     4,    25,     0,    52,     4,     0,     0,
+       0,    42,    43,    44,    45,    46,    42,    43,    44,    45,
+      46
 };
 
 static const yytype_int8 yycheck[] =
 {
-       4,    10,    12,     6,    10,     3,     0,     5,     6,    17,
-      12,    14,    14,     3,     4,    25,    20,    15,    22,    16,
-      10,    20,    -1,    -1,    28,    33,    34,    30,    18,    33,
-      -1,    21,    -1,    23,    -1,     3,     4,    41,    42,    43,
-      44,    45,    10,    46,     7,    53,    54,    51,    -1,     7,
-      18,    24,    25,    26,    -1,    23,    -1,    -1,    -1,    22,
-      23,    24,    25,    26,    22,    23,    24,    25,    26,    11,
-      11,    -1,    -1,    -1,    11,    17,    -1,    -1,    19,    20,
+       4,    10,     3,     6,     5,     6,     3,     4,    16,    12,
+      10,    14,     0,    10,    15,    17,    20,    27,    22,    11,
+      -1,    18,    20,    -1,    21,    29,    23,    19,    20,    12,
+      34,    14,    34,    35,    -1,    -1,     3,     4,    42,    43,
+      44,    45,    46,    10,    47,     7,    11,    -1,    52,    -1,
+       7,    18,    54,    55,    19,    20,    23,    -1,    -1,    -1,
       22,    23,    24,    25,    26,    22,    23,    24,    25,    26,
-       3,    -1,     5,     6,     3,    -1,     5,     6,    -1,    12,
-      13,    -1,    15,    12,    -1,    17,    15,    11,    -1,    11,
-      22,    23,    24,    25,    26,    19,    20,    19,    20,    22,
-      23,    24,    25,    26
+      11,    11,    24,    25,    26,    11,    17,    -1,    -1,    19,
+      20,    22,    23,    24,    25,    26,    22,    23,    24,    25,
+      26,     3,    -1,     5,     6,     3,    -1,     5,     6,    -1,
+      12,    13,    -1,    15,    12,    -1,    17,    15,    -1,    -1,
+      -1,    22,    23,    24,    25,    26,    22,    23,    24,    25,
+      26
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,     3,     5,     6,    15,    29,    31,    32,    33,    34,
-      35,    37,    38,    40,    41,    42,    10,    10,     3,     4,
-      10,    18,    23,    36,     0,    12,    30,    32,    16,    30,
-      31,    30,    32,    10,    21,    36,    39,    39,    36,    36,
-       7,    22,    23,    24,    25,    26,    31,    36,    36,    39,
-      39,    17,    11,    19,    20,    11,    11,    36,    36,    36,
-      36,    36,    13,     7,    11,    36,    39,    39
+       0,     3,     5,     6,    15,    29,    33,    34,    35,    36,
+      37,    39,    40,    42,    43,    44,    10,    10,     3,     4,
+      10,    18,    23,    38,     0,    12,    30,    31,    34,    16,
+      30,    34,    30,    34,    10,    21,    38,    41,    41,    38,
+      38,     7,    22,    23,    24,    25,    26,    33,    38,    38,
+      41,    41,    17,    11,    19,    20,    11,    11,    38,    38,
+      38,    38,    38,    13,    32,     7,    11,    38,    41,    41
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    28,    29,    30,    31,    31,    31,    31,    32,    33,
-      33,    33,    33,    34,    35,    36,    36,    36,    36,    36,
-      36,    36,    36,    36,    36,    37,    37,    38,    39,    39,
-      39,    39,    39,    39,    40,    40,    41,    42
+       0,    28,    29,    30,    31,    32,    33,    33,    33,    33,
+      34,    35,    35,    35,    35,    36,    37,    38,    38,    38,
+      38,    38,    38,    38,    38,    38,    38,    39,    39,    40,
+      41,    41,    41,    41,    41,    41,    42,    42,    43,    44
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     1,     3,     0,     1,     2,     2,     1,     1,
-       1,     1,     1,     4,     1,     3,     3,     3,     3,     3,
-       2,     1,     1,     1,     3,     2,     2,     4,     1,     3,
-       3,     3,     2,     3,     2,     2,     4,     3
+       0,     2,     1,     3,     1,     1,     0,     1,     2,     2,
+       1,     1,     1,     1,     1,     4,     1,     3,     3,     3,
+       3,     3,     2,     1,     1,     1,     3,     2,     2,     4,
+       1,     3,     3,     3,     2,     3,     2,     2,     4,     3
 };
 
 
@@ -1276,7 +1276,7 @@ yyreduce:
         case 2:
 #line 24 "compiler.y" /* yacc.c:1646  */
     { 
-					printf ("program stms\n");
+					//printf ("program stms\n");
 					currentScope->calc();
 				}
 #line 1283 "compiler.cpp" /* yacc.c:1646  */
@@ -1284,253 +1284,350 @@ yyreduce:
 
   case 3:
 #line 29 "compiler.y" /* yacc.c:1646  */
-    { printf ("{scope}\n");}
-#line 1289 "compiler.cpp" /* yacc.c:1646  */
+    {
+					//std::cout << "Scope" << std::endl;
+					(yyval) = (yyvsp[0]);
+				}
+#line 1292 "compiler.cpp" /* yacc.c:1646  */
+    break;
+
+  case 4:
+#line 34 "compiler.y" /* yacc.c:1646  */
+    {
+					//std::cout << "{" << std::endl;
+					currentScope = new Scope{currentScope};
+				}
+#line 1301 "compiler.cpp" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 33 "compiler.y" /* yacc.c:1646  */
-    { 
-					printf ("stm ");
-					currentScope->addBranch((yyvsp[0]).treeNode);
-					std::cout << (yyvsp[0]).treeNode << '\n';
-				}
-#line 1299 "compiler.cpp" /* yacc.c:1646  */
-    break;
-
-  case 6:
 #line 39 "compiler.y" /* yacc.c:1646  */
-    { 
-					printf ("stms stm ");
-					currentScope->addBranch((yyvsp[0]).treeNode);
-					std::cout << (yyvsp[0]).treeNode << '\n';
+    {
+					//std::cout << "}" << std::endl;
+					(yyval).treeNode = currentScope;
+					currentScope = currentScope->resetScope();
 				}
-#line 1309 "compiler.cpp" /* yacc.c:1646  */
+#line 1311 "compiler.cpp" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 45 "compiler.y" /* yacc.c:1646  */
-    {printf ("stms scope\n");}
-#line 1315 "compiler.cpp" /* yacc.c:1646  */
+#line 47 "compiler.y" /* yacc.c:1646  */
+    { 
+					//printf ("stm ");
+					currentScope->addBranch((yyvsp[0]).treeNode);
+					//std::cout << $1.treeNode << '\n';
+				}
+#line 1321 "compiler.cpp" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 47 "compiler.y" /* yacc.c:1646  */
+#line 53 "compiler.y" /* yacc.c:1646  */
     { 
-					printf ("stm oper ");
-					(yyval) = (yyvsp[0]);
-					std::cout << (yyvsp[0]).treeNode << '\n';
+					//printf ("stms stm ");
+					currentScope->addBranch((yyvsp[0]).treeNode);
+					//std::cout << $2.treeNode << '\n';
 				}
-#line 1325 "compiler.cpp" /* yacc.c:1646  */
+#line 1331 "compiler.cpp" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 53 "compiler.y" /* yacc.c:1646  */
-    { 
-					printf ("oper assign ");
-					(yyval) = (yyvsp[0]);
-					std::cout << (yyvsp[0]).treeNode << '\n';
+#line 59 "compiler.y" /* yacc.c:1646  */
+    {
+					//printf ("stms scope\n");
+					currentScope->addBranch((yyvsp[0]).treeNode);
 				}
-#line 1335 "compiler.cpp" /* yacc.c:1646  */
+#line 1340 "compiler.cpp" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 59 "compiler.y" /* yacc.c:1646  */
-    { printf ("oper if\n");}
-#line 1341 "compiler.cpp" /* yacc.c:1646  */
+#line 64 "compiler.y" /* yacc.c:1646  */
+    { 
+					//printf ("stm oper ");
+					(yyval) = (yyvsp[0]);
+					//std::cout << $1.treeNode << '\n';
+				}
+#line 1350 "compiler.cpp" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 61 "compiler.y" /* yacc.c:1646  */
-    { printf ("oper while\n");}
-#line 1347 "compiler.cpp" /* yacc.c:1646  */
+#line 70 "compiler.y" /* yacc.c:1646  */
+    { 
+					//printf ("oper assign ");
+					(yyval) = (yyvsp[0]);
+					//std::cout << $1.treeNode << '\n';
+				}
+#line 1360 "compiler.cpp" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 63 "compiler.y" /* yacc.c:1646  */
+#line 76 "compiler.y" /* yacc.c:1646  */
     { 
-					printf ("oper output ");
+					//printf ("oper if\n");
+					currentScope = currentScope->resetScope();
 					(yyval) = (yyvsp[0]);
-					std::cout << (yyval).treeNode << '\n';
 				}
-#line 1357 "compiler.cpp" /* yacc.c:1646  */
+#line 1370 "compiler.cpp" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 69 "compiler.y" /* yacc.c:1646  */
+#line 82 "compiler.y" /* yacc.c:1646  */
     { 
-					printf ("assign lval ");
-					(yyval).treeNode = new Op{(yyvsp[-3]).treeNode, Ops::Assign, (yyvsp[-1]).treeNode};
-					std::cout << (yyval).treeNode << '\n';
+					//printf ("oper while\n");
+					currentScope = currentScope->resetScope();
+					(yyval) = (yyvsp[0]);
 				}
-#line 1367 "compiler.cpp" /* yacc.c:1646  */
+#line 1380 "compiler.cpp" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 75 "compiler.y" /* yacc.c:1646  */
+#line 88 "compiler.y" /* yacc.c:1646  */
     { 
-					printf ("laval name ");
-					(yyval).treeNode = (*currentScope)[(yyvsp[0]).name];
-					std::cout << (yyval).treeNode << '\n';
+					//printf ("oper output ");
+					(yyval) = (yyvsp[0]);
+					//std::cout << $$.treeNode << '\n';
 				}
-#line 1377 "compiler.cpp" /* yacc.c:1646  */
+#line 1390 "compiler.cpp" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 81 "compiler.y" /* yacc.c:1646  */
-    { printf ("expr +\n");}
-#line 1383 "compiler.cpp" /* yacc.c:1646  */
+#line 94 "compiler.y" /* yacc.c:1646  */
+    { 
+					//printf ("assign lval ");
+					(yyval).treeNode = new Op{(yyvsp[-3]).treeNode, Ops::Assign, (yyvsp[-1]).treeNode};
+					//std::cout << $$.treeNode << '\n';
+				}
+#line 1400 "compiler.cpp" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 83 "compiler.y" /* yacc.c:1646  */
-    { printf ("expr -\n");}
-#line 1389 "compiler.cpp" /* yacc.c:1646  */
+#line 100 "compiler.y" /* yacc.c:1646  */
+    { 
+					//printf ("laval name ");
+					(yyval).treeNode = (*currentScope)[(yyvsp[0]).name];
+					//std::cout << $$.treeNode << '\n';
+				}
+#line 1410 "compiler.cpp" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 85 "compiler.y" /* yacc.c:1646  */
-    { printf ("expt *\n");}
-#line 1395 "compiler.cpp" /* yacc.c:1646  */
+#line 106 "compiler.y" /* yacc.c:1646  */
+    { 
+					//printf ("expr +\n");
+					(yyval).treeNode = new Op{(yyvsp[-2]).treeNode, Ops::Plus, (yyvsp[0]).treeNode};
+				}
+#line 1419 "compiler.cpp" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 87 "compiler.y" /* yacc.c:1646  */
-    { printf ("expr /\n");}
-#line 1401 "compiler.cpp" /* yacc.c:1646  */
+#line 111 "compiler.y" /* yacc.c:1646  */
+    { 
+					//printf ("expr -\n");
+					(yyval).treeNode = new Op{(yyvsp[-2]).treeNode, Ops::Minus, (yyvsp[0]).treeNode};
+				}
+#line 1428 "compiler.cpp" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 89 "compiler.y" /* yacc.c:1646  */
-    { printf ("expr MOD\n");}
-#line 1407 "compiler.cpp" /* yacc.c:1646  */
+#line 116 "compiler.y" /* yacc.c:1646  */
+    { 
+					//printf ("expt *\n");
+					(yyval).treeNode = new Op{(yyvsp[-2]).treeNode, Ops::Mul, (yyvsp[0]).treeNode};
+				}
+#line 1437 "compiler.cpp" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 91 "compiler.y" /* yacc.c:1646  */
+#line 121 "compiler.y" /* yacc.c:1646  */
     { 
-					printf ("expr u-\n");
-					(yyval).treeNode = new Op{new Value{0}, Ops::Minus, (yyvsp[0]).treeNode};
+					//printf ("expr /\n");
+					(yyval).treeNode = new Op{(yyvsp[-2]).treeNode, Ops::Div, (yyvsp[0]).treeNode};
 				}
-#line 1416 "compiler.cpp" /* yacc.c:1646  */
+#line 1446 "compiler.cpp" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 96 "compiler.y" /* yacc.c:1646  */
+#line 126 "compiler.y" /* yacc.c:1646  */
     { 
-					printf ("expr name ");
-					(yyval).treeNode = (*currentScope)[(yyvsp[0]).name];
-					std::cout << (yyval).treeNode << '\n';
+					//printf ("expr MOD\n");
+					(yyval).treeNode = new Op{(yyvsp[-2]).treeNode, Ops::Mod, (yyvsp[0]).treeNode};
 				}
-#line 1426 "compiler.cpp" /* yacc.c:1646  */
+#line 1455 "compiler.cpp" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 102 "compiler.y" /* yacc.c:1646  */
-    {
-					printf ("expr value ");
-					(yyval).treeNode = new Value{(yyvsp[0]).value};
-					std::cout << (yyval).treeNode << '\n';
+#line 131 "compiler.y" /* yacc.c:1646  */
+    { 
+					//printf ("expr u-\n");
+					(yyval).treeNode = new Op{new Value{0}, Ops::Minus, (yyvsp[0]).treeNode};
 				}
-#line 1436 "compiler.cpp" /* yacc.c:1646  */
+#line 1464 "compiler.cpp" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 108 "compiler.y" /* yacc.c:1646  */
-    { printf ("expr input\n");}
-#line 1442 "compiler.cpp" /* yacc.c:1646  */
+#line 136 "compiler.y" /* yacc.c:1646  */
+    { 
+					//printf ("expr name ");
+					(yyval).treeNode = (*currentScope)[(yyvsp[0]).name];
+					//std::cout << $$.treeNode << '\n';
+				}
+#line 1474 "compiler.cpp" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 110 "compiler.y" /* yacc.c:1646  */
-    { printf ("(expr)\n");}
-#line 1448 "compiler.cpp" /* yacc.c:1646  */
-    break;
-
-  case 25:
-#line 112 "compiler.y" /* yacc.c:1646  */
-    { printf ("if stm\n");}
-#line 1454 "compiler.cpp" /* yacc.c:1646  */
-    break;
-
-  case 26:
-#line 114 "compiler.y" /* yacc.c:1646  */
-    { printf ("is scope\n");}
-#line 1460 "compiler.cpp" /* yacc.c:1646  */
-    break;
-
-  case 27:
-#line 116 "compiler.y" /* yacc.c:1646  */
-    { printf ("ifh()\n");}
-#line 1466 "compiler.cpp" /* yacc.c:1646  */
-    break;
-
-  case 28:
-#line 118 "compiler.y" /* yacc.c:1646  */
-    {printf("lexpr expr\n");}
-#line 1472 "compiler.cpp" /* yacc.c:1646  */
-    break;
-
-  case 29:
-#line 120 "compiler.y" /* yacc.c:1646  */
-    { printf ("lexpr relop\n");}
-#line 1478 "compiler.cpp" /* yacc.c:1646  */
-    break;
-
-  case 30:
-#line 122 "compiler.y" /* yacc.c:1646  */
-    { printf ("lexpr ||\n");}
+#line 142 "compiler.y" /* yacc.c:1646  */
+    {
+					//printf ("expr value ");
+					(yyval).treeNode = new Value{(yyvsp[0]).value};
+					//std::cout << $$.treeNode << '\n';
+				}
 #line 1484 "compiler.cpp" /* yacc.c:1646  */
     break;
 
-  case 31:
-#line 124 "compiler.y" /* yacc.c:1646  */
-    { printf ("lexpr &&\n");}
-#line 1490 "compiler.cpp" /* yacc.c:1646  */
+  case 25:
+#line 148 "compiler.y" /* yacc.c:1646  */
+    { 
+					//printf ("expr input\n");
+					(yyval).treeNode = new Op{nullptr, Ops::StdIn, nullptr};
+				}
+#line 1493 "compiler.cpp" /* yacc.c:1646  */
     break;
 
-  case 32:
-#line 126 "compiler.y" /* yacc.c:1646  */
-    { printf ("lexpr !\n");}
-#line 1496 "compiler.cpp" /* yacc.c:1646  */
-    break;
-
-  case 33:
-#line 128 "compiler.y" /* yacc.c:1646  */
-    { printf ("(lexpr)\n");}
+  case 26:
+#line 153 "compiler.y" /* yacc.c:1646  */
+    { 
+					//printf ("(expr)\n");
+					(yyval).treeNode = (yyvsp[-1]).treeNode;
+				}
 #line 1502 "compiler.cpp" /* yacc.c:1646  */
     break;
 
+  case 27:
+#line 158 "compiler.y" /* yacc.c:1646  */
+    { 
+					//printf ("if stm\n");
+					currentScope->addBranch((yyvsp[0]).treeNode);
+					(yyval).treeNode = new If{(yyvsp[-1]).treeNode, currentScope};
+				}
+#line 1512 "compiler.cpp" /* yacc.c:1646  */
+    break;
+
+  case 28:
+#line 164 "compiler.y" /* yacc.c:1646  */
+    { 
+					//printf ("if scope\n");
+					currentScope->addBranch((yyvsp[0]).treeNode);
+					(yyval).treeNode = new If{(yyvsp[-1]).treeNode, currentScope};
+				}
+#line 1522 "compiler.cpp" /* yacc.c:1646  */
+    break;
+
+  case 29:
+#line 170 "compiler.y" /* yacc.c:1646  */
+    { 
+					//printf ("ifh() newScope: ");
+					currentScope = new Scope{currentScope};
+					//std::cout << currentScope << std::endl;
+					(yyval) = (yyvsp[-1]);
+				}
+#line 1533 "compiler.cpp" /* yacc.c:1646  */
+    break;
+
+  case 30:
+#line 177 "compiler.y" /* yacc.c:1646  */
+    {
+					//printf("lexpr expr\n");
+					(yyval) = (yyvsp[0]);
+				}
+#line 1542 "compiler.cpp" /* yacc.c:1646  */
+    break;
+
+  case 31:
+#line 182 "compiler.y" /* yacc.c:1646  */
+    {
+					//printf ("lexpr relop\n");
+					(yyval).treeNode = new Op{(yyvsp[-2]).treeNode, (yyvsp[-1]).op, (yyvsp[0]).treeNode};
+				}
+#line 1551 "compiler.cpp" /* yacc.c:1646  */
+    break;
+
+  case 32:
+#line 187 "compiler.y" /* yacc.c:1646  */
+    { 
+					//printf ("lexpr ||\n");
+					(yyval).treeNode = new Op{(yyvsp[-2]).treeNode, Ops::Or, (yyvsp[0]).treeNode};
+				}
+#line 1560 "compiler.cpp" /* yacc.c:1646  */
+    break;
+
+  case 33:
+#line 192 "compiler.y" /* yacc.c:1646  */
+    { 
+					//printf ("lexpr &&\n");
+					(yyval).treeNode = new Op{(yyvsp[-2]).treeNode, Ops::And, (yyvsp[0]).treeNode};
+				}
+#line 1569 "compiler.cpp" /* yacc.c:1646  */
+    break;
+
   case 34:
-#line 130 "compiler.y" /* yacc.c:1646  */
-    { printf ("while stm\n");}
-#line 1508 "compiler.cpp" /* yacc.c:1646  */
+#line 197 "compiler.y" /* yacc.c:1646  */
+    { 
+					//printf ("lexpr !\n");
+					(yyval).treeNode = new Op{nullptr, Ops::Not, (yyvsp[0]).treeNode};
+				}
+#line 1578 "compiler.cpp" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 132 "compiler.y" /* yacc.c:1646  */
-    { printf ("while scope\n");}
-#line 1514 "compiler.cpp" /* yacc.c:1646  */
+#line 202 "compiler.y" /* yacc.c:1646  */
+    { 
+					//printf ("(lexpr)\n");
+					(yyval) = (yyvsp[-1]);
+				}
+#line 1587 "compiler.cpp" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 134 "compiler.y" /* yacc.c:1646  */
-    { printf ("whileh ()\n");}
-#line 1520 "compiler.cpp" /* yacc.c:1646  */
+#line 207 "compiler.y" /* yacc.c:1646  */
+    { 
+					//printf ("while stm\n");
+					currentScope->addBranch((yyvsp[0]).treeNode);
+					(yyval).treeNode = new While{(yyvsp[-1]).treeNode, currentScope};
+				}
+#line 1597 "compiler.cpp" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 136 "compiler.y" /* yacc.c:1646  */
-    {
-					printf ("output expr ");
-					(yyval).treeNode = new Op{nullptr, Ops::StdOut, (yyvsp[-1]).treeNode};
-					std::cout << (yyval).treeNode << std::endl;
+#line 213 "compiler.y" /* yacc.c:1646  */
+    { 
+					//printf ("while scope\n");
+					currentScope->addBranch((yyvsp[0]).treeNode);
+					(yyval).treeNode = new While{(yyvsp[-1]).treeNode, currentScope};
 				}
-#line 1530 "compiler.cpp" /* yacc.c:1646  */
+#line 1607 "compiler.cpp" /* yacc.c:1646  */
+    break;
+
+  case 38:
+#line 219 "compiler.y" /* yacc.c:1646  */
+    { 
+					//printf ("whileh ()\n");
+					currentScope = new Scope{currentScope};
+					(yyval) = (yyvsp[-1]);
+				}
+#line 1617 "compiler.cpp" /* yacc.c:1646  */
+    break;
+
+  case 39:
+#line 225 "compiler.y" /* yacc.c:1646  */
+    {
+					//printf ("output expr ");
+					(yyval).treeNode = new Op{nullptr, Ops::StdOut, (yyvsp[-1]).treeNode};
+					//std::cout << $$.treeNode << std::endl;
+				}
+#line 1627 "compiler.cpp" /* yacc.c:1646  */
     break;
 
 
-#line 1534 "compiler.cpp" /* yacc.c:1646  */
+#line 1631 "compiler.cpp" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1758,7 +1855,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 142 "compiler.y" /* yacc.c:1906  */
+#line 231 "compiler.y" /* yacc.c:1906  */
 
 
 int main(int argc, char * argv[])
@@ -1771,6 +1868,7 @@ int main(int argc, char * argv[])
 	}
 	yyin = f;
 	currentScope = new Scope{nullptr};
+	//std::cout << "CurrentScope: " << currentScope << std::endl;
 	yyparse();
 	fclose(f);
 
