@@ -243,6 +243,7 @@ int main(int argc, char * argv[])
 	//std::cout << "CurrentScope: " << currentScope << std::endl;
 	yyparse();
 	fclose(f);
+	delete currentScope;
 
 	return 0;
 }

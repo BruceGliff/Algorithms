@@ -142,6 +142,12 @@ RType Op::calc()
         return left->calc() || right->calc();
         break;
     case Ops::Div:
+        val = right->calc();
+        if (!val)
+        {
+            std::cerr << "Division by zero!" << std::endl;
+            exit(1);
+        }
         return left->calc() / right->calc();
         break;
     case Ops::Mul:
@@ -209,10 +215,10 @@ void Op::dump() const
 }
 Op::~Op() 
 { 
-    if (!dynamic_cast<Decl *>(right))
+    if (left && typeid(Decl) != typeid(*left))
+        delete left;
+    if (right && typeid(Decl) != typeid(*right))
         delete right;
-    if (!dynamic_cast<Decl *>(left))
-        delete left; 
 }
 
 
@@ -230,7 +236,7 @@ void While::dump() const
 }
 While::~While()
 {
-    if (!dynamic_cast<Decl *>(op))
+    if (op && typeid(Decl) != typeid(*op))
         delete op;
     delete scope;
 }
@@ -249,7 +255,7 @@ void If::dump() const
 }
 If::~If() 
 { 
-    if (!dynamic_cast<Decl *>(op))
+    if (op && typeid(Decl) != typeid(*op))
         delete op;
     delete scope;
 }

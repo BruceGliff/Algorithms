@@ -4,6 +4,7 @@
 #include <map>
 #include <string>
 #include <iostream>
+#include <typeinfo>
 
 class Node
 {
@@ -31,7 +32,7 @@ class Decl final : public Node
 {
     int val;
 public:
-    Decl() = default;
+    Decl() {};
     RType calc() override;
     void dump() const override;
     void SetValue(int Val);
@@ -62,20 +63,20 @@ public:
 // OPERATIONS
 enum class Ops
 {
-    Plus, //
-    Minus, //
-    Assign, //
-    Greater, //
-    Less, //
-    GreaterEq, //
-    LessEq, //
-    StdOut, //
-    StdIn, //
-    Equal, //
-    NotEqual, //
-    Div, //
-    Mul, //
-    Mod, //
+    Plus,
+    Minus,
+    Assign, 
+    Greater, 
+    Less, 
+    GreaterEq, 
+    LessEq, 
+    StdOut, 
+    StdIn, 
+    Equal, 
+    NotEqual, 
+    Div, 
+    Mul, 
+    Mod, 
     Not,
     And,
     Or
