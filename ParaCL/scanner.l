@@ -87,7 +87,7 @@ int   [0-9]+
 int yywrap() 	{ return 1; }
 void ScanError(char const * s, int lineno)
 {
-	fprintf(stderr, 
+	fprintf(stdout, 
 		"Scanner error: %s in line %d\n", 
 		s, lineno
 	       );

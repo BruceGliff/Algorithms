@@ -147,7 +147,7 @@ RType Op::calc()
         val = right->calc();
         if (!val)
         {
-            std::cerr << "Division by zero!" << std::endl;
+            std::cout << "Division by zero!" << std::endl;
             exit(1);
         }
         return left->calc() / right->calc();

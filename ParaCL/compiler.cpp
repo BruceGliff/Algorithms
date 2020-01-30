@@ -1,8 +1,9 @@
-/* A Bison parser, made by GNU Bison 3.0.4.  */
+/* A Bison parser, made by GNU Bison 3.4.2.  */
 
 /* Bison implementation for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2019 Free Software Foundation,
+   Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -40,11 +41,14 @@
    define necessary library symbols; they are noted "INFRINGES ON
    USER NAME SPACE" below.  */
 
+/* Undocumented macros, especially those whose name start with YY_,
+   are private implementation details.  Do not rely on them.  */
+
 /* Identify Bison output.  */
 #define YYBISON 1
 
 /* Bison version.  */
-#define YYBISON_VERSION "3.0.4"
+#define YYBISON_VERSION "3.4.2"
 
 /* Skeleton name.  */
 #define YYSKELETON_NAME "yacc.c"
@@ -61,8 +65,8 @@
 
 
 
-/* Copy the first part of user declarations.  */
-#line 1 "compiler.y" /* yacc.c:339  */
+/* First part of user prologue.  */
+#line 1 "compiler.y"
 
 	#include "parser.hpp"
 
@@ -70,13 +74,17 @@
 static char error_text[128];
 Scope * currentScope = nullptr;
 
-#line 74 "compiler.cpp" /* yacc.c:339  */
+#line 78 "compiler.cpp"
 
 # ifndef YY_NULLPTR
-#  if defined __cplusplus && 201103L <= __cplusplus
-#   define YY_NULLPTR nullptr
+#  if defined __cplusplus
+#   if 201103L <= __cplusplus
+#    define YY_NULLPTR nullptr
+#   else
+#    define YY_NULLPTR 0
+#   endif
 #  else
-#   define YY_NULLPTR 0
+#   define YY_NULLPTR ((void*)0)
 #  endif
 # endif
 
@@ -88,8 +96,8 @@ Scope * currentScope = nullptr;
 # define YYERROR_VERBOSE 0
 #endif
 
-/* In a future release of Bison, this section will be replaced
-   by #include "compiler.cpp.h".  */
+/* Use api.header.include to #include this header
+   instead of duplicating it here.  */
 #ifndef YY_YY_COMPILER_CPP_H_INCLUDED
 # define YY_YY_COMPILER_CPP_H_INCLUDED
 /* Debug traces.  */
@@ -147,9 +155,7 @@ int yyparse (void);
 
 #endif /* !YY_YY_COMPILER_CPP_H_INCLUDED  */
 
-/* Copy the second part of user declarations.  */
 
-#line 153 "compiler.cpp" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -170,13 +176,13 @@ typedef signed char yytype_int8;
 #ifdef YYTYPE_UINT16
 typedef YYTYPE_UINT16 yytype_uint16;
 #else
-typedef unsigned short int yytype_uint16;
+typedef unsigned short yytype_uint16;
 #endif
 
 #ifdef YYTYPE_INT16
 typedef YYTYPE_INT16 yytype_int16;
 #else
-typedef short int yytype_int16;
+typedef short yytype_int16;
 #endif
 
 #ifndef YYSIZE_T
@@ -188,7 +194,7 @@ typedef short int yytype_int16;
 #  include <stddef.h> /* INFRINGES ON USER NAME SPACE */
 #  define YYSIZE_T size_t
 # else
-#  define YYSIZE_T unsigned int
+#  define YYSIZE_T unsigned
 # endif
 #endif
 
@@ -224,15 +230,6 @@ typedef short int yytype_int16;
 # define YY_ATTRIBUTE_UNUSED YY_ATTRIBUTE ((__unused__))
 #endif
 
-#if !defined _Noreturn \
-     && (!defined __STDC_VERSION__ || __STDC_VERSION__ < 201112)
-# if defined _MSC_VER && 1200 <= _MSC_VER
-#  define _Noreturn __declspec (noreturn)
-# else
-#  define _Noreturn YY_ATTRIBUTE ((__noreturn__))
-# endif
-#endif
-
 /* Suppress unused-variable warnings by "using" E.  */
 #if ! defined lint || defined __GNUC__
 # define YYUSE(E) ((void) (E))
@@ -240,7 +237,7 @@ typedef short int yytype_int16;
 # define YYUSE(E) /* empty */
 #endif
 
-#if defined __GNUC__ && 407 <= __GNUC__ * 100 + __GNUC_MINOR__
+#if defined __GNUC__ && ! defined __ICC && 407 <= __GNUC__ * 100 + __GNUC_MINOR__
 /* Suppress an incorrect diagnostic about yylval being uninitialized.  */
 # define YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN \
     _Pragma ("GCC diagnostic push") \
@@ -259,6 +256,8 @@ typedef short int yytype_int16;
 # define YY_INITIAL_VALUE(Value) /* Nothing. */
 #endif
 
+
+#define YY_ASSERT(E) ((void) (0 && (E)))
 
 #if ! defined yyoverflow || YYERROR_VERBOSE
 
@@ -402,16 +401,16 @@ union yyalloc
 /* YYNSTATES -- Number of states.  */
 #define YYNSTATES  70
 
-/* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
-   by yylex, with out-of-bounds checking.  */
 #define YYUNDEFTOK  2
 #define YYMAXUTOK   282
 
+/* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
+   as returned by yylex, with out-of-bounds checking.  */
 #define YYTRANSLATE(YYX)                                                \
-  ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
+  ((unsigned) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
 
 /* YYTRANSLATE[TOKEN-NUM] -- Symbol number corresponding to TOKEN-NUM
-   as returned by yylex, without out-of-bounds checking.  */
+   as returned by yylex.  */
 static const yytype_uint8 yytranslate[] =
 {
        0,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -613,22 +612,22 @@ static const yytype_uint8 yyr2[] =
 
 #define YYRECOVERING()  (!!yyerrstatus)
 
-#define YYBACKUP(Token, Value)                                  \
-do                                                              \
-  if (yychar == YYEMPTY)                                        \
-    {                                                           \
-      yychar = (Token);                                         \
-      yylval = (Value);                                         \
-      YYPOPSTACK (yylen);                                       \
-      yystate = *yyssp;                                         \
-      goto yybackup;                                            \
-    }                                                           \
-  else                                                          \
-    {                                                           \
-      yyerror (YY_("syntax error: cannot back up")); \
-      YYERROR;                                                  \
-    }                                                           \
-while (0)
+#define YYBACKUP(Token, Value)                                    \
+  do                                                              \
+    if (yychar == YYEMPTY)                                        \
+      {                                                           \
+        yychar = (Token);                                         \
+        yylval = (Value);                                         \
+        YYPOPSTACK (yylen);                                       \
+        yystate = *yyssp;                                         \
+        goto yybackup;                                            \
+      }                                                           \
+    else                                                          \
+      {                                                           \
+        yyerror (YY_("syntax error: cannot back up")); \
+        YYERROR;                                                  \
+      }                                                           \
+  while (0)
 
 /* Error token number */
 #define YYTERROR        1
@@ -668,37 +667,39 @@ do {                                                                      \
 } while (0)
 
 
-/*----------------------------------------.
-| Print this symbol's value on YYOUTPUT.  |
-`----------------------------------------*/
+/*-----------------------------------.
+| Print this symbol's value on YYO.  |
+`-----------------------------------*/
 
 static void
-yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep)
+yy_symbol_value_print (FILE *yyo, int yytype, YYSTYPE const * const yyvaluep)
 {
-  FILE *yyo = yyoutput;
-  YYUSE (yyo);
+  FILE *yyoutput = yyo;
+  YYUSE (yyoutput);
   if (!yyvaluep)
     return;
 # ifdef YYPRINT
   if (yytype < YYNTOKENS)
-    YYPRINT (yyoutput, yytoknum[yytype], *yyvaluep);
+    YYPRINT (yyo, yytoknum[yytype], *yyvaluep);
 # endif
+  YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN
   YYUSE (yytype);
+  YY_IGNORE_MAYBE_UNINITIALIZED_END
 }
 
 
-/*--------------------------------.
-| Print this symbol on YYOUTPUT.  |
-`--------------------------------*/
+/*---------------------------.
+| Print this symbol on YYO.  |
+`---------------------------*/
 
 static void
-yy_symbol_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep)
+yy_symbol_print (FILE *yyo, int yytype, YYSTYPE const * const yyvaluep)
 {
-  YYFPRINTF (yyoutput, "%s %s (",
+  YYFPRINTF (yyo, "%s %s (",
              yytype < YYNTOKENS ? "token" : "nterm", yytname[yytype]);
 
-  yy_symbol_value_print (yyoutput, yytype, yyvaluep);
-  YYFPRINTF (yyoutput, ")");
+  yy_symbol_value_print (yyo, yytype, yyvaluep);
+  YYFPRINTF (yyo, ")");
 }
 
 /*------------------------------------------------------------------.
@@ -732,7 +733,7 @@ do {                                                            \
 static void
 yy_reduce_print (yytype_int16 *yyssp, YYSTYPE *yyvsp, int yyrule)
 {
-  unsigned long int yylno = yyrline[yyrule];
+  unsigned long yylno = yyrline[yyrule];
   int yynrhs = yyr2[yyrule];
   int yyi;
   YYFPRINTF (stderr, "Reducing stack by rule %d (line %lu):\n",
@@ -743,7 +744,7 @@ yy_reduce_print (yytype_int16 *yyssp, YYSTYPE *yyvsp, int yyrule)
       YYFPRINTF (stderr, "   $%d = ", yyi + 1);
       yy_symbol_print (stderr,
                        yystos[yyssp[yyi + 1 - yynrhs]],
-                       &(yyvsp[(yyi + 1) - (yynrhs)])
+                       &yyvsp[(yyi + 1) - (yynrhs)]
                                               );
       YYFPRINTF (stderr, "\n");
     }
@@ -847,7 +848,10 @@ yytnamerr (char *yyres, const char *yystr)
           case '\\':
             if (*++yyp != '\\')
               goto do_not_strip_quotes;
-            /* Fall through.  */
+            else
+              goto append;
+
+          append:
           default:
             if (yyres)
               yyres[yyn] = *yyp;
@@ -865,7 +869,7 @@ yytnamerr (char *yyres, const char *yystr)
   if (! yyres)
     return yystrlen (yystr);
 
-  return yystpcpy (yyres, yystr) - yyres;
+  return (YYSIZE_T) (yystpcpy (yyres, yystr) - yyres);
 }
 # endif
 
@@ -943,10 +947,10 @@ yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
                 yyarg[yycount++] = yytname[yyx];
                 {
                   YYSIZE_T yysize1 = yysize + yytnamerr (YY_NULLPTR, yytname[yyx]);
-                  if (! (yysize <= yysize1
-                         && yysize1 <= YYSTACK_ALLOC_MAXIMUM))
+                  if (yysize <= yysize1 && yysize1 <= YYSTACK_ALLOC_MAXIMUM)
+                    yysize = yysize1;
+                  else
                     return 2;
-                  yysize = yysize1;
                 }
               }
         }
@@ -958,6 +962,7 @@ yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
       case N:                               \
         yyformat = S;                       \
       break
+    default: /* Avoid compiler warnings. */
       YYCASE_(0, YY_("syntax error"));
       YYCASE_(1, YY_("syntax error, unexpected %s"));
       YYCASE_(2, YY_("syntax error, unexpected %s, expecting %s"));
@@ -969,9 +974,10 @@ yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
 
   {
     YYSIZE_T yysize1 = yysize + yystrlen (yyformat);
-    if (! (yysize <= yysize1 && yysize1 <= YYSTACK_ALLOC_MAXIMUM))
+    if (yysize <= yysize1 && yysize1 <= YYSTACK_ALLOC_MAXIMUM)
+      yysize = yysize1;
+    else
       return 2;
-    yysize = yysize1;
   }
 
   if (*yymsg_alloc < yysize)
@@ -1097,23 +1103,33 @@ yyparse (void)
   yychar = YYEMPTY; /* Cause a token to be read.  */
   goto yysetstate;
 
+
 /*------------------------------------------------------------.
-| yynewstate -- Push a new state, which is found in yystate.  |
+| yynewstate -- push a new state, which is found in yystate.  |
 `------------------------------------------------------------*/
- yynewstate:
+yynewstate:
   /* In all cases, when you get here, the value and location stacks
      have just been pushed.  So pushing a state here evens the stacks.  */
   yyssp++;
 
- yysetstate:
-  *yyssp = yystate;
+
+/*--------------------------------------------------------------------.
+| yynewstate -- set current state (the top of the stack) to yystate.  |
+`--------------------------------------------------------------------*/
+yysetstate:
+  YYDPRINTF ((stderr, "Entering state %d\n", yystate));
+  YY_ASSERT (0 <= yystate && yystate < YYNSTATES);
+  *yyssp = (yytype_int16) yystate;
 
   if (yyss + yystacksize - 1 <= yyssp)
+#if !defined yyoverflow && !defined YYSTACK_RELOCATE
+    goto yyexhaustedlab;
+#else
     {
       /* Get the current used size of the three stacks, in elements.  */
-      YYSIZE_T yysize = yyssp - yyss + 1;
+      YYSIZE_T yysize = (YYSIZE_T) (yyssp - yyss + 1);
 
-#ifdef yyoverflow
+# if defined yyoverflow
       {
         /* Give user a chance to reallocate the stack.  Use copies of
            these so that the &'s don't force the real ones into
@@ -1129,14 +1145,10 @@ yyparse (void)
                     &yyss1, yysize * sizeof (*yyssp),
                     &yyvs1, yysize * sizeof (*yyvsp),
                     &yystacksize);
-
         yyss = yyss1;
         yyvs = yyvs1;
       }
-#else /* no yyoverflow */
-# ifndef YYSTACK_RELOCATE
-      goto yyexhaustedlab;
-# else
+# else /* defined YYSTACK_RELOCATE */
       /* Extend the stack our own way.  */
       if (YYMAXDEPTH <= yystacksize)
         goto yyexhaustedlab;
@@ -1152,35 +1164,33 @@ yyparse (void)
           goto yyexhaustedlab;
         YYSTACK_RELOCATE (yyss_alloc, yyss);
         YYSTACK_RELOCATE (yyvs_alloc, yyvs);
-#  undef YYSTACK_RELOCATE
+# undef YYSTACK_RELOCATE
         if (yyss1 != yyssa)
           YYSTACK_FREE (yyss1);
       }
 # endif
-#endif /* no yyoverflow */
 
       yyssp = yyss + yysize - 1;
       yyvsp = yyvs + yysize - 1;
 
       YYDPRINTF ((stderr, "Stack size increased to %lu\n",
-                  (unsigned long int) yystacksize));
+                  (unsigned long) yystacksize));
 
       if (yyss + yystacksize - 1 <= yyssp)
         YYABORT;
     }
-
-  YYDPRINTF ((stderr, "Entering state %d\n", yystate));
+#endif /* !defined yyoverflow && !defined YYSTACK_RELOCATE */
 
   if (yystate == YYFINAL)
     YYACCEPT;
 
   goto yybackup;
 
+
 /*-----------.
 | yybackup.  |
 `-----------*/
 yybackup:
-
   /* Do appropriate processing given the current state.  Read a
      lookahead token if we need one and don't already have one.  */
 
@@ -1238,7 +1248,6 @@ yybackup:
   YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN
   *++yyvsp = yylval;
   YY_IGNORE_MAYBE_UNINITIALIZED_END
-
   goto yynewstate;
 
 
@@ -1253,7 +1262,7 @@ yydefault:
 
 
 /*-----------------------------.
-| yyreduce -- Do a reduction.  |
+| yyreduce -- do a reduction.  |
 `-----------------------------*/
 yyreduce:
   /* yyn is the number of a rule to reduce with.  */
@@ -1273,361 +1282,362 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-        case 2:
-#line 24 "compiler.y" /* yacc.c:1646  */
+  case 2:
+#line 24 "compiler.y"
     { 
 					//printf ("program stms\n");
 					currentScope->calc();
 				}
-#line 1283 "compiler.cpp" /* yacc.c:1646  */
+#line 1292 "compiler.cpp"
     break;
 
   case 3:
-#line 29 "compiler.y" /* yacc.c:1646  */
+#line 29 "compiler.y"
     {
 					//std::cout << "Scope" << std::endl;
-					(yyval) = (yyvsp[0]);
+					yyval = yyvsp[0];
 				}
-#line 1292 "compiler.cpp" /* yacc.c:1646  */
+#line 1301 "compiler.cpp"
     break;
 
   case 4:
-#line 34 "compiler.y" /* yacc.c:1646  */
+#line 34 "compiler.y"
     {
 					//std::cout << "{" << std::endl;
 					currentScope = new Scope{currentScope};
 				}
-#line 1301 "compiler.cpp" /* yacc.c:1646  */
+#line 1310 "compiler.cpp"
     break;
 
   case 5:
-#line 39 "compiler.y" /* yacc.c:1646  */
+#line 39 "compiler.y"
     {
 					//std::cout << "}" << std::endl;
-					(yyval).treeNode = currentScope;
+					yyval.treeNode = currentScope;
 					currentScope = currentScope->resetScope();
 				}
-#line 1311 "compiler.cpp" /* yacc.c:1646  */
+#line 1320 "compiler.cpp"
     break;
 
   case 7:
-#line 47 "compiler.y" /* yacc.c:1646  */
+#line 47 "compiler.y"
     { 
 					//printf ("stm ");
-					currentScope->addBranch((yyvsp[0]).treeNode);
+					currentScope->addBranch(yyvsp[0].treeNode);
 					//std::cout << $1.treeNode << '\n';
 				}
-#line 1321 "compiler.cpp" /* yacc.c:1646  */
+#line 1330 "compiler.cpp"
     break;
 
   case 8:
-#line 53 "compiler.y" /* yacc.c:1646  */
+#line 53 "compiler.y"
     { 
 					//printf ("stms stm ");
-					currentScope->addBranch((yyvsp[0]).treeNode);
+					currentScope->addBranch(yyvsp[0].treeNode);
 					//std::cout << $2.treeNode << '\n';
 				}
-#line 1331 "compiler.cpp" /* yacc.c:1646  */
+#line 1340 "compiler.cpp"
     break;
 
   case 9:
-#line 59 "compiler.y" /* yacc.c:1646  */
+#line 59 "compiler.y"
     {
 					//printf ("stms scope\n");
-					currentScope->addBranch((yyvsp[0]).treeNode);
+					currentScope->addBranch(yyvsp[0].treeNode);
 				}
-#line 1340 "compiler.cpp" /* yacc.c:1646  */
+#line 1349 "compiler.cpp"
     break;
 
   case 10:
-#line 64 "compiler.y" /* yacc.c:1646  */
+#line 64 "compiler.y"
     { 
 					//printf ("stm oper ");
-					(yyval) = (yyvsp[0]);
+					yyval = yyvsp[0];
 					//std::cout << $1.treeNode << '\n';
 				}
-#line 1350 "compiler.cpp" /* yacc.c:1646  */
+#line 1359 "compiler.cpp"
     break;
 
   case 11:
-#line 70 "compiler.y" /* yacc.c:1646  */
+#line 70 "compiler.y"
     { 
 					//printf ("oper assign ");
-					(yyval) = (yyvsp[0]);
+					yyval = yyvsp[0];
 					//std::cout << $1.treeNode << '\n';
 				}
-#line 1360 "compiler.cpp" /* yacc.c:1646  */
+#line 1369 "compiler.cpp"
     break;
 
   case 12:
-#line 76 "compiler.y" /* yacc.c:1646  */
+#line 76 "compiler.y"
     { 
 					//printf ("oper if\n");
 					currentScope = currentScope->resetScope();
-					(yyval) = (yyvsp[0]);
+					yyval = yyvsp[0];
 				}
-#line 1370 "compiler.cpp" /* yacc.c:1646  */
+#line 1379 "compiler.cpp"
     break;
 
   case 13:
-#line 82 "compiler.y" /* yacc.c:1646  */
+#line 82 "compiler.y"
     { 
 					//printf ("oper while\n");
 					currentScope = currentScope->resetScope();
-					(yyval) = (yyvsp[0]);
+					yyval = yyvsp[0];
 				}
-#line 1380 "compiler.cpp" /* yacc.c:1646  */
+#line 1389 "compiler.cpp"
     break;
 
   case 14:
-#line 88 "compiler.y" /* yacc.c:1646  */
+#line 88 "compiler.y"
     { 
 					//printf ("oper output ");
-					(yyval) = (yyvsp[0]);
+					yyval = yyvsp[0];
 					//std::cout << $$.treeNode << '\n';
 				}
-#line 1390 "compiler.cpp" /* yacc.c:1646  */
+#line 1399 "compiler.cpp"
     break;
 
   case 15:
-#line 94 "compiler.y" /* yacc.c:1646  */
+#line 94 "compiler.y"
     { 
 					//printf ("assign lval ");
-					(yyval).treeNode = new Op{(yyvsp[-3]).treeNode, Ops::Assign, (yyvsp[-1]).treeNode};
+					yyval.treeNode = new Op{yyvsp[-3].treeNode, Ops::Assign, yyvsp[-1].treeNode};
 					//std::cout << $$.treeNode << '\n';
 				}
-#line 1400 "compiler.cpp" /* yacc.c:1646  */
+#line 1409 "compiler.cpp"
     break;
 
   case 16:
-#line 100 "compiler.y" /* yacc.c:1646  */
+#line 100 "compiler.y"
     { 
 					//printf ("laval name ");
-					(yyval).treeNode = (*currentScope)[(yyvsp[0]).name];
+					yyval.treeNode = (*currentScope)[yyvsp[0].name];
 					//std::cout << $$.treeNode << '\n';
 				}
-#line 1410 "compiler.cpp" /* yacc.c:1646  */
+#line 1419 "compiler.cpp"
     break;
 
   case 17:
-#line 106 "compiler.y" /* yacc.c:1646  */
+#line 106 "compiler.y"
     { 
 					//printf ("expr +\n");
-					(yyval).treeNode = new Op{(yyvsp[-2]).treeNode, Ops::Plus, (yyvsp[0]).treeNode};
+					yyval.treeNode = new Op{yyvsp[-2].treeNode, Ops::Plus, yyvsp[0].treeNode};
 				}
-#line 1419 "compiler.cpp" /* yacc.c:1646  */
+#line 1428 "compiler.cpp"
     break;
 
   case 18:
-#line 111 "compiler.y" /* yacc.c:1646  */
+#line 111 "compiler.y"
     { 
 					//printf ("expr -\n");
-					(yyval).treeNode = new Op{(yyvsp[-2]).treeNode, Ops::Minus, (yyvsp[0]).treeNode};
+					yyval.treeNode = new Op{yyvsp[-2].treeNode, Ops::Minus, yyvsp[0].treeNode};
 				}
-#line 1428 "compiler.cpp" /* yacc.c:1646  */
+#line 1437 "compiler.cpp"
     break;
 
   case 19:
-#line 116 "compiler.y" /* yacc.c:1646  */
+#line 116 "compiler.y"
     { 
 					//printf ("expt *\n");
-					(yyval).treeNode = new Op{(yyvsp[-2]).treeNode, Ops::Mul, (yyvsp[0]).treeNode};
+					yyval.treeNode = new Op{yyvsp[-2].treeNode, Ops::Mul, yyvsp[0].treeNode};
 				}
-#line 1437 "compiler.cpp" /* yacc.c:1646  */
+#line 1446 "compiler.cpp"
     break;
 
   case 20:
-#line 121 "compiler.y" /* yacc.c:1646  */
+#line 121 "compiler.y"
     { 
 					//printf ("expr /\n");
-					(yyval).treeNode = new Op{(yyvsp[-2]).treeNode, Ops::Div, (yyvsp[0]).treeNode};
+					yyval.treeNode = new Op{yyvsp[-2].treeNode, Ops::Div, yyvsp[0].treeNode};
 				}
-#line 1446 "compiler.cpp" /* yacc.c:1646  */
+#line 1455 "compiler.cpp"
     break;
 
   case 21:
-#line 126 "compiler.y" /* yacc.c:1646  */
+#line 126 "compiler.y"
     { 
 					//printf ("expr MOD\n");
-					(yyval).treeNode = new Op{(yyvsp[-2]).treeNode, Ops::Mod, (yyvsp[0]).treeNode};
+					yyval.treeNode = new Op{yyvsp[-2].treeNode, Ops::Mod, yyvsp[0].treeNode};
 				}
-#line 1455 "compiler.cpp" /* yacc.c:1646  */
+#line 1464 "compiler.cpp"
     break;
 
   case 22:
-#line 131 "compiler.y" /* yacc.c:1646  */
+#line 131 "compiler.y"
     { 
 					//printf ("expr u-\n");
-					(yyval).treeNode = new Op{new Value{0}, Ops::Minus, (yyvsp[0]).treeNode};
+					yyval.treeNode = new Op{new Value{0}, Ops::Minus, yyvsp[0].treeNode};
 				}
-#line 1464 "compiler.cpp" /* yacc.c:1646  */
+#line 1473 "compiler.cpp"
     break;
 
   case 23:
-#line 136 "compiler.y" /* yacc.c:1646  */
+#line 136 "compiler.y"
     { 
 					//printf ("expr name ");
-					(yyval).treeNode = (*currentScope)[(yyvsp[0]).name];
+					yyval.treeNode = (*currentScope)[yyvsp[0].name];
 					//std::cout << $$.treeNode << '\n';
 				}
-#line 1474 "compiler.cpp" /* yacc.c:1646  */
+#line 1483 "compiler.cpp"
     break;
 
   case 24:
-#line 142 "compiler.y" /* yacc.c:1646  */
+#line 142 "compiler.y"
     {
 					//printf ("expr value ");
-					(yyval).treeNode = new Value{(yyvsp[0]).value};
+					yyval.treeNode = new Value{yyvsp[0].value};
 					//std::cout << $$.treeNode << '\n';
 				}
-#line 1484 "compiler.cpp" /* yacc.c:1646  */
+#line 1493 "compiler.cpp"
     break;
 
   case 25:
-#line 148 "compiler.y" /* yacc.c:1646  */
+#line 148 "compiler.y"
     { 
 					//printf ("expr input\n");
-					(yyval).treeNode = new Op{nullptr, Ops::StdIn, nullptr};
+					yyval.treeNode = new Op{nullptr, Ops::StdIn, nullptr};
 				}
-#line 1493 "compiler.cpp" /* yacc.c:1646  */
+#line 1502 "compiler.cpp"
     break;
 
   case 26:
-#line 153 "compiler.y" /* yacc.c:1646  */
+#line 153 "compiler.y"
     { 
 					//printf ("(expr)\n");
-					(yyval).treeNode = (yyvsp[-1]).treeNode;
+					yyval.treeNode = yyvsp[-1].treeNode;
 				}
-#line 1502 "compiler.cpp" /* yacc.c:1646  */
+#line 1511 "compiler.cpp"
     break;
 
   case 27:
-#line 158 "compiler.y" /* yacc.c:1646  */
+#line 158 "compiler.y"
     { 
 					//printf ("if stm\n");
-					currentScope->addBranch((yyvsp[0]).treeNode);
-					(yyval).treeNode = new If{(yyvsp[-1]).treeNode, currentScope};
+					currentScope->addBranch(yyvsp[0].treeNode);
+					yyval.treeNode = new If{yyvsp[-1].treeNode, currentScope};
 				}
-#line 1512 "compiler.cpp" /* yacc.c:1646  */
+#line 1521 "compiler.cpp"
     break;
 
   case 28:
-#line 164 "compiler.y" /* yacc.c:1646  */
+#line 164 "compiler.y"
     { 
 					//printf ("if scope\n");
-					currentScope->addBranch((yyvsp[0]).treeNode);
-					(yyval).treeNode = new If{(yyvsp[-1]).treeNode, currentScope};
+					currentScope->addBranch(yyvsp[0].treeNode);
+					yyval.treeNode = new If{yyvsp[-1].treeNode, currentScope};
 				}
-#line 1522 "compiler.cpp" /* yacc.c:1646  */
+#line 1531 "compiler.cpp"
     break;
 
   case 29:
-#line 170 "compiler.y" /* yacc.c:1646  */
+#line 170 "compiler.y"
     { 
 					//printf ("ifh() newScope: ");
 					currentScope = new Scope{currentScope};
 					//std::cout << currentScope << std::endl;
-					(yyval) = (yyvsp[-1]);
+					yyval = yyvsp[-1];
 				}
-#line 1533 "compiler.cpp" /* yacc.c:1646  */
+#line 1542 "compiler.cpp"
     break;
 
   case 30:
-#line 177 "compiler.y" /* yacc.c:1646  */
+#line 177 "compiler.y"
     {
 					//printf("lexpr expr\n");
-					(yyval) = (yyvsp[0]);
+					yyval = yyvsp[0];
 				}
-#line 1542 "compiler.cpp" /* yacc.c:1646  */
+#line 1551 "compiler.cpp"
     break;
 
   case 31:
-#line 182 "compiler.y" /* yacc.c:1646  */
+#line 182 "compiler.y"
     {
 					//printf ("lexpr relop\n");
-					(yyval).treeNode = new Op{(yyvsp[-2]).treeNode, (yyvsp[-1]).op, (yyvsp[0]).treeNode};
+					yyval.treeNode = new Op{yyvsp[-2].treeNode, yyvsp[-1].op, yyvsp[0].treeNode};
 				}
-#line 1551 "compiler.cpp" /* yacc.c:1646  */
+#line 1560 "compiler.cpp"
     break;
 
   case 32:
-#line 187 "compiler.y" /* yacc.c:1646  */
+#line 187 "compiler.y"
     { 
 					//printf ("lexpr ||\n");
-					(yyval).treeNode = new Op{(yyvsp[-2]).treeNode, Ops::Or, (yyvsp[0]).treeNode};
+					yyval.treeNode = new Op{yyvsp[-2].treeNode, Ops::Or, yyvsp[0].treeNode};
 				}
-#line 1560 "compiler.cpp" /* yacc.c:1646  */
+#line 1569 "compiler.cpp"
     break;
 
   case 33:
-#line 192 "compiler.y" /* yacc.c:1646  */
+#line 192 "compiler.y"
     { 
 					//printf ("lexpr &&\n");
-					(yyval).treeNode = new Op{(yyvsp[-2]).treeNode, Ops::And, (yyvsp[0]).treeNode};
+					yyval.treeNode = new Op{yyvsp[-2].treeNode, Ops::And, yyvsp[0].treeNode};
 				}
-#line 1569 "compiler.cpp" /* yacc.c:1646  */
+#line 1578 "compiler.cpp"
     break;
 
   case 34:
-#line 197 "compiler.y" /* yacc.c:1646  */
+#line 197 "compiler.y"
     { 
 					//printf ("lexpr !\n");
-					(yyval).treeNode = new Op{nullptr, Ops::Not, (yyvsp[0]).treeNode};
+					yyval.treeNode = new Op{nullptr, Ops::Not, yyvsp[0].treeNode};
 				}
-#line 1578 "compiler.cpp" /* yacc.c:1646  */
+#line 1587 "compiler.cpp"
     break;
 
   case 35:
-#line 202 "compiler.y" /* yacc.c:1646  */
+#line 202 "compiler.y"
     { 
 					//printf ("(lexpr)\n");
-					(yyval) = (yyvsp[-1]);
+					yyval = yyvsp[-1];
 				}
-#line 1587 "compiler.cpp" /* yacc.c:1646  */
+#line 1596 "compiler.cpp"
     break;
 
   case 36:
-#line 207 "compiler.y" /* yacc.c:1646  */
+#line 207 "compiler.y"
     { 
 					//printf ("while stm\n");
-					currentScope->addBranch((yyvsp[0]).treeNode);
-					(yyval).treeNode = new While{(yyvsp[-1]).treeNode, currentScope};
+					currentScope->addBranch(yyvsp[0].treeNode);
+					yyval.treeNode = new While{yyvsp[-1].treeNode, currentScope};
 				}
-#line 1597 "compiler.cpp" /* yacc.c:1646  */
+#line 1606 "compiler.cpp"
     break;
 
   case 37:
-#line 213 "compiler.y" /* yacc.c:1646  */
+#line 213 "compiler.y"
     { 
 					//printf ("while scope\n");
-					currentScope->addBranch((yyvsp[0]).treeNode);
-					(yyval).treeNode = new While{(yyvsp[-1]).treeNode, currentScope};
+					currentScope->addBranch(yyvsp[0].treeNode);
+					yyval.treeNode = new While{yyvsp[-1].treeNode, currentScope};
 				}
-#line 1607 "compiler.cpp" /* yacc.c:1646  */
+#line 1616 "compiler.cpp"
     break;
 
   case 38:
-#line 219 "compiler.y" /* yacc.c:1646  */
+#line 219 "compiler.y"
     { 
 					//printf ("whileh ()\n");
 					currentScope = new Scope{currentScope};
-					(yyval) = (yyvsp[-1]);
+					yyval = yyvsp[-1];
 				}
-#line 1617 "compiler.cpp" /* yacc.c:1646  */
+#line 1626 "compiler.cpp"
     break;
 
   case 39:
-#line 225 "compiler.y" /* yacc.c:1646  */
+#line 225 "compiler.y"
     {
 					//printf ("output expr ");
-					(yyval).treeNode = new Op{nullptr, Ops::StdOut, (yyvsp[-1]).treeNode};
+					yyval.treeNode = new Op{nullptr, Ops::StdOut, yyvsp[-1].treeNode};
 					//std::cout << $$.treeNode << std::endl;
 				}
-#line 1627 "compiler.cpp" /* yacc.c:1646  */
+#line 1636 "compiler.cpp"
     break;
 
 
-#line 1631 "compiler.cpp" /* yacc.c:1646  */
+#line 1640 "compiler.cpp"
+
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1652,14 +1662,13 @@ yyreduce:
   /* Now 'shift' the result of the reduction.  Determine what state
      that goes to, based on the state we popped back to and the rule
      number reduced by.  */
-
-  yyn = yyr1[yyn];
-
-  yystate = yypgoto[yyn - YYNTOKENS] + *yyssp;
-  if (0 <= yystate && yystate <= YYLAST && yycheck[yystate] == *yyssp)
-    yystate = yytable[yystate];
-  else
-    yystate = yydefgoto[yyn - YYNTOKENS];
+  {
+    const int yylhs = yyr1[yyn] - YYNTOKENS;
+    const int yyi = yypgoto[yylhs] + *yyssp;
+    yystate = (0 <= yyi && yyi <= YYLAST && yycheck[yyi] == *yyssp
+               ? yytable[yyi]
+               : yydefgoto[yylhs]);
+  }
 
   goto yynewstate;
 
@@ -1742,12 +1751,10 @@ yyerrlab:
 | yyerrorlab -- error raised explicitly by YYERROR.  |
 `---------------------------------------------------*/
 yyerrorlab:
-
-  /* Pacify compilers like GCC when the user code never invokes
-     YYERROR and the label yyerrorlab therefore never appears in user
-     code.  */
-  if (/*CONSTCOND*/ 0)
-     goto yyerrorlab;
+  /* Pacify compilers when the user code never invokes YYERROR and the
+     label yyerrorlab therefore never appears in user code.  */
+  if (0)
+    YYERROR;
 
   /* Do not reclaim the symbols of the rule whose action triggered
      this YYERROR.  */
@@ -1809,12 +1816,14 @@ yyacceptlab:
   yyresult = 0;
   goto yyreturn;
 
+
 /*-----------------------------------.
 | yyabortlab -- YYABORT comes here.  |
 `-----------------------------------*/
 yyabortlab:
   yyresult = 1;
   goto yyreturn;
+
 
 #if !defined yyoverflow || YYERROR_VERBOSE
 /*-------------------------------------------------.
@@ -1826,6 +1835,10 @@ yyexhaustedlab:
   /* Fall through.  */
 #endif
 
+
+/*-----------------------------------------------------.
+| yyreturn -- parsing is finished, return the result.  |
+`-----------------------------------------------------*/
 yyreturn:
   if (yychar != YYEMPTY)
     {
@@ -1855,7 +1868,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 231 "compiler.y" /* yacc.c:1906  */
+#line 231 "compiler.y"
 
 
 int main(int argc, char * argv[])
