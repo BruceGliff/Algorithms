@@ -32,6 +32,8 @@ RType Scope::calc()
 {
     for (auto x : branches)
         x->calc();
+
+    return 0;
 }
 void Scope::dump() const
 {
@@ -156,7 +158,11 @@ RType Op::calc()
     case Ops::Mod:
         return left->calc() % right->calc();
         break;
+    default:
+        return 999;
     }
+
+    return 998;
 }
 void Op::dump() const
 {

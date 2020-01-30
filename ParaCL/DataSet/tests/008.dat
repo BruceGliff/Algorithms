@@ -1,0 +1,4 @@
+a; = d;
+d = d + 1;
+print a;
+print d;

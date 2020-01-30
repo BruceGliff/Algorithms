@@ -32,7 +32,7 @@ class Decl final : public Node
 {
     int val;
 public:
-    Decl() {};
+    Decl() = default;
     RType calc() override;
     void dump() const override;
     void SetValue(int Val);
