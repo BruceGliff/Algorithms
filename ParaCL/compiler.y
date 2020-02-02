@@ -3,13 +3,17 @@
 
 //current node
 static char error_text[128];
-Scope * currentScope = nullptr;
+extern Scope * currentScope;
+
+#define YYERROR_VERBOSE 1
 %}
 
-%term NAME VALUE
-%term WHILE IF
-%term SM LBR RBR LPAR RPAR LCB RCB ILLEGAL
-%term OUTPUT
+%defines
+
+%token NAME VALUE
+%token WHILE IF
+%token SM LBR RBR LPAR RPAR LCB RCB ILLEGAL
+%token OUTPUT
 %right ASG
 %nonassoc RELOP
 %left INPUT
@@ -135,7 +139,21 @@ expr:		expr PLUS expr {
 			|
 			NAME { 
 					//printf ("expr name ");
-					$$.treeNode = (*currentScope)[$1.name];
+					// Current scope GET
+					//$$.treeNode = (*currentScope)[$1.name];
+					$$.treeNode = currentScope->existsLater($1.name);
+					if (!$$.treeNode)
+					{
+						// std::stringstream errOut;
+						// errOut << "Undeclared variable: " << $1.name;
+						// yyerror(errOut.str().c_str());
+					
+						YYLTYPE * info = &@1;
+						PrintError("Using undeclared variable! %s - Line %d:c%d to %d:c%d", $1.name.c_str(),
+                        			info->first_line, info->first_column,
+                        			info->last_line, info->last_column);
+					}
+					
 					//std::cout << $$.treeNode << '\n';
 				}
 			|
@@ -229,26 +247,8 @@ output:		OUTPUT expr SM {
 				}
        		;
 %%
-
-int main(int argc, char * argv[])
-{
-	FILE * f = fopen(argv[1], "r");
-	if (f <= 0)
-	{
-		perror("Cannot open file");
-		return 1;
-	}
-	yyin = f;
-	currentScope = new Scope{nullptr};
-	//std::cout << "CurrentScope: " << currentScope << std::endl;
-	yyparse();
-	fclose(f);
-	delete currentScope;
-
-	return 0;
-}
 		
 int yyerror(const char *s) {
-    printf("%s in line %d\n", s, yylineno);
-    return 0;
+    PrintError(s);
+	return 0;
 }

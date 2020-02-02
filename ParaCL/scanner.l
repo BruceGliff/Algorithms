@@ -6,79 +6,93 @@
 	#include <string.h>
 
 	void ScanError(char const *, int lineno);
+	// int yyinLinePos = 0;
 %}
 id    [a-zA-Z][a-zA-Z_0-9]*
-ws	[ \t\n]+
+ws	[ \t]+
 int   [0-9]+
 %option yylineno
 
 %%
-{ws}
+"\n"	{ yyinlinePos = 0; }
+{ws}	{ BeginToken(yytext, &yyinlinePos); }
 "if"	{
         	//printf("if\n");
+			BeginToken(yytext, &yyinlinePos);
 			return IF;
         }   
 "while" {
 			//printf("while\n");
+			BeginToken(yytext, &yyinlinePos);
 			return WHILE;
 		}
 "print"	{
 			//printf("print\n");
+			BeginToken(yytext, &yyinlinePos);
 			return OUTPUT;
 		}
-"+"		{	return PLUS;	}
-"-"		{	return MINUS; 	}
-"*"		{	return MUL;	}
-"/"		{	return DIV;	}
-"%"		{	return MOD;	}
-"("		{	return LPAR;	}
-")"		{ 	return RPAR;	}
-"["		{	return LBR;	}
-"]"		{	return RBR;	}
-"{"		{	return LCB;	}
-"}"		{ 	return RCB;	}
-";"		{	return SM;	}
-"="		{ 	return ASG;	}
-"=="	{	
+"+"		{	BeginToken(yytext, &yyinlinePos); return PLUS;	}
+"-"		{	BeginToken(yytext, &yyinlinePos); return MINUS; 	}
+"*"		{	BeginToken(yytext, &yyinlinePos); return MUL;	}
+"/"		{	BeginToken(yytext, &yyinlinePos); return DIV;	}
+"%"		{	BeginToken(yytext, &yyinlinePos); return MOD;	}
+"("		{	BeginToken(yytext, &yyinlinePos); return LPAR;	}
+")"		{ 	BeginToken(yytext, &yyinlinePos); return RPAR;	}
+"["		{	BeginToken(yytext, &yyinlinePos); return LBR;	}
+"]"		{	BeginToken(yytext, &yyinlinePos); return RBR;	}
+"{"		{	BeginToken(yytext, &yyinlinePos); return LCB;	}
+"}"		{ 	BeginToken(yytext, &yyinlinePos); return RCB;	}
+";"		{	BeginToken(yytext, &yyinlinePos); return SM;	}
+"="		{ 	BeginToken(yytext, &yyinlinePos); return ASG;	}
+"=="	{
+			BeginToken(yytext, &yyinlinePos);	
 			yylval.op = Ops::Equal;
 			return RELOP;
 		}
 "!="	{
+			BeginToken(yytext, &yyinlinePos);
 			yylval.op = Ops::NotEqual;
 			return RELOP;
 		}
 "<"		{
+			BeginToken(yytext, &yyinlinePos);
 			yylval.op = Ops::Less;
 			return RELOP;
 		}
 ">"		{
+			BeginToken(yytext, &yyinlinePos);
 			yylval.op = Ops::Greater;
 			return RELOP;
 		}
 "<="	{
+			BeginToken(yytext, &yyinlinePos);
 			yylval.op = Ops::LessEq;
 			return RELOP;
 		}
 ">="	{
+			BeginToken(yytext, &yyinlinePos);
 			yylval.op = Ops::GreaterEq;
 			return RELOP;
 		}
-"||"	{	return OR;	}
-"&&"	{	return AND;	}
-"!"		{	return NOT;	}
-"?" 	{	return INPUT; }
+"||"	{	BeginToken(yytext, &yyinlinePos); return OR;	}
+"&&"	{	BeginToken(yytext, &yyinlinePos); return AND;	}
+"!"		{	BeginToken(yytext, &yyinlinePos); return NOT;	}
+"?" 	{	BeginToken(yytext, &yyinlinePos); return INPUT; }
 
 {id}	{
+			BeginToken(yytext, &yyinlinePos);
 			//printf("name %s\n", yytext);
 			yylval.name = yytext;
 			return NAME;
 		}
 {int}	{
+			BeginToken(yytext, &yyinlinePos);
 			yylval.value = atoi(yytext);
 			//printf("int %d \n", yylval.value);
 			return VALUE;
 		}
 .		{	
+			BeginToken(yytext, &yyinlinePos);
 			ScanError("Unexpected smth", yylineno);
 			return ILLEGAL;	
 		}

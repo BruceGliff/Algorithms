@@ -1,7 +1,7 @@
 a=3;
 {
-    b=4;
+    babba=4;
     a=1+a;
     print a;
 }
-print b;
+print babba;

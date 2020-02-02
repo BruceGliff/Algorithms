@@ -370,8 +370,8 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
-#define YY_NUM_RULES 31
-#define YY_END_OF_BUFFER 32
+#define YY_NUM_RULES 32
+#define YY_END_OF_BUFFER 33
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -381,11 +381,11 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[50] =
     {   0,
-        0,    0,   32,   30,    1,    1,   26,    9,   30,   10,
-       11,    7,    5,    6,    8,   29,   16,   20,   17,   21,
-       27,   28,   12,   13,   28,   28,   28,   14,   30,   15,
-        1,   19,   25,   29,   22,   18,   23,   28,    2,   28,
-       28,   24,   28,   28,   28,   28,    4,    3,    0
+        0,    0,   33,   31,    2,    1,   27,   10,   31,   11,
+       12,    8,    6,    7,    9,   30,   17,   21,   18,   22,
+       28,   29,   13,   14,   29,   29,   29,   15,   31,   16,
+        2,   20,   26,   30,   23,   19,   24,   29,    3,   29,
+       29,   25,   29,   29,   29,   29,    5,    4,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
@@ -430,11 +430,11 @@ static const YY_CHAR yy_meta[36] =
 
 static const flex_int16_t yy_base[51] =
     {   0,
-        0,    0,   60,   61,   34,   36,   43,   61,   52,   61,
-       61,   61,   61,   61,   61,   44,   61,   40,   39,   38,
-       61,    0,   61,   61,   29,   22,   26,   61,   16,   61,
-       38,   61,   61,   36,   61,   61,   61,    0,    0,   22,
-       21,   61,   18,   18,   13,   20,    0,    0,   61,   40
+        0,    0,   56,   57,   53,   57,   38,   57,   47,   57,
+       57,   57,   57,   57,   57,   39,   57,   35,   34,   33,
+       57,    0,   57,   57,   24,   17,   21,   57,   11,   57,
+       42,   57,   57,   30,   57,   57,   57,    0,    0,   16,
+       15,   57,   12,   12,    7,   14,    0,    0,   57,   34
     } ;
 
 static const flex_int16_t yy_def[51] =
@@ -446,41 +446,41 @@ static const flex_int16_t yy_def[51] =
        50,   49,   50,   50,   50,   50,   50,   50,    0,   49
     } ;
 
-static const flex_int16_t yy_nxt[97] =
+static const flex_int16_t yy_nxt[93] =
     {   0,
         4,    5,    6,    7,    8,    9,   10,   11,   12,   13,
        14,   15,   16,   17,   18,   19,   20,   21,   22,   23,
        24,    4,   22,   22,   22,   25,   22,   22,   26,   22,
-       22,   27,   28,   29,   30,   31,   31,   31,   31,   31,
-       31,   38,   48,   47,   46,   45,   44,   43,   34,   42,
-       41,   40,   39,   37,   36,   35,   34,   33,   32,   49,
-        3,   49,   49,   49,   49,   49,   49,   49,   49,   49,
+       22,   27,   28,   29,   30,   38,   48,   47,   46,   45,
+       44,   43,   34,   31,   42,   41,   40,   39,   37,   36,
+       35,   34,   33,   32,   31,   49,    3,   49,   49,   49,
        49,   49,   49,   49,   49,   49,   49,   49,   49,   49,
        49,   49,   49,   49,   49,   49,   49,   49,   49,   49,
-       49,   49,   49,   49,   49,   49
+       49,   49,   49,   49,   49,   49,   49,   49,   49,   49,
+       49,   49
 
     } ;
 
-static const flex_int16_t yy_chk[97] =
+static const flex_int16_t yy_chk[93] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    5,    5,    6,    6,   31,
-       31,   50,   46,   45,   44,   43,   41,   40,   34,   29,
-       27,   26,   25,   20,   19,   18,   16,    9,    7,    3,
+        1,    1,    1,    1,    1,   50,   46,   45,   44,   43,
+       41,   40,   34,   31,   29,   27,   26,   25,   20,   19,
+       18,   16,    9,    7,    5,    3,   49,   49,   49,   49,
        49,   49,   49,   49,   49,   49,   49,   49,   49,   49,
        49,   49,   49,   49,   49,   49,   49,   49,   49,   49,
        49,   49,   49,   49,   49,   49,   49,   49,   49,   49,
-       49,   49,   49,   49,   49,   49
+       49,   49
 
     } ;
 
 /* Table of booleans, true if rule could match eol. */
-static const flex_int32_t yy_rule_can_match_eol[32] =
+static const flex_int32_t yy_rule_can_match_eol[33] =
     {   0,
 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,     };
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,     };
 
 static yy_state_type yy_last_accepting_state;
 static char *yy_last_accepting_cpos;
@@ -505,8 +505,9 @@ char *yytext;
 	#include <string.h>
 
 	void ScanError(char const *, int lineno);
-#line 509 "lex.yy.c"
+	// int yyinLinePos = 0;
 #line 510 "lex.yy.c"
+#line 511 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -723,9 +724,9 @@ YY_DECL
 		}
 
 	{
-#line 15 "scanner.l"
+#line 16 "scanner.l"
 
-#line 729 "lex.yy.c"
+#line 730 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -758,7 +759,7 @@ yy_match:
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 61 );
+		while ( yy_base[yy_current_state] != 57 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -795,198 +796,215 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 16 "scanner.l"
-
+#line 17 "scanner.l"
+{ yyinlinePos = 0; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 17 "scanner.l"
-{
-        	//printf("if\n");
-			return IF;
-        }   
+#line 18 "scanner.l"
+{ BeginToken(yytext, &yyinlinePos); }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 21 "scanner.l"
+#line 19 "scanner.l"
 {
-			//printf("while\n");
-			return WHILE;
-		}
+        	//printf("if\n");
+			BeginToken(yytext, &yyinlinePos);
+			return IF;
+        }   
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 25 "scanner.l"
+#line 24 "scanner.l"
 {
-			//printf("print\n");
-			return OUTPUT;
+			//printf("while\n");
+			BeginToken(yytext, &yyinlinePos);
+			return WHILE;
 		}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
 #line 29 "scanner.l"
-{	return PLUS;	}
+{
+			//printf("print\n");
+			BeginToken(yytext, &yyinlinePos);
+			return OUTPUT;
+		}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 30 "scanner.l"
-{	return MINUS; 	}
+#line 34 "scanner.l"
+{	BeginToken(yytext, &yyinlinePos); return PLUS;	}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 31 "scanner.l"
-{	return MUL;	}
+#line 35 "scanner.l"
+{	BeginToken(yytext, &yyinlinePos); return MINUS; 	}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 32 "scanner.l"
-{	return DIV;	}
+#line 36 "scanner.l"
+{	BeginToken(yytext, &yyinlinePos); return MUL;	}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 33 "scanner.l"
-{	return MOD;	}
+#line 37 "scanner.l"
+{	BeginToken(yytext, &yyinlinePos); return DIV;	}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 34 "scanner.l"
-{	return LPAR;	}
+#line 38 "scanner.l"
+{	BeginToken(yytext, &yyinlinePos); return MOD;	}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 35 "scanner.l"
-{ 	return RPAR;	}
+#line 39 "scanner.l"
+{	BeginToken(yytext, &yyinlinePos); return LPAR;	}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 36 "scanner.l"
-{	return LBR;	}
+#line 40 "scanner.l"
+{ 	BeginToken(yytext, &yyinlinePos); return RPAR;	}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 37 "scanner.l"
-{	return RBR;	}
+#line 41 "scanner.l"
+{	BeginToken(yytext, &yyinlinePos); return LBR;	}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 38 "scanner.l"
-{	return LCB;	}
+#line 42 "scanner.l"
+{	BeginToken(yytext, &yyinlinePos); return RBR;	}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 39 "scanner.l"
-{ 	return RCB;	}
+#line 43 "scanner.l"
+{	BeginToken(yytext, &yyinlinePos); return LCB;	}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 40 "scanner.l"
-{	return SM;	}
+#line 44 "scanner.l"
+{ 	BeginToken(yytext, &yyinlinePos); return RCB;	}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 41 "scanner.l"
-{ 	return ASG;	}
+#line 45 "scanner.l"
+{	BeginToken(yytext, &yyinlinePos); return SM;	}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 42 "scanner.l"
-{	
-			yylval.op = Ops::Equal;
-			return RELOP;
-		}
+#line 46 "scanner.l"
+{ 	BeginToken(yytext, &yyinlinePos); return ASG;	}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 46 "scanner.l"
+#line 47 "scanner.l"
 {
-			yylval.op = Ops::NotEqual;
+			BeginToken(yytext, &yyinlinePos);	
+			yylval.op = Ops::Equal;
 			return RELOP;
 		}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 50 "scanner.l"
+#line 52 "scanner.l"
 {
-			yylval.op = Ops::Less;
+			BeginToken(yytext, &yyinlinePos);
+			yylval.op = Ops::NotEqual;
 			return RELOP;
 		}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 54 "scanner.l"
+#line 57 "scanner.l"
 {
-			yylval.op = Ops::Greater;
+			BeginToken(yytext, &yyinlinePos);
+			yylval.op = Ops::Less;
 			return RELOP;
 		}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 58 "scanner.l"
+#line 62 "scanner.l"
 {
-			yylval.op = Ops::LessEq;
+			BeginToken(yytext, &yyinlinePos);
+			yylval.op = Ops::Greater;
 			return RELOP;
 		}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 62 "scanner.l"
+#line 67 "scanner.l"
 {
-			yylval.op = Ops::GreaterEq;
+			BeginToken(yytext, &yyinlinePos);
+			yylval.op = Ops::LessEq;
 			return RELOP;
 		}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 66 "scanner.l"
-{	return OR;	}
+#line 72 "scanner.l"
+{
+			BeginToken(yytext, &yyinlinePos);
+			yylval.op = Ops::GreaterEq;
+			return RELOP;
+		}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 67 "scanner.l"
-{	return AND;	}
+#line 77 "scanner.l"
+{	BeginToken(yytext, &yyinlinePos); return OR;	}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 68 "scanner.l"
-{	return NOT;	}
+#line 78 "scanner.l"
+{	BeginToken(yytext, &yyinlinePos); return AND;	}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 69 "scanner.l"
-{	return INPUT; }
+#line 79 "scanner.l"
+{	BeginToken(yytext, &yyinlinePos); return NOT;	}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 71 "scanner.l"
+#line 80 "scanner.l"
+{	BeginToken(yytext, &yyinlinePos); return INPUT; }
+	YY_BREAK
+case 29:
+YY_RULE_SETUP
+#line 82 "scanner.l"
 {
+			BeginToken(yytext, &yyinlinePos);
 			//printf("name %s\n", yytext);
 			yylval.name = yytext;
 			return NAME;
 		}
 	YY_BREAK
-case 29:
+case 30:
 YY_RULE_SETUP
-#line 76 "scanner.l"
+#line 88 "scanner.l"
 {
+			BeginToken(yytext, &yyinlinePos);
 			yylval.value = atoi(yytext);
 			//printf("int %d \n", yylval.value);
 			return VALUE;
 		}
 	YY_BREAK
-case 30:
+case 31:
 YY_RULE_SETUP
-#line 81 "scanner.l"
+#line 94 "scanner.l"
 {	
+			BeginToken(yytext, &yyinlinePos);
 			ScanError("Unexpected smth", yylineno);
 			return ILLEGAL;	
 		}
 	YY_BREAK
-case 31:
+case 32:
 YY_RULE_SETUP
-#line 85 "scanner.l"
+#line 99 "scanner.l"
 ECHO;
 	YY_BREAK
-#line 990 "lex.yy.c"
+#line 1008 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2003,7 +2021,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 85 "scanner.l"
+#line 99 "scanner.l"
 
 
 int yywrap() 	{ return 1; }
