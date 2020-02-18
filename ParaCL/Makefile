@@ -1,6 +1,6 @@
 CC = g++ $(CFLAGS)
 
-CFLAGS = -g -O0 -Wno-unused -Wno-unused-function -Wno-unused-label -Wno-error
+CFLAGS = -g -O0 -Wno-unused -Wno-unused-function -Wno-unused-label -Wno-error -Wreturn-type
 
 default: compiler.y scanner.l parser.hpp Node.cpp
 	flex -8 scanner.l
