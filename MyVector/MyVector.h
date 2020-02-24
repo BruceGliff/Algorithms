@@ -13,19 +13,22 @@ namespace My
         {
         protected:
             T * array_ = nullptr;
+            int capacity_ = 0;
             int size_ = 0;
-            int curr_ = 0;
+
+            T * GetArr()         noexcept { return array_; }
+            int & GetCapacity()  noexcept { return capacity_; }
+            int & GetSize()      noexcept { return size_; }
 
             void copy_construct(T * p, T const & value);
             void destroy(T * p) noexcept;
             void destroy(T * first, T * last) noexcept;
 
-        public:
-            MyVectorBuf(int size = 0);
-            ~MyVectorBuf() noexcept;
+            MyVectorBuf(int cap = 0);
+            virtual ~MyVectorBuf() noexcept;
         };
 
-        #include "MyVectorRaw.hpp"
+        #include "MyVectorBuf.hpp"
     }
 
 
@@ -34,23 +37,26 @@ namespace My
 template <typename T>
 class Vector : public Raw::MyVectorBuf<T>
 {
-    // T * array_ = nullptr;
-    // int size_ = 0;
-    // int current_ = 0;
-
-    T * safe_copy(T const * source, int srsize);
-
-
 public:
-    explicit Vector(int size);
+    explicit Vector(int capacity);
     Vector(Vector const & src);
+    Vector<T> & operator=(Vector const & src);
+
     ~Vector() noexcept;
-    Vector<T> & operator=(T const & src);
 
-    void swap(T const & lf, T const & rf) noexcept;
-    //void push_back(T const & el);
+    T & at(int idx);
+    T const & at(int idx)           const;
+    T & operator[](int idx);
+    T const & operator[](int idx)   const;
 
-    void pop();
+    int size()      const noexcept { return Raw::MyVectorBuf<T>::size_; }
+    int capacity()  const noexcept { return Raw::MyVectorBuf<T>::capacity_; }
+
+    void swap(Vector & lf, Vector & rf) noexcept;
+    void push_back(T const & el);
+    void resize(int count);
+
+    void pop() noexcept;
     T top();
 };
 

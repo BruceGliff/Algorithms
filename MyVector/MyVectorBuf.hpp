@@ -1,13 +1,16 @@
+#include <cstdio>
 template<typename T>
 void MyVectorBuf<T>::copy_construct(T * p, T const & value)
 {
     new (p) T (value);
+    ++size_;
 }
 
 template<typename T>
 void MyVectorBuf<T>::destroy(T * p) noexcept
 {
     p->~T();
+    --size_;
 }
 
 template<typename T>
@@ -20,18 +23,18 @@ void MyVectorBuf<T>::destroy(T * first, T * last) noexcept
     }
 }
 template<typename T>
-MyVectorBuf<T>::MyVectorBuf(int size)
+MyVectorBuf<T>::MyVectorBuf(int cap)
 {
-    if (size)
+    if (cap)
     {
-        array_ = static_cast<T *>(::operator new(sizeof(T) * size));
-        size_ = size;
+        array_ = static_cast<T *>(::operator new(sizeof(T) * cap));
+        capacity_ = cap;
     }
 }
 
 template<typename T>
 MyVectorBuf<T>::~MyVectorBuf() noexcept
 {
-    destroy(array_, array_ + curr_);
+    destroy(array_, array_ + size_);
     ::operator delete(array_);
 }
