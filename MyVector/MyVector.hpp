@@ -17,10 +17,25 @@ Vector<T>::Vector(Vector const & src) :
 }
 
 template<typename T>
+Vector<T>::Vector(Vector && src) :
+    Raw::MyVectorBuf<T>{src.capacity_}
+{
+    swap(*this, src);
+}
+
+
+template<typename T>
 Vector<T> & Vector<T>::operator=(Vector const & src)
 {
     Vector<T> tmp{src};
     swap(tmp, *this);
+    return *this;
+}
+
+template<typename T>
+Vector<T> & Vector<T>::operator=(Vector && src)
+{
+    swap(*this, src);
     return *this;
 }
 
@@ -31,7 +46,7 @@ Vector<T>::~Vector() noexcept
 template<typename T>
 T & Vector<T>::at(int idx)
 {
-    if(idx == R<T>::size_ || idx < 0)
+    if(idx >= R<T>::size_ || idx < 0)
         throw std::out_of_range("Out of range");
 
     return R<T>::array_[idx];
@@ -40,7 +55,7 @@ T & Vector<T>::at(int idx)
 template<typename T>
 T const & Vector<T>::at(int idx) const
 {
-    if(idx == R<T>::size_ || idx < 0)
+    if(idx >= R<T>::size_ || idx < 0)
         throw std::out_of_range("Out of range");
 
     return R<T>::array_[idx];
@@ -88,7 +103,7 @@ template<typename T>
 void Vector<T>::push_back(T const & el)
 {
     if (R<T>::capacity_ == R<T>::size_)
-        resize(R<T>::capacity_ * 2);
+        resize(R<T>::capacity_ * 2 + 1);
 
     R<T>::copy_construct(R<T>::array_ + R<T>::size_, el);
 }

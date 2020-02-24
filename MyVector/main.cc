@@ -35,4 +35,35 @@ int main()
     l = a.top();
     a.resize(100);
     std::cout << a.size() << ' ' << a.capacity() << ' ' << l << std::endl;
+
+    My::Vector<int> r{My::Vector<int>{5}};
+    std::cout << r.size() << ' ' << r.capacity() << std::endl;
+
+    r = My::Vector<int>{1};
+    std::cout << r.size() << ' ' << r.capacity() << std::endl;
+    try
+    {
+        a.at(100) = 14;
+    }
+    catch (std::out_of_range & e)
+    {
+        std::cout << e.what() << std::endl;
+    } 
+    try
+    {
+        int const & p = a.at(100);
+    }
+    catch (std::out_of_range & e)
+    {
+        std::cout << e.what() << std::endl;
+    }
+    try
+    {
+        My::Vector<int> p;
+        int d = p.top();
+    }
+    catch (std::out_of_range & e)
+    {
+        std::cout << e.what() << std::endl;
+    } 
 }

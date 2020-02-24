@@ -38,9 +38,11 @@ template <typename T>
 class Vector : public Raw::MyVectorBuf<T>
 {
 public:
-    explicit Vector(int capacity);
+    explicit Vector(int capacity =  0);
     Vector(Vector const & src);
+    Vector(Vector && src);
     Vector<T> & operator=(Vector const & src);
+    Vector<T> & operator=(Vector && src);
 
     ~Vector() noexcept;
 
