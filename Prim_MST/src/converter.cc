@@ -4,9 +4,9 @@
 
 int main(int argc, char ** argv) {
     // program is to convert from matrix to input format
-    // launch smth like this: ./a.out {number of vertecies} < matrixInput.txt > rowOutput.txr
+    // launch smth like this: ./a.out {number of vertices} < matrixInput.txt > rowOutput.txr
     if (argc == 1) {
-        std::cout << "no number of vertecies!\n";
+        std::cout << "no number of vertices!\n";
         return 0;
     }
 

@@ -85,7 +85,7 @@ void O_n2(input_t const & in, std::ostream & os) {
     shortest[0] = 0;
     for (int i = 0; i != n; ++i) {
         int vertex = -1;
-        for (int j = 0; j != n; ++j) { // extract_min
+        for (int j = 0; j != n; ++j) { // extract_min. Here can be not O(n) but O(logn) complexity
             ++operations;
             if (!used[j] && (vertex == -1 || shortest[j] < shortest[vertex]))
                 vertex = j;
