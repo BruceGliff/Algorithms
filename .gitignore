@@ -2,4 +2,6 @@
 *.obj
 *longTest*
 *.vscode
+*.o
+*.out
 build
