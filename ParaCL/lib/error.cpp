@@ -10,7 +10,7 @@ static int currentinlinePos = 0;
 int main(int argc, char * argv[])
 {
 	f = fopen(argv[1], "r");
-	if (f <= 0)
+	if (!f)
 	{
 		perror("Cannot open file");
 		return 1;
