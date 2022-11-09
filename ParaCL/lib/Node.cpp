@@ -1,10 +1,25 @@
 #include "Node.hpp"
 
+llvm::LLVMContext TheContext;
+llvm::IRBuilder<> Builder(TheContext);
+std::unique_ptr<llvm::Module> TheModule;
+std::map<std::string, llvm::Value *> NamedValues;
+
+Value *LogErrorV(const char *Str) {
+//   llvm::LogError(Str);
+    std::cout << Str << std::endl;
+  return nullptr;
+}
+
+
 Node::~Node() {}
 // NUMBER
 RType Value::calc()
 {
     return val;
+}
+llvm::Value *Value::codegen()  {
+    return llvm::ConstantInt::get(TheContext, llvm::APInt(32, val));
 }
 void Value::dump() const
 {
@@ -15,6 +30,9 @@ Value::~Value() {}
 RType Decl::calc()
 {
     return val;
+}
+llvm::Value *Decl::codegen() {
+    return v;
 }
 void Decl::dump() const
 {
@@ -34,6 +52,13 @@ RType Scope::calc()
         x->calc();
 
     return 0;
+}
+llvm::Value *Scope::codegen() {
+    // TODO BasicBlock?
+    llvm::Value *TheLast = nullptr;
+    for (auto &&x : branches)
+        TheLast = x->codegen();
+    return TheLast;
 }
 void Scope::dump() const
 {
@@ -164,6 +189,75 @@ RType Op::calc()
 
     return 998;
 }
+llvm::Value *Op::codegen() {
+
+    switch (op)
+    {
+    case Ops::Plus:
+        if (left == nullptr)
+            return right->codegen();
+        return Builder.CreateAdd(left->codegen(), right->codegen(), "add");
+        break;
+    case Ops::Minus:
+        if (left == nullptr)
+            return Builder.CreateNeg(right->codegen(), "neg");
+        return Builder.CreateSub(left->codegen(), right->codegen(), "sub");
+        break;
+    case Ops::Greater:
+        return Builder.CreateICmpSGT(left->codegen(), right->codegen(), "sgt");
+        break;
+    case Ops::Less:
+        return Builder.CreateICmpSLT(left->codegen(), right->codegen(), "slt");
+        break;
+    case Ops::GreaterEq:
+        return Builder.CreateICmpSGE(left->codegen(), right->codegen(), "eq");
+        break;
+    case Ops::LessEq:
+        return Builder.CreateICmpSLE(left->codegen(), right->codegen(), "sle");
+        break;
+    case Ops::Assign:
+        static_cast<Decl * >(left)->SetValue(right->codegen());
+        return left->codegen();
+        break;
+    // TODO
+    case Ops::StdOut:
+        std::cerr << "Not supported.\n";
+        return nullptr;
+        break;
+    case Ops::StdIn:
+        std::cerr << "Not supported.\n";
+        return nullptr;
+        break;
+    case Ops::Equal:
+        return Builder.CreateICmpEQ(left->codegen(), right->codegen(), "eq");
+        break;
+    case Ops::NotEqual:
+        return Builder.CreateICmpNE(left->codegen(), right->codegen(), "ne");
+        break;
+    case Ops::Not:
+        return Builder.CreateNot(right->codegen(), "not");
+        break;
+    case Ops::And:
+        return Builder.CreateAnd(left->codegen(), right->codegen(), "and");
+        break;
+    case Ops::Or:
+        return Builder.CreateOr(left->codegen(), right->codegen(), "or");
+        break;
+    case Ops::Div:
+        return Builder.CreateSDiv(left->codegen(), right->codegen(), "div");
+        break;
+    case Ops::Mul:
+        return Builder.CreateMul(left->codegen(), right->codegen(), "mul");
+        break;
+    case Ops::Mod:
+        return Builder.CreateSRem(left->codegen(), right->codegen(), "rem");
+        break;
+    default:
+        return nullptr;
+    }
+
+    return nullptr;
+}
 void Op::dump() const
 {
     std::cout << "Node Op: ";
@@ -235,6 +329,9 @@ RType While::calc()
 
     return 0;
 }
+llvm::Value *While::codegen() {
+    return nullptr;
+}
 void While::dump() const
 {
     std::cout << "Node While " << std::endl;
@@ -253,6 +350,9 @@ RType If::calc()
         scope->calc();
 
     return 0;
+}
+llvm::Value *If::codegen() {
+    return nullptr;
 }
 void If::dump() const
 {

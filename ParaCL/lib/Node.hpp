@@ -1,5 +1,19 @@
 #pragma once
 
+
+#include <llvm/ADT/APFloat.h>
+#include <llvm/ADT/STLExtras.h>
+#include <llvm/IR/BasicBlock.h>
+#include <llvm/IR/Constants.h>
+#include <llvm/IR/DerivedTypes.h>
+#include <llvm/IR/Function.h>
+#include <llvm/IR/IRBuilder.h>
+#include <llvm/IR/LLVMContext.h>
+#include <llvm/IR/Module.h>
+#include <llvm/IR/Type.h>
+#include <llvm/IR/Verifier.h>
+
+
 #include <vector>
 #include <map>
 #include <string>
@@ -11,6 +25,7 @@ class Node
 public:
     virtual int calc() = 0;
     virtual void dump() const = 0;
+    virtual llvm::Value *codegen() = 0;
     virtual ~Node() = 0;
 };
 
@@ -25,17 +40,21 @@ public:
     Value(int v) : val(v) {}
     RType calc() override;
     void dump() const override;
+    llvm::Value *codegen() override;
     ~Value();
 };
 
 class Decl final : public Node
 {
     int val;
+    llvm::Value *v;
 public:
     Decl() = default;
     RType calc() override;
     void dump() const override;
+    llvm::Value *codegen() override;
     void SetValue(int Val);
+    void SetValue(llvm::Value* v_in) {v = v_in;}
     ~Decl();
 };
 
@@ -50,6 +69,7 @@ class Scope final : public Node
 public:
     Scope(Scope * prev) : prev_scope(prev) {}
     RType calc() override;
+    llvm::Value *codegen() override;
     void dump() const override;
     Scope * resetScope()const;
     void addBranch(Node * branch);
@@ -93,6 +113,7 @@ public:
     Op(Node * l, Ops o, Node * r) : left(l), right(r), op(o) {}
     RType calc() override;
     void dump() const override;
+    llvm::Value *codegen() override;
     ~Op();
 };
 
@@ -107,6 +128,7 @@ public:
     While(Node * o, Node * s) : op(o), scope(s) {}
     RType calc() override;
     void dump() const override;
+    llvm::Value *codegen() override;
     ~While();
 };
 
@@ -119,5 +141,6 @@ public:
     If(Node * o, Node * s) : op(o), scope(s) {}
     RType calc() override;
     void dump() const override;
+    llvm::Value *codegen() override;
     ~If();
 };
