@@ -4,6 +4,8 @@ static FILE * f;
 
 Scope * currentScope = nullptr; 
 
+void start();
+
 static int currentinlinePos = 0;
 
 
@@ -20,9 +22,14 @@ int main(int argc, char * argv[])
 	//std::cout << "CurrentScope: " << currentScope << std::endl;
 	yyparse();
 	fclose(f);
+  start();
 	delete currentScope;
 
 	return 0;
+}
+
+void start() {
+  currentScope->calc();
 }
 
 void PrintError(char const * errorstring, ...) 

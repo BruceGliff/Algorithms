@@ -4,6 +4,7 @@
 //current node
 static char error_text[128];
 extern Scope * currentScope;
+extern void start();
 
 #define YYERROR_VERBOSE 1
 %}
@@ -27,7 +28,7 @@ extern Scope * currentScope;
 %%
 program: 	stms { 
 					//printf ("program stms\n");
-					currentScope->calc();
+					//currentScope->calc();
 				}
 			;
 scope:		openScope stms closeScope {

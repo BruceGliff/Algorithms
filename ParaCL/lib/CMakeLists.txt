@@ -7,7 +7,7 @@ project(${PROJECT_NAME})
 find_package(LLVM REQUIRED CONFIG)
 find_package(BISON REQUIRED)
 find_package(FLEX REQUIRED)
-BISON_TARGET(MyParser compiler.y ${CMAKE_CURRENT_SOURCE_DIR}/compiler.cpp
+BISON_TARGET(MyParser compiler.y ${CMAKE_CURRENT_BINARY_DIR}/compiler.cpp
              DEFINES_FILE ${CMAKE_CURRENT_BINARY_DIR}/compiler.cpp.h  )
 message(STATUS ${BISON_MyParser_OUTPUTS})
 
