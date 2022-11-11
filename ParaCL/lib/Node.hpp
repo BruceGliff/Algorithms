@@ -20,6 +20,9 @@
 #include <iostream>
 #include <typeinfo>
 
+class Scope;
+void InitModule(Scope *begin);
+
 class Node
 {
 public:

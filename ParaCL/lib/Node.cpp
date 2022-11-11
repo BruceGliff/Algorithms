@@ -365,3 +365,38 @@ If::~If()
         delete op;
     delete scope;
 }
+static llvm::Function *createMainFunction(Scope *begin);
+
+void InitModule(Scope *begin) {
+  std::cout << "I am here\n";
+  TheModule = std::make_unique<llvm::Module>("my cool jit", TheContext);
+  createMainFunction(begin);
+}
+
+
+static llvm::Function *proto() {
+  llvm::FunctionType *FT =
+      llvm::FunctionType::get(llvm::Type::getInt32Ty(TheContext), false);
+
+  llvm::Function *F =
+      llvm::Function::Create(FT, llvm::Function::InternalLinkage, "main", TheModule.get());
+  return F;
+}
+
+llvm::Function *createMainFunction(Scope *begin) {
+
+  llvm::Function *F = proto();
+
+  // Create a new basic block to start insertion into.
+  llvm::BasicBlock *BB = llvm::BasicBlock::Create(TheContext, "entry", F);
+  Builder.SetInsertPoint(BB);
+  Builder.CreateRet(llvm::ConstantInt::get(TheContext, llvm::APInt(32, 0)));
+
+  begin->codegen();
+  llvm::verifyFunction(*F);
+
+  return F;
+}
+
+static void InitializeModule() {
+}
