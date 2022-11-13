@@ -51,6 +51,7 @@ class Decl final : public Node
 {
     int val;
     llvm::Value *v;
+    llvm::Value *ItSelf{nullptr};
 public:
     Decl() = default;
     RType calc() override;
