@@ -38,6 +38,8 @@ llvm_map_components_to_libnames(llvm_libs
   native
 )
 
+set(CMAKE_CXX_FLAGS "-O0 -g")
+
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(${PROJECT_NAME} ${FLEX_LIBRARIES} ${llvm_libs})
 

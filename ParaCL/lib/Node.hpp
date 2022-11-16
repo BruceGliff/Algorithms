@@ -20,6 +20,9 @@
 #include <iostream>
 #include <typeinfo>
 
+class Scope;
+void InitModule(Scope *begin);
+
 class Node
 {
 public:
@@ -48,6 +51,7 @@ class Decl final : public Node
 {
     int val;
     llvm::Value *v;
+    llvm::Value *ItSelf{nullptr};
 public:
     Decl() = default;
     RType calc() override;

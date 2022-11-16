@@ -32,7 +32,14 @@ RType Decl::calc()
     return val;
 }
 llvm::Value *Decl::codegen() {
-    return v;
+    if (!ItSelf) {
+        auto I32 = llvm::Type::getInt32Ty(TheContext);
+        llvm::AllocaInst *AI = Builder.CreateAlloca(I32);
+        llvm::StoreInst *SI = Builder.CreateStore(v, AI);
+        llvm::LoadInst *LI = Builder.CreateLoad(I32, AI);
+        ItSelf = LI;
+    }
+    return ItSelf;
 }
 void Decl::dump() const
 {
@@ -364,4 +371,37 @@ If::~If()
     if (op && typeid(Decl) != typeid(*op))
         delete op;
     delete scope;
+}
+static llvm::Function *createMainFunction(Scope *begin);
+
+void InitModule(Scope *begin) {
+  std::cout << "I am here\n";
+  TheModule = std::make_unique<llvm::Module>("my cool jit", TheContext);
+  createMainFunction(begin);
+  TheModule->print(llvm::errs(), nullptr);
+}
+
+
+static llvm::Function *proto() {
+  llvm::FunctionType *FT =
+      llvm::FunctionType::get(llvm::Type::getInt32Ty(TheContext), false);
+
+  llvm::Function *F =
+      llvm::Function::Create(FT, llvm::Function::InternalLinkage, "main", TheModule.get());
+  return F;
+}
+
+llvm::Function *createMainFunction(Scope *begin) {
+
+  llvm::Function *F = proto();
+
+  // Create a new basic block to start insertion into.
+  llvm::BasicBlock *BB = llvm::BasicBlock::Create(TheContext, "entry", F);
+  Builder.SetInsertPoint(BB);
+
+  begin->codegen();
+  Builder.CreateRet(llvm::ConstantInt::get(TheContext, llvm::APInt(32, 0)));
+  llvm::verifyFunction(*F);
+
+  return F;
 }

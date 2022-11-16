@@ -30,6 +30,8 @@ int main(int argc, char * argv[])
 
 void start() {
   currentScope->calc();
+  // Here starts also codegen
+  InitModule(currentScope);
 }
 
 void PrintError(char const * errorstring, ...) 
