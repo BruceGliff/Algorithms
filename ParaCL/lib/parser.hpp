@@ -22,10 +22,11 @@ struct yyRet
 
 extern FILE * yyin;
 
+extern "C" {
 int yylex();
 int yyerror(char const *);
 extern void PrintError(char const * s, ...);
 extern void BeginToken(char*, int *);
-
+}
 extern int yylineno;
 static int yyinlinePos = 0;
